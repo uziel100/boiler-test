@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: uey-app
+  name: uey-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uey-app
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: uey-app
+    spec:
+      containers:
+        - image: registry.digitalocean.com/bluepixel/uey-app:v0.1.0
+          name: uey-app
+          imagePullPolicy: Always
+          resources: {}
+status: {}
