@@ -22,7 +22,7 @@ export const ThemeCustomContext = createContext({
 
 export const ThemeContextProvider = ({ children, emotionCache }) => {
   const isDarkMode = () => Boolean(window.matchMedia(PREFERS_SCHEME_COLOR).matches)
-  const getTheme = () => ( LIGHT_THEME)
+  const getTheme = () => LIGHT_THEME
 
   const [activeTheme, setActiveTheme] = useState(THEMES_KEYS[LIGHT_THEME])
   const [selectedTheme, setSelectedTheme] = useState(LIGHT_THEME)

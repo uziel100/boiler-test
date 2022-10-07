@@ -1,6 +1,7 @@
-import * as React from "react"
+/* eslint-disable max-len */
+import * as React from 'react'
 
-const IconTwitter = ({ color, ...props}) => (
+const IconTwitter = ({ color, ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={20}

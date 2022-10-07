@@ -1,1 +1,2 @@
-export { default as CardFeature } from './CardFeature';
+// eslint-disable-next-line import/prefer-default-export
+export { default as CardFeature } from './CardFeature'

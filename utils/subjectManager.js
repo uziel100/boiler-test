@@ -1,15 +1,13 @@
-import { Subject } from "rxjs";
+import { Subject } from 'rxjs'
 
+export default class SubjectManager {
+  subject$ = new Subject()
 
-export default class SubjectManager{
-  subject$ = new Subject();
-
-  getSubject(){
-    return this.subject$.asObservable();
+  getSubject() {
+    return this.subject$.asObservable()
   }
 
-  setSubject(value){
-    this.subject$.next(value);
+  setSubject(value) {
+    this.subject$.next(value)
   }
-
 }

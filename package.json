@@ -9,7 +9,7 @@
     "lint": "next lint",
     "lint:fix": "eslint ./ --fix",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "lintter": "npm run format && npm run lint && npm run lint-fix",
+    "lintter": "npm run format && npm run lint && npm run lint:fix",
     "test": "jest --watch"
   },
   "dependencies": {
@@ -27,6 +27,7 @@
     "@mui/styles": "^5.4.4",
     "@mui/x-date-pickers": "^5.0.1",
     "@reduxjs/toolkit": "^1.8.5",
+    "check-password-strength": "^2.0.7",
     "cookie": "^0.5.0",
     "crypto-js": "^4.1.1",
     "date-fns": "^2.29.3",
@@ -50,8 +51,6 @@
   },
   "devDependencies": {
     "@apollo/react-testing": "^4.0.0",
-    "@babel/core": "^7.17.5",
-    "@babel/plugin-syntax-jsx": "^7.16.7",
     "@next/eslint-plugin-next": "^12.3.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.2",

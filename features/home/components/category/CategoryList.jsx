@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import { CardCategory } from '.'
+import CardCategory from './CardCategory'
 
 const categories = [
   {
@@ -40,15 +40,13 @@ const categories = [
   }
 ]
 
-const CategoryList = () => {
-  return (
-    <Grid container spacing={4} mt="2.5rem">
-      {categories.map(({id, title, description}) => (
-        <Grid key={id} item xs={12} sm={6} md={4}>
-          <CardCategory title={title} description={description} />
-        </Grid>
-      ))}
-    </Grid>
-  )
-}
+const CategoryList = () => (
+  <Grid container spacing={4} mt="2.5rem">
+    {categories.map(({ id, title, description }) => (
+      <Grid key={id} item xs={12} sm={6} md={4}>
+        <CardCategory title={title} description={description} />
+      </Grid>
+    ))}
+  </Grid>
+)
 export default CategoryList

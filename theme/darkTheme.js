@@ -8,7 +8,11 @@ const Theme = createTheme({
     mode: 'dark',
     primary: {
       main: '#334195',
-      "100": "red"
+      100: 'red'
+    },
+    background: {
+      default: '#0f0f0f', // background body
+      paper: '#1b1b1b'
     }
   },
   components: {

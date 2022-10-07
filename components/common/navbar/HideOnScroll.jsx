@@ -1,6 +1,6 @@
-import { Slide, useScrollTrigger } from "@mui/material"
+import { Slide, useScrollTrigger } from '@mui/material'
 
-const HideOnScroll = (props) => {
+const HideOnScroll = props => {
   const { children } = props
   const trigger = useScrollTrigger()
 

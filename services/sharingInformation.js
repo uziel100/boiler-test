@@ -1,7 +1,5 @@
-import { SubjectManager } from "utils";
+import { SubjectManager } from 'utils'
 
+const sharingInformationService = new SubjectManager()
 
-
-const sharingInformationService = new SubjectManager();
-
-export default sharingInformationService;
+export default sharingInformationService

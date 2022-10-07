@@ -1,14 +1,14 @@
 import Grid from '@mui/material/Grid'
 import Image from 'next/image'
 import Typography from '@mui/material/Typography'
-import { Box, List, ListItem, ListItemText, Stack, Button, styled, useTheme, ButtonBase } from '@mui/material'
+import { Box, List, ListItem, Stack, styled, useTheme, ButtonBase } from '@mui/material'
 import Link from 'next/link'
-import { ContainerApp } from '../surfaces'
 import { BpTypography } from 'components/shared'
-import { IconFacebook, IconInstagram, IconLinkedin, IconTwitter } from 'components/icons'
+import { IconFacebook, IconInstagram, IconLinkedin, IconLogoUey, IconTwitter } from 'components/icons'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import { ContainerApp } from '../surfaces'
 
-let categories = [
+const categories = [
   {
     id: 'category1',
     name: 'Bebidas'
@@ -92,7 +92,7 @@ const Footer = () => {
           spacing={2}
         >
           <Grid item xs={12} sm={6} md={3}>
-            <Image src="/images/logo-uey.svg" alt="Logo de la empresa uey" width={86} height={56} />
+            <IconLogoUey width={86} height={56} />
             <BpTypography fontVariant="secondary" fontWeight={400} variant="body2" color="grey.700">
               Arma tus eventos de manera fácil y rápida. Tenemos todo en un solo lugar para tí.
             </BpTypography>
@@ -192,7 +192,7 @@ const Footer = () => {
             <BpTypography variant="subtitle1" color="grey.800" fontWeight={600} sx={{ mb: 1 }}>
               Siguenos en nuestras redes sociales
             </BpTypography>
-            <Stack direction="row" gap={2} mt={2} justifyContent={{xs:"center", md: "initial"}}>
+            <Stack direction="row" gap={2} mt={2} justifyContent={{ xs: 'center', md: 'initial' }}>
               <Box sx={styleCardContainerMediaSocial}>
                 <IconInstagram color={theme.palette.primary.main} />
               </Box>
@@ -226,13 +226,34 @@ const Footer = () => {
             <Grid item xs={12} sm={6}>
               <Stack direction="row" justifyContent={{ xs: 'center', md: 'flex-end' }} gap={2}>
                 <StyledMethodPayment>
-                  <Image src="/images/visa.png" alt="Logo visa" width={32} height={32} priority={false} />
+                  <Image
+                    fixed="1x"
+                    src="/images/Imagen-Mastercard-min.svg"
+                    alt="Pagos mediante tarjeta mastercard"
+                    width={32}
+                    height={20}
+                    priority={false}
+                  />
                 </StyledMethodPayment>
                 <StyledMethodPayment>
-                  <Image src="/images/paypal.png" alt="Logo paypal" width={24} height={20} priority={false} />
+                  <Image
+                    fixed="1x"
+                    src="/images/Imagen-Paypal-min.svg"
+                    alt="Pagos mediante tarjeta paypal"
+                    width={20}
+                    height={20}
+                    priority={false}
+                  />
                 </StyledMethodPayment>
                 <StyledMethodPayment>
-                  <Image src="/images/visa.png" alt="Logo visa" width={32} height={32} priority={false} />
+                  <Image
+                    fixed="1x"
+                    src="/images/Imagen-Visa-min.svg"
+                    alt="Pagos mediante tarjeta visa"
+                    width={36}
+                    height={32}
+                    priority={false}
+                  />
                 </StyledMethodPayment>
               </Stack>
             </Grid>

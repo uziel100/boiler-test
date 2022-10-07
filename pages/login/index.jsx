@@ -10,7 +10,11 @@ const LoginPageRoot = () => {
 }
 
 LoginPageRoot.getLayout = function getLayout(page) {
-  return <LayoutMain>{page}</LayoutMain>
+  return (
+    <LayoutMain center={false} isLogin>
+      {page}
+    </LayoutMain>
+  )
 }
 
 export default LoginPageRoot

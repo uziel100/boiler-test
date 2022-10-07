@@ -1,1 +1,2 @@
-export { default as Carousel } from './Carousel';
+/* eslint-disable import/prefer-default-export */
+export { default as Carousel } from './Carousel'

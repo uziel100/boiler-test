@@ -1,7 +1,8 @@
-import { Box, Card, CardContent, Fade, Grid, Slide, Stack, Button, styled } from '@mui/material'
+import { Box, Card, CardContent, Slide, Stack, Button, styled } from '@mui/material'
 import { BpTypography } from 'components/shared'
 import { useState } from 'react'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import { IconLogoUey } from 'components/icons'
 
 const StyledCard = styled(Card)(() => ({
   display: 'flex',
@@ -14,20 +15,20 @@ const StyledCard = styled(Card)(() => ({
   padding: '1rem'
 }))
 
-const StyledCircleContainer = styled(Box,{
-  shouldForwardProp: prop => prop !== "size"
-})(({theme, size}) => ({
-  minWidth: size === "big"? '7rem' : "4.2rem",
-  width: size === "big"? '7rem' : "4.2rem",
-  height: size === "big"? '7rem' : "4.2rem",
-  borderRadius: size === "big"? '7rem' : "4.2rem",
+const StyledCircleContainer = styled(Box, {
+  shouldForwardProp: prop => prop !== 'size'
+})(({ theme, size }) => ({
+  minWidth: size === 'big' ? '7rem' : '4.2rem',
+  width: size === 'big' ? '7rem' : '4.2rem',
+  height: size === 'big' ? '7rem' : '4.2rem',
+  borderRadius: size === 'big' ? '7rem' : '4.2rem',
   background: theme.palette.primary[50],
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center'
 }))
 
-const CardCategory = ({ title, description, img }) => {
+const CardCategory = ({ title = '', description = '' }) => {
   const [checked, setChecked] = useState(false)
 
   return (
@@ -36,7 +37,7 @@ const CardCategory = ({ title, description, img }) => {
         <CardContent sx={{ zIndex: 1, display: !checked ? 'block' : 'none', width: '100%' }}>
           <Stack direction="row" alignItems="center" gap={2}>
             <StyledCircleContainer size="big">
-              <img src="/images/logo-uey.svg" width={70} />
+              <IconLogoUey width={70} height={70} />
             </StyledCircleContainer>
             <BpTypography fontVariant="primary" variant="h6" fontWeight={600} label={title} color="grey.800" />
           </Stack>
@@ -46,7 +47,7 @@ const CardCategory = ({ title, description, img }) => {
         <CardContent sx={{ display: checked ? 'block' : 'none', zIndex: 2, width: '100%' }}>
           <Stack direction="row" alignItems="flex-start" justifyContent="flex-start" gap={3}>
             <StyledCircleContainer size="small">
-              <img src="/images/logo-uey.svg" width={50} />
+              <IconLogoUey width={50} priority={false} height={70} />
             </StyledCircleContainer>
             <Box>
               <BpTypography fontVariant="primary" variant="h6" fontWeight={600} label={title} color="grey.800" />

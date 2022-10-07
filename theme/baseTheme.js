@@ -1,16 +1,38 @@
 const BaseTheme = {
-  typography: {
-    fontFamily: ['Poppins', 'Nunito'].join(',')
-  },
   palette: {},
-  breakpoints:{
-    keys: ["xs","sm","md","lg", "xl"],
+  typography: {
+    fontFamily: ['Poppins', 'Nunito'].join(','),
+    h1: {
+      fontSize: '2.5rem'
+    },
+    h2: {
+      fontSize: '2rem'
+    },
+    h3: {
+      fontSize: '1.5rem'
+    },
+    h4: {
+      fontSize: '1.375rem'
+    },
+    h5: {
+      fontSize: '1.25rem'
+    },
+    h6: {
+      fontSize: '1.125rem'
+    },
+    button: {
+      fontFamily: 'Poppins',
+      textTransform: 'none'
+    }
+  },
+  breakpoints: {
+    keys: ['xs', 'sm', 'md', 'lg', 'xl'],
     values: {
       xs: 0,
       sm: 600,
       md: 900,
       lg: 1300,
-      xl: 1536,
+      xl: 1536
     }
   },
   zIndex: {
@@ -46,15 +68,15 @@ const BaseTheme = {
     MuiButton: {
       variants: [
         {
-          props: { variant: 'dashed' },
+          props: { variant: 'border' },
           style: {
             textTransform: 'none',
-            border: `2px dashed blue`,
+            border: `1px solid #BFBDBE`
             // background: "red"
-          },
-        },
-      ],
-    },
+          }
+        }
+      ]
+    }
   }
 }
 

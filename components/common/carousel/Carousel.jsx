@@ -1,6 +1,5 @@
+/* eslint-disable react/no-array-index-key */
 import { Box, Button, Card, CardActions, CardContent, Typography, useMediaQuery } from '@mui/material'
-import Slider from 'react-slick'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper'
 
@@ -8,99 +7,99 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 
 import { useTheme } from '@emotion/react'
-function SampleNextArrow(props) {
-  const { className, style, onClick } = props
-  return (
-    <Box
-      className={className}
-      sx={{
-        display: 'block',
-        // background: 'green',
-        bgcolor: 'grey.100',
-        borderRadius: '50%',
-        padding: '4px',
-        width: '30px',
-        ':hover': {
-          bgcolor: 'grey.100'
-          // background: 'green',
-        },
-        height: '30px',
-        '::before': {
-          display: 'none'
-        }
-      }}
-      onClick={onClick}
-    >
-      <ArrowForwardIcon htmlColor="#555" />
-    </Box>
-  )
-}
 
-function SamplePrevArrow(props) {
-  const { className, style, onClick } = props
-  return (
-    <Box
-      className={className}
-      sx={{
-        display: 'block',
-        background: 'green',
-        width: '20px',
-        ':hover': {
-          background: 'green'
-        },
-        height: '20px',
-        '::before': {
-          display: 'none'
-        }
-      }}
-      onClick={onClick}
-    />
-  )
-}
+// function SampleNextArrow(props) {
+//   const { className, onClick } = props
+//   return (
+//     <Box
+//       className={className}
+//       sx={{
+//         display: 'block',
+//         // background: 'green',
+//         bgcolor: 'grey.100',
+//         borderRadius: '50%',
+//         padding: '4px',
+//         width: '30px',
+//         ':hover': {
+//           bgcolor: 'grey.100'
+//           // background: 'green',
+//         },
+//         height: '30px',
+//         '::before': {
+//           display: 'none'
+//         }
+//       }}
+//       onClick={onClick}
+//     >
+//       <ArrowForwardIcon htmlColor="#555" />
+//     </Box>
+//   )
+// }
 
-const settings = {
-  // dots: true,
-  infinite: false,
-  speed: 500,
-  slidesToShow: 4,
-  slidesToScroll: 4,
-  initialSlide: 0,
-  fade: false,
-  centerPadding: '60px',
-  nextArrow: <SampleNextArrow />,
-  prevArrow: <SamplePrevArrow />,
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 4,
-        slidesToScroll: 4
-        // infinite: true,
-        // dots: true
-      }
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
-        initialSlide: 3
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2
-      }
-    }
-  ]
-}
+// function SamplePrevArrow(props) {
+//   const { className, onClick } = props
+//   return (
+//     <Box
+//       className={className}
+//       sx={{
+//         display: 'block',
+//         background: 'green',
+//         width: '20px',
+//         ':hover': {
+//           background: 'green'
+//         },
+//         height: '20px',
+//         '::before': {
+//           display: 'none'
+//         }
+//       }}
+//       onClick={onClick}
+//     />
+//   )
+// }
+
+// const settings = {
+//   // dots: true,
+//   infinite: false,
+//   speed: 500,
+//   slidesToShow: 4,
+//   slidesToScroll: 4,
+//   initialSlide: 0,
+//   fade: false,
+//   centerPadding: '60px',
+//   nextArrow: <SampleNextArrow />,
+//   prevArrow: <SamplePrevArrow />,
+//   responsive: [
+//     {
+//       breakpoint: 1024,
+//       settings: {
+//         slidesToShow: 4,
+//         slidesToScroll: 4
+//         // infinite: true,
+//         // dots: true
+//       }
+//     },
+//     {
+//       breakpoint: 600,
+//       settings: {
+//         slidesToShow: 3,
+//         slidesToScroll: 3,
+//         initialSlide: 3
+//       }
+//     },
+//     {
+//       breakpoint: 480,
+//       settings: {
+//         slidesToShow: 2,
+//         slidesToScroll: 2
+//       }
+//     }
+//   ]
+// }
 
 const Carousel = () => {
-
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up('sm'));
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
     <Box>
@@ -134,14 +133,14 @@ const Carousel = () => {
         // slidesPerView={5}
         // slidesPerGroup={5}
         // centeredSlides={true}
-        slidesPerView={"auto"}
+        slidesPerView="auto"
         navigation={matches}
-        pagination={true}
+        pagination
         // parallax
         style={{
-          padding: "0.5rem 0rem",
-          paddingRight: !matches? "2rem" : "0rem",
-          height: "auto",
+          padding: '0.5rem 0rem',
+          paddingRight: !matches ? '2rem' : '0rem',
+          height: 'auto'
           // background: "red"
         }}
         modules={[Navigation, Pagination]}
@@ -195,8 +194,7 @@ const Carousel = () => {
                 </Typography>
                 <Typography variant="body2">
                   well meaning and kindly.
-                  <br />
-                  {'"a benevolent smile"'}
+                  <br />a benevolent smile
                 </Typography>
               </CardContent>
               <CardActions>

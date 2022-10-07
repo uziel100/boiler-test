@@ -1,12 +1,17 @@
-import { Stack } from '@mui/system'
 import baseConfig from 'base.config'
 import { Footer } from 'components/common/footer'
 import Head from 'next/head'
 import { ScrollTop } from 'components/common'
-import { NavbarMain } from 'features/common/components'
+import { NavbarLogin, NavbarMain } from 'features/common/components'
 
+const styleCenter = {
+  height: 'calc(100vh - 90px)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center'
+}
 
-const LayoutMain = ({ children, title }) => (
+const LayoutMain = ({ children, title, isLogin = false, center = false }) => (
   <>
     <Head>
       <title>
@@ -15,12 +20,12 @@ const LayoutMain = ({ children, title }) => (
       </title>
     </Head>
     <div id="back-to-top-anchor" />
-    <NavbarMain />
-    <main>
+    {!isLogin ? <NavbarMain isLogin={isLogin} /> : <NavbarLogin />}
+    <main style={center ? { ...styleCenter } : {}}>
       {children}
-      <ScrollTop />
+      {!isLogin && <ScrollTop />}
     </main>
-    <Footer />
+    {!isLogin && <Footer />}
   </>
 )
 

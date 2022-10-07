@@ -1,1 +1,2 @@
-export { default as BpTypography } from './BpTypography';
+// eslint-disable-next-line import/prefer-default-export
+export { default as BpTypography } from './BpTypography'

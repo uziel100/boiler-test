@@ -1,5 +1,5 @@
 // import { useSnackbar } from 'notistack'
-import toast from 'react-hot-toast';
+import toast from 'react-hot-toast'
 
 /**
  * Hook to display a snackbar message when an error occurs.
@@ -13,16 +13,16 @@ const useError = () => {
       toast.error(messageText)
     } else if (error.message.includes('Error')) {
       const customMessage = message || error.message.split(':').pop().trim()
-      if(customMessage === "Failed to fetch"){
-        toast.error("Error de red")
-        return;
+      if (customMessage === 'Failed to fetch') {
+        toast.error('Error de red')
+        return
       }
-      
+
       toast.error(customMessage)
     } else if (error.message.includes('GraphQL')) {
       const customMessage = message || error.message.split(':').pop().trim()
       toast.error(customMessage)
-    } else {      
+    } else {
       const customMessage = error?.message || 'Ocurrió un error inesperado'
       toast.error(customMessage)
     }

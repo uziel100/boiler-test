@@ -1,10 +1,13 @@
-import { Box, IconButton, InputBase, Stack, TextField } from '@mui/material'
+import { Box, IconButton, InputBase, Stack } from '@mui/material'
 import { ContainerApp, NavbarApp } from 'components/common'
 import { IconAccountUser, IconShoppingCart } from 'components/icons'
+import { BpTypography } from 'components/shared'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 const NavbarMain = () => {
   const [open, setOpen] = useState(false)
+  const router = useRouter()
 
   const onOpenDrawer = () => setOpen(true)
   const onCloseDrawer = () => setOpen(false)
@@ -33,7 +36,7 @@ const NavbarMain = () => {
                       fontFamily: 'Poppins',
                       fontWeight: 500,
                       fontSize: '0.875rem',
-                      maxWidth: "160px"
+                      maxWidth: '160px'
                     }}
                   />
                 </Stack>
@@ -41,7 +44,7 @@ const NavbarMain = () => {
               </Stack>
             </Stack>
             <Stack direction="row" gap={1}>
-              <IconButton>
+              <IconButton onClick={() => router.push('/login')}>
                 <IconAccountUser />
               </IconButton>
               <IconButton>
@@ -51,7 +54,9 @@ const NavbarMain = () => {
           </Stack>
         </ContainerApp>
       </NavbarApp>
-      <NavbarApp.Drawer open={open} onClose={onCloseDrawer} />
+      <NavbarApp.Drawer open={open} onClose={onCloseDrawer}>
+        <BpTypography label="Ejemplo de opcion" />
+      </NavbarApp.Drawer>
     </>
   )
 }

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import * as React from 'react'
 
 import Document, { Head, Html, Main, NextScript } from 'next/document'
