@@ -2,14 +2,13 @@
 
 import { login } from './queries.graphql'
 
-const loginService = async (apolloClient, { email, password, nonce }, options = {}) => {
+const loginService = async (apolloClient, { email, password }, options = {}) => {
   try {
     const resp = await apolloClient.mutate({
       mutation: login,
       variables: {
         email,
         password,
-        nonce
       },
       ...options
     })

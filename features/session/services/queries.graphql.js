@@ -7,13 +7,14 @@ export const logout = gql`
 `
 
 export const login = gql`
-  mutation login($email: String!, $password: String!, $nonce: ID!) {
-    login: login(email: $email, password: $password, nonce: $nonce) {
+  mutation login($email: String!, $password: String!) {
+    login: login(email: $email, password: $password) {
+      id
+      token
       user {
         id
         firstName
-        lastName
-        phone
+        fullName
         email
       }
     }

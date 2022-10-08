@@ -7,7 +7,9 @@ import { Box, Divider, InputAdornment, Stack } from '@mui/material'
 import { IconAccountUser, IconLogoUey } from 'components/icons'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import { ButtonFacebook, ButtonGoogle, ContainerAuth } from '../components'
+import { useAuthService } from '../hooks'
 
 const validationSchema = Yup.object({
   email: Yup.string().email('Formato inválido').required('Campo obligatorio'),
@@ -15,25 +17,28 @@ const validationSchema = Yup.object({
 })
 
 const LoginPage = () => {
+
+  const { onLogin } = useAuthService();
   const { logError, showAlert } = useError()
   const router = useRouter()
+
+  const [loading, setLoading] = useState(false)
 
   const formik = useFormik({
     initialValues: { email: '', password: '' },
     validationSchema,
     onSubmit: async ({ email, password }) => {
+      setLoading(true);
       try {
-        console.log({ email, password })
-        // sharingInformationService.setSubject('hola com estsa')
-        // toggleTheme();
-        // const resp = await onLogin({ email, password })
-        // if (!resp?.login) throw new Error('Usuario o contraseña incorrectos')
-
-        showAlert('Login success', 'success')
-        // router.replace('/')
+        const data = await onLogin({ email, password })
+        if (!data) throw new Error('Usuario o contraseña incorrectos')
+        showAlert(`Bienvenido, ${ data.fullName }`, 'success')
+        router.replace('/')
       } catch (error) {
         console.log(error)
         logError(error)
+      }finally{
+        setLoading(false);
       }
     }
   })
@@ -122,6 +127,7 @@ const LoginPage = () => {
               fullWidth={false}
               disabled={!(formik.isValid && formik.dirty)}
               sx={{ mt: { xs: 4, md: 2 }, width: { xs: '100%', sm: 'auto' } }}
+              loading={loading}
             >
               Iniciar sesión
             </BpButton>
