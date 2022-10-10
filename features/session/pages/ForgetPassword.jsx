@@ -14,8 +14,7 @@ const validationSchema = Yup.object({
 })
 
 const ForgetPassword = () => {
-
-  const { forgetPassword } = useAuthService();
+  const { forgetPassword } = useAuthService()
   const { showAlert, logError } = useError()
   const [openModal, setOpenModal] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -26,15 +25,15 @@ const ForgetPassword = () => {
     onSubmit: async ({ email }) => {
       setLoading(true)
       try {
-        const statusOk = await forgetPassword({email});
-        if(!statusOk) throw new Error('No se ha podido enviar la solicitud')
-        
+        const statusOk = await forgetPassword({ email })
+        if (!statusOk) throw new Error('No se ha podido enviar la solicitud')
+
         showAlert('Solicitud enviada', 'success')
         setOpenModal(true)
       } catch (error) {
         console.log(error)
         logError(error)
-      }finally{
+      } finally {
         setLoading(false)
       }
     }

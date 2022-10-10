@@ -1,10 +1,10 @@
-import { changePassword } from "./queries.graphql"
+import { changePassword } from './queries.graphql'
 
 const changePasswordService = async (apolloClient, variables = {}, options = {}) => {
   try {
     const resp = await apolloClient.mutate({
       mutation: changePassword,
-      variables: {...variables},
+      variables: { ...variables },
       ...options
     })
     return resp.data

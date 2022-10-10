@@ -15,11 +15,11 @@ export const loginNormalAdapter = data => ({
 
 export const mapperRecoveryCodeAdapter = data => ({
   code: data.code,
-  email: data.user.email,
+  email: data.user.email
 })
 
 export const changePasswordPayloadAdapter = data => ({
-  input:{
+  input: {
     email: data.email,
     code: data.code,
     password: SHA256(`${data.password}`).toString()

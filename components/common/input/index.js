@@ -1,2 +1,2 @@
-/* eslint-disable import/prefer-default-export */
+export { default as InputDatePicker } from './InputDatePicker'
 export { default as InputPassword } from './InputPassword'
