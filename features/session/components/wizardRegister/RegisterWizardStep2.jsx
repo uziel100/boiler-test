@@ -4,8 +4,10 @@ import { BpButton, BpTypography } from 'components/shared'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { motion } from 'framer-motion'
+import { useAuthService } from 'features/session/hooks'
 import { useEffect } from 'react'
 import { useError } from 'hooks'
+import { useRouter } from 'next/router'
 import CheckPasswordStrength from '../CheckPasswordStrength'
 import { containerVariants } from './animations'
 
@@ -17,7 +19,10 @@ const validationSchema = Yup.object({
     .required('Campo obligatorio')
 })
 const RegisterWizardStep2 = ({ data, setData, nextPage }) => {
-  const { logError, showAlert } = useError()
+
+  const { registerUser } = useAuthService();
+  const { logError, showAlert } = useError();
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -26,10 +31,12 @@ const RegisterWizardStep2 = ({ data, setData, nextPage }) => {
       validStrengthPassword: false
     },
     validationSchema,
-    onSubmit: () => {
+    onSubmit: async () => {
       try {
-        console.log('Regsiter')
+        const resp = await registerUser(data)
+        if(!resp) throw new Error('Ha ocurrido un error, intetelo de nuevo')  
         showAlert('Usuario registrado :)', 'success')
+        router.replace("/");
       } catch (error) {
         logError(error)
       }

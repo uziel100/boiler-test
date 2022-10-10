@@ -18,7 +18,7 @@ const validationSchema = Yup.object({
   name: Yup.string().max(100, 'Maximo 100 caracteres').required('Campo obligatorio'),
   lastName: Yup.string().max(100, 'Maximo 100 caracteres').required('Campo obligatorio'),
   email: Yup.string().email('Formato inválido').required('Campo obligatorio'),
-  birthdate: Yup.string().required('Campo obligatorio')
+  birthday: Yup.string().required('Campo obligatorio')
 })
 
 const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
@@ -27,7 +27,7 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
       email: data?.email || '',
       lastName: data?.lastName || '',
       name: data?.name || '',
-      birthdate: data?.birthdate || maxDate
+      birthday: data?.birthday || maxDate
     },
     validationSchema,
     onSubmit: async () => {
@@ -99,12 +99,12 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
           }}
         />
         <InputDatePicker
-          id="birthdate"
-          name="birthdate"
-          value={formik.values.birthdate}
-          error={formik.touched.birthdate && Boolean(formik.errors.birthdate)}
-          helperText={formik.touched.birthdate && formik.errors.birthdate}
-          onChange={currentDate => formik.setFieldValue('birthdate', currentDate)}
+          id="birthday"
+          name="birthday"
+          value={formik.values.birthday}
+          error={formik.touched.birthday && Boolean(formik.errors.birthday)}
+          helperText={formik.touched.birthday && formik.errors.birthday}
+          onChange={currentDate => formik.setFieldValue('birthday', currentDate)}
           maxDate={maxDate}
         />
         <BpTypography fontWeight={400} variant="caption" color="grey.700" sx={{ display: 'block', mt: 3, mb: 1 }}>

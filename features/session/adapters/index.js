@@ -5,7 +5,8 @@ export const mapperUserAdaper = data => ({
   token: data.token,
   fullName: data.user.fullName,
   firstName: data.user.firstName,
-  email: data.user.email
+  email: data.user.email,
+  birthday: data.user.birthday
 })
 
 export const loginNormalAdapter = data => ({
@@ -23,5 +24,15 @@ export const changePasswordPayloadAdapter = data => ({
     email: data.email,
     code: data.code,
     password: SHA256(`${data.password}`).toString()
+  }
+})
+
+export const registerUserPayloadAdapter = data => ({
+  input: {
+    firstName: data.name,
+    lastName: data.lastName,
+    email: data.email,
+    password: SHA256(`${data.password}`).toString(),
+    birthday: data.birthday
   }
 })

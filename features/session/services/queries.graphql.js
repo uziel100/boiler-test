@@ -46,3 +46,19 @@ export const changePassword = gql`
     response: changePassword(input: $input)
   }
 `
+
+export const registerUser = gql`
+  mutation registerUser($input: RegisterUser!) {
+    response: registerUser(input: $input) {
+      id
+      token
+      user {
+        id
+        email
+        firstName
+        fullName
+        birthday
+      }
+    }
+  }
+`

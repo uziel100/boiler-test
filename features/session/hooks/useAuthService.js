@@ -4,14 +4,16 @@ import {
   changePasswordPayloadAdapter,
   loginNormalAdapter,
   mapperRecoveryCodeAdapter,
-  mapperUserAdaper
+  mapperUserAdaper,
+  registerUserPayloadAdapter
 } from '../adapters'
 import {
   changePasswordService,
   forgetPasswordService,
   loginService,
   logoutService,
-  recoveryCodeService
+  recoveryCodeService,
+  registerUserService
 } from '../services'
 
 const useAuthService = () => {
@@ -71,7 +73,20 @@ const useAuthService = () => {
       try {
         const mapperPayload = changePasswordPayloadAdapter(data)
         const res = await changePasswordService(apolloClient, mapperPayload)
-        return res.response
+        return mapperUserAdaper(res.response)
+      } catch (error) {
+        throw new Error(error)
+      }
+    },
+    [apolloClient]
+  )
+
+  const registerUser = useCallback(
+    async data => {
+      try {
+        const mapperPayload = registerUserPayloadAdapter(data)
+        const res = await registerUserService(apolloClient, mapperPayload)
+        return mapperUserAdaper(res.response);
       } catch (error) {
         throw new Error(error)
       }
@@ -84,7 +99,8 @@ const useAuthService = () => {
     onLogout,
     forgetPassword,
     getRecoveryCode,
-    changePassword
+    changePassword,
+    registerUser
   }
 }
 
