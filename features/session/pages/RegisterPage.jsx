@@ -4,7 +4,7 @@ import { BpTypography } from 'components/shared'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { ContainerAuth, ModalSuccesChangePassword } from '../components'
+import { ContainerAuth, ModalNoticeOfPrivacy } from '../components'
 import { RegisterWizardStep1, RegisterWizardStep2, RegisterWizardStep3 } from '../components/wizardRegister'
 
 const steps = ['step1', 'step2', 'step3']
@@ -28,7 +28,7 @@ const RegisterPage = () => {
 
   return (
     <>
-      <ModalSuccesChangePassword open={!!router.query.q} onClose={() => router.push('/register')} />
+      <ModalNoticeOfPrivacy open={!!router.query.q} onClose={() => router.push('/register')} />
       <ContainerAuth>
         <ContainerAuth.Left sx={{ p: '3rem 0' }}>
           <Stack
