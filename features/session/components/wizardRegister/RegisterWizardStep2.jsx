@@ -6,8 +6,11 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { motion } from 'framer-motion'
 import { useEffect } from 'react'
+import { subYears } from 'date-fns'
 import CheckPasswordStrength from '../CheckPasswordStrength'
 import { containerVariants } from './animations'
+
+const maxDate = subYears(new Date, 18);
 
 const validationSchema = Yup.object({
   birthdate: Yup.string().required('Campo obligatorio'),
@@ -17,7 +20,7 @@ const validationSchema = Yup.object({
 const RegisterWizardStep2 = ({ data, setData, nextPage }) => {
   const formik = useFormik({
     initialValues: {
-      birthdate: data?.birthdate || '',
+      birthdate: data?.birthdate || maxDate,
       password: data?.password || '',
       validStrengthPassword: false
     },
@@ -61,6 +64,7 @@ const RegisterWizardStep2 = ({ data, setData, nextPage }) => {
               error={formik.touched.birthdate && Boolean(formik.errors.birthdate)}
               helperText={formik.touched.birthdate && formik.errors.birthdate}
               onChange={currentDate => formik.setFieldValue('birthdate', currentDate)}
+              maxDate={maxDate}
             />
           </InputLabel>
           <InputLabel>

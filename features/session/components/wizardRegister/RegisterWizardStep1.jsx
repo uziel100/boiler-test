@@ -37,8 +37,14 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
   }, [formik.values])
 
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="exit" style={{ height: '100%' }}>
-      <Box component="form" onSubmit={formik.handleSubmit}>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      style={{ height: '100%', marginTop: '2.5rem' }}
+    >
+      <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 2 }}>
         <BpTypography fontWeight={600} variant="h5" color="grey.800">
           Regístrate en Uey
         </BpTypography>

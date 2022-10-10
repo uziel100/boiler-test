@@ -92,9 +92,20 @@ const RegisterPage = () => {
               width="100%"
               direction="column"
               alignItems="center"
-              mb={4}
+              mb={3}
             >
-              <Stepper sx={{ width: '100%' }} activeStep={page}>
+              <Stepper
+                sx={{
+                  width: '100%',
+                  '& .MuiStepConnector-root': {
+                    '.MuiStepConnector-line': {
+                      borderTopStyle: 'dotted',
+                      borderTopWidth: '4px'
+                    }
+                  }
+                }}
+                activeStep={page}
+              >
                 {steps.map(label => (
                   <Step
                     sx={{
@@ -102,7 +113,7 @@ const RegisterPage = () => {
                         color: theme => theme.palette.secondary.main
                       },
                       '.Mui-disabled > svg': {
-                        color: theme => theme.palette.secondary[400]
+                        color: theme => theme.palette.grey[400]
                       }
                     }}
                     key={label}
