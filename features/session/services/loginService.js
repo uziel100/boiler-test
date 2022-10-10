@@ -8,7 +8,7 @@ const loginService = async (apolloClient, { email, password }, options = {}) => 
       mutation: login,
       variables: {
         email,
-        password,
+        password
       },
       ...options
     })

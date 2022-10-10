@@ -17,8 +17,7 @@ const validationSchema = Yup.object({
 })
 
 const LoginPage = () => {
-
-  const { onLogin } = useAuthService();
+  const { onLogin } = useAuthService()
   const { logError, showAlert } = useError()
   const router = useRouter()
 
@@ -28,17 +27,17 @@ const LoginPage = () => {
     initialValues: { email: '', password: '' },
     validationSchema,
     onSubmit: async ({ email, password }) => {
-      setLoading(true);
+      setLoading(true)
       try {
         const data = await onLogin({ email, password })
         if (!data) throw new Error('Usuario o contraseña incorrectos')
-        showAlert(`Bienvenido, ${ data.fullName }`, 'success')
+        showAlert(`Bienvenido, ${data.fullName}`, 'success')
         router.replace('/')
       } catch (error) {
         console.log(error)
         logError(error)
-      }finally{
-        setLoading(false);
+      } finally {
+        setLoading(false)
       }
     }
   })

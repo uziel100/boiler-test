@@ -9,10 +9,10 @@ const useAuthService = () => {
   const onLogin = useCallback(
     async ({ email, password }) => {
       try {
-        const data = loginNormalAdapter({email, password});
+        const data = loginNormalAdapter({ email, password })
         const variables = { ...data }
         const response = await loginService(apolloClient, variables)
-        return  mapperUserAdaper(response.login);
+        return mapperUserAdaper(response.login)
       } catch (error) {
         throw new Error(error)
       }
