@@ -6,6 +6,7 @@ const ContainerRight = ({ children }) => (
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center'
+      // justifyContent:"center"
     }}
     item
     xs={12}

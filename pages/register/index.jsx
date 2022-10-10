@@ -5,7 +5,7 @@ const RegisterPageRoot = () => <RegisterPage />
 
 RegisterPageRoot.getLayout = function getLayout(page) {
   return (
-    <LayoutMain center isLogin>
+    <LayoutMain center={false} isLogin>
       {page}
     </LayoutMain>
   )
