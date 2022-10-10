@@ -12,3 +12,16 @@ export const loginNormalAdapter = data => ({
   email: data.email,
   password: SHA256(`${data.password}`).toString()
 })
+
+export const mapperRecoveryCodeAdapter = data => ({
+  code: data.code,
+  email: data.user.email,
+})
+
+export const changePasswordPayloadAdapter = data => ({
+  input:{
+    email: data.email,
+    code: data.code,
+    password: SHA256(`${data.password}`).toString()
+  }
+})

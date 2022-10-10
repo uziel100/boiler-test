@@ -7,27 +7,35 @@ import { useError } from 'hooks'
 import { IconEmail } from 'components/icons'
 import { useState } from 'react'
 import { ModalForgetPassword } from '../components'
+import { useAuthService } from '../hooks'
 
 const validationSchema = Yup.object({
   email: Yup.string().email('Formato inválido').required('Campo obligatorio')
 })
 
 const ForgetPassword = () => {
+
+  const { forgetPassword } = useAuthService();
   const { showAlert, logError } = useError()
   const [openModal, setOpenModal] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const formik = useFormik({
     initialValues: { email: '' },
     validationSchema,
     onSubmit: async ({ email }) => {
+      setLoading(true)
       try {
-        console.log({ email })
+        const statusOk = await forgetPassword({email});
+        if(!statusOk) throw new Error('No se ha podido enviar la solicitud')
+        
         showAlert('Solicitud enviada', 'success')
         setOpenModal(true)
-        // router.replace('/')
       } catch (error) {
         console.log(error)
         logError(error)
+      }finally{
+        setLoading(false)
       }
     }
   })
@@ -78,6 +86,7 @@ const ForgetPassword = () => {
           variant="contained"
           color="secondary"
           fullWidth={false}
+          loading={loading}
           disabled={!(formik.isValid && formik.dirty)}
           sx={{ mt: { xs: 4, md: 2 }, width: { xs: '100%', sm: 'auto' } }}
         >

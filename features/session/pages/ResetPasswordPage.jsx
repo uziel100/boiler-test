@@ -2,12 +2,13 @@ import { Box, Card, InputLabel } from '@mui/material'
 import { InputPassword } from 'components/common'
 import { BpButton, BpTypography } from 'components/shared'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useError } from 'hooks'
 import { CheckPasswordStrength, ModalSuccesChangePassword } from '../components'
+import { useAuthService } from '../hooks'
 
 const validationSchema = Yup.object({
   password: Yup.string().required('Campo obligatorio'),
@@ -17,24 +18,46 @@ const validationSchema = Yup.object({
 })
 
 const ResetPasswordPage = () => {
+  const { getRecoveryCode, changePassword } = useAuthService()
   const [openModal, setOpenModal] = useState(false)
   const { showAlert, logError } = useError()
   const router = useRouter()
 
+  const [recoveryCode, setRecoveryCode] = useState(null)
+  const [loading, setLoading] = useState(false)
+
   const formik = useFormik({
     initialValues: { passwordConfirm: '', password: '', validStrengthPassword: false },
     validationSchema,
-    onSubmit: async ({ password, passwordConfirm }) => {
+    onSubmit: async ({ password }) => {
+      setLoading(false)
       try {
-        console.log({ password, passwordConfirm })
-        showAlert('Operation success', 'success')
+        const statusOk = await changePassword({ password, code: recoveryCode.code, email: recoveryCode.email })
+        if (!statusOk) throw new Error('Ha ocurrido un error al procesar la solicitud')
+
+        showAlert('Contraseña actualizada correctamente', 'success')
         setOpenModal(true)
       } catch (error) {
-        console.log(error)
         logError(error)
+      } finally {
+        setLoading(false)
       }
     }
   })
+
+  useEffect(() => {
+    if (!router.isReady) return
+    getRecoveryCode({ code: router.query.token })
+      .then(data => {
+        console.log({ data })
+        if (data.redeemAt) throw new Error('Este codigo ya ha expirado')
+        setRecoveryCode(data)
+      })
+      .catch(error => {
+        logError(error)
+        router.replace('/login')
+      })
+  }, [router.isReady])
 
   return (
     <Box mt={{ xs: 1, md: 3 }}>
@@ -80,6 +103,7 @@ const ResetPasswordPage = () => {
             placeholder="Contraseña"
             value={formik.values.password}
             onChange={formik.handleChange}
+            disabled={loading}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
             className="mb-1"
@@ -102,7 +126,7 @@ const ResetPasswordPage = () => {
             id="passwordConfirm"
             name="passwordConfirm"
             placeholder="Confirma tu contraseña"
-            disabled={!formik.values.validStrengthPassword}
+            disabled={!formik.values.validStrengthPassword || loading}
             value={formik.values.passwordConfirm}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -116,6 +140,7 @@ const ResetPasswordPage = () => {
           variant="contained"
           color="secondary"
           fullWidth={false}
+          loading={loading}
           disabled={!(formik.isValid && formik.dirty)}
           sx={{ mt: { xs: 4, md: 2 }, width: { xs: '100%', sm: 'auto' } }}
         >

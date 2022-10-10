@@ -1,7 +1,18 @@
 import { useApolloClient } from '@apollo/client'
 import { useCallback } from 'react'
-import { loginNormalAdapter, mapperUserAdaper } from '../adapters'
-import { loginService, logoutService } from '../services'
+import {
+  changePasswordPayloadAdapter,
+  loginNormalAdapter,
+  mapperRecoveryCodeAdapter,
+  mapperUserAdaper
+} from '../adapters'
+import {
+  changePasswordService,
+  forgetPasswordService,
+  loginService,
+  logoutService,
+  recoveryCodeService
+} from '../services'
 
 const useAuthService = () => {
   const apolloClient = useApolloClient()
@@ -29,9 +40,51 @@ const useAuthService = () => {
     }
   }, [apolloClient])
 
+  const forgetPassword = useCallback(
+    async data => {
+      try {
+        const variables = { email: data.email }
+        const res = await forgetPasswordService(apolloClient, variables)
+        return res.response
+      } catch (error) {
+        throw new Error(error)
+      }
+    },
+    [apolloClient]
+  )
+
+  const getRecoveryCode = useCallback(
+    async data => {
+      try {
+        const variables = { code: data.code }
+        const res = await recoveryCodeService(apolloClient, variables)
+        return mapperRecoveryCodeAdapter(res.response)
+      } catch (error) {
+        throw new Error(error)
+      }
+    },
+    [apolloClient]
+  )
+
+  const changePassword = useCallback(
+    async data => {
+      try {
+        const mapperPayload = changePasswordPayloadAdapter(data)
+        const res = await changePasswordService(apolloClient, mapperPayload)
+        return res.response
+      } catch (error) {
+        throw new Error(error)
+      }
+    },
+    [apolloClient]
+  )
+
   return {
     onLogin,
-    onLogout
+    onLogout,
+    forgetPassword,
+    getRecoveryCode,
+    changePassword
   }
 }
 

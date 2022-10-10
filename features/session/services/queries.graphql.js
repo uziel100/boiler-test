@@ -20,3 +20,29 @@ export const login = gql`
     }
   }
 `
+
+export const forgetPassword = gql`
+  mutation forgetPassword($email: String!) {
+    response: forgetPassword(email: $email)
+  }
+`
+
+export const recoveryCode = gql`
+  query recoveryCode($code: String!) {
+    response: recoveryCode(code: $code) {
+      id
+      code
+      redeemAt
+      user {
+        id
+        email
+      }
+    }
+  }
+`
+
+export const changePassword = gql`
+  mutation changePassword($input: ChangePassword!) {
+    response: changePassword(input: $input)
+  }
+`
