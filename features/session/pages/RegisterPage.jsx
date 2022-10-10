@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { ContainerAuth, ModalNoticeOfPrivacy } from '../components'
-import { RegisterWizardStep1, RegisterWizardStep2, RegisterWizardStep3 } from '../components/wizardRegister'
+import { RegisterWizardStep1, RegisterWizardStep2 } from '../components/wizardRegister'
 
-const steps = ['step1', 'step2', 'step3']
+const steps = ['step1', 'step2']
 
 const RegisterPage = () => {
   const router = useRouter()
@@ -22,8 +22,7 @@ const RegisterPage = () => {
 
   const WIZARD_STEPS = [
     <RegisterWizardStep1 data={dataRegister} setData={setDataRegister} nextPage={val => setPage(page + val)} />,
-    <RegisterWizardStep2 data={dataRegister} setData={setDataRegister} nextPage={val => setPage(page + val)} />,
-    <RegisterWizardStep3 data={dataRegister} setData={setDataRegister} nextPage={val => setPage(page + val)} />
+    <RegisterWizardStep2 data={dataRegister} setData={setDataRegister} nextPage={val => setPage(page + val)} />
   ]
 
   return (
@@ -96,7 +95,7 @@ const RegisterPage = () => {
             >
               <Stepper
                 sx={{
-                  width: '100%',
+                  width: '200px',
                   '& .MuiStepConnector-root': {
                     '.MuiStepConnector-line': {
                       borderTopStyle: 'dotted',

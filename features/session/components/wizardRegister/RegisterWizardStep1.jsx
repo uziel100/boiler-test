@@ -6,14 +6,19 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { InputDatePicker } from 'components/common'
+import { subYears } from 'date-fns'
 import ButtonFacebook from '../ButtonFacebook'
 import ButtonGoogle from '../ButtonGoogle'
 import { containerVariants } from './animations'
 
+const maxDate = subYears(new Date(), 18)
+
 const validationSchema = Yup.object({
   name: Yup.string().max(100, 'Maximo 100 caracteres').required('Campo obligatorio'),
   lastName: Yup.string().max(100, 'Maximo 100 caracteres').required('Campo obligatorio'),
-  email: Yup.string().email('Formato inválido').required('Campo obligatorio')
+  email: Yup.string().email('Formato inválido').required('Campo obligatorio'),
+  birthdate: Yup.string().required('Campo obligatorio')
 })
 
 const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
@@ -21,7 +26,8 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
     initialValues: {
       email: data?.email || '',
       lastName: data?.lastName || '',
-      name: data?.name || ''
+      name: data?.name || '',
+      birthdate: data?.birthdate || maxDate
     },
     validationSchema,
     onSubmit: async () => {
@@ -37,12 +43,13 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
   }, [formik.values])
 
   return (
-    <motion.div
+    <Box
+      component={motion.div}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
       exit="exit"
-      style={{ height: '100%', marginTop: '2.5rem' }}
+      sx={{ height: '100%', mt: { xs: 0, sm: '2.5rem' } }}
     >
       <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 2 }}>
         <BpTypography fontWeight={600} variant="h5" color="grey.800">
@@ -91,7 +98,16 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
             )
           }}
         />
-        <BpTypography fontWeight={400} variant="caption" color="grey.700" sx={{ display: 'block', mt: 2, mb: 1 }}>
+        <InputDatePicker
+          id="birthdate"
+          name="birthdate"
+          value={formik.values.birthdate}
+          error={formik.touched.birthdate && Boolean(formik.errors.birthdate)}
+          helperText={formik.touched.birthdate && formik.errors.birthdate}
+          onChange={currentDate => formik.setFieldValue('birthdate', currentDate)}
+          maxDate={maxDate}
+        />
+        <BpTypography fontWeight={400} variant="caption" color="grey.700" sx={{ display: 'block', mt: 3, mb: 1 }}>
           Al ingresar tu correo electrónico, aceptas nuestras{' '}
           <Link href="/register?q=terms" as="/register">
             <strong style={{ textDecoration: 'underline', cursor: 'pointer' }}>Políticas de Privacidad</strong>
@@ -119,7 +135,7 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
         <ButtonGoogle />
         <ButtonFacebook />
       </Stack>
-    </motion.div>
+    </Box>
   )
 }
 export default RegisterWizardStep1
