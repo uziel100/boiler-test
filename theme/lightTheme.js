@@ -17,13 +17,14 @@ const Theme = createTheme({
       500: '#E675A4'
     },
     secondary: {
-      main: '#7D66AD',
+      main: '#6A50FC',
       contrastText: '#fff',
-      100: '#F2F0F7',
-      200: '#E5E0EF',
-      300: '#D8D2E7',
-      400: '#BDB2D5',
-      500: '#9E8CC2'
+      100: '#F4F3FF',
+      200: '#F1EEFF',
+      300: '#E1DCFE',
+      400: '#D3CBFF',
+      500: '#B4A7FD',
+      600: '#8F7CFD'
     },
     success: {
       main: '#43C568'

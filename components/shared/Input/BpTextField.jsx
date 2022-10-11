@@ -18,6 +18,7 @@ const CpTextField = ({
   disabled = false,
   fullWidth = true,
   children,
+  color = "primary",
   value,
   ...rest
 }) => (
@@ -25,6 +26,7 @@ const CpTextField = ({
     name={name}
     label={label}
     variant={variant}
+    color={color}
     placeholder={placeholder}
     className={`${className}`}
     disabled={disabled}
