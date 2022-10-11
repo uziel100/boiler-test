@@ -20,6 +20,10 @@ import store from 'store/store'
 // import "swiper/css/pagination";
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import "react-multi-carousel/lib/styles.css";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 const clientSideEmotionCache = createEmotionCache()
 
