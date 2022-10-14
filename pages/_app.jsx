@@ -1,4 +1,4 @@
-import React from 'react'
+  import React, { useEffect } from 'react'
 
 import Head from 'next/head'
 import createEmotionCache from 'utils/createEmotionCache'
@@ -12,21 +12,17 @@ import esLocale from 'date-fns/locale/es'
 import { ThemeContextProvider } from 'context/Theme/ThemeContextProvider'
 import { useApollo } from 'utils'
 import { Toaster } from 'react-hot-toast'
-import '../components/Styles/styles.global.css'
 import { Provider } from 'react-redux'
 import store from 'store/store'
 
-// import 'swiper/css';
-// import "swiper/css/pagination";
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import "react-multi-carousel/lib/styles.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import '../components/styles/styles.global.css'
 
 const clientSideEmotionCache = createEmotionCache()
-
 const WebApp = ({ Component, emotionCache = clientSideEmotionCache, pageProps }) => {
   const apolloClient = useApollo(pageProps)
 
