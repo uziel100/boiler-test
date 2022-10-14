@@ -1,9 +1,10 @@
 import { Box, Container, Grid, Stack } from '@mui/material'
-import { Carousel, ContainerApp } from 'components/common'
+import { ContainerApp } from 'components/common'
 import { IconEye, IconLogoUey } from 'components/icons'
 import { BpTypography } from 'components/shared'
 import { useEffect, useState } from 'react'
 import { About, Banner, CardFeature, CategoryList, TitleSection } from '../components'
+import TestimonialsSlider from '../components/testimonials/TestimonialsSlider'
 
 const HomePage = () => {
   const [banners, setBanners] = useState(undefined)
@@ -12,23 +13,23 @@ const HomePage = () => {
     setTimeout(() => {
       setBanners([
         {
-          id: 'slide-01',
-          url: '/images/banner1.jpg',
-          type: 'image',
-          description: "Imagen de la celebracion de dia de muertos",
-          redirect:"/login"
-        },
-        {
           id: 'slide-02',
           url: '/images/banner2.jpg',
           type: 'image',
-          description: "Imagen de la celebracion de dia halloween"
+          description: 'Imagen de la celebracion de dia halloween'
+        },
+        {
+          id: 'slide-01',
+          url: '/images/banner1.jpg',
+          type: 'image',
+          description: 'Imagen de la celebracion de dia de muertos',
+          redirect: '/login'
         },
         {
           id: 'slide-03',
           url: '/images/banner3.jpg',
           type: 'image',
-          description: "Imagen de un paisaje verde"
+          description: 'Imagen de un paisaje verde'
         }
       ])
     }, 800)
@@ -50,7 +51,7 @@ const HomePage = () => {
             magna fringilla urna, porttitor
           </BpTypography>
         </Container>
-        <Grid container spacing={4} mt="5rem">
+        <Grid component="div" container spacing={4} mt="5rem" data-aos="fade-up">
           <Grid item xs={12} sm={6} md={4}>
             <CardFeature
               icon={<IconLogoUey width={100} height={80} />}
@@ -98,12 +99,11 @@ const HomePage = () => {
         </ContainerApp>
       </Box>
       {/* ABOUT */}
-      <ContainerApp component="section" sx={{ py: '5.6rem' }}>
+      <ContainerApp component="section" sx={{ py: '5rem' }}>
         <About />
-        <br />
-        <br />
-        <br />
-        <Carousel />
+      </ContainerApp>
+      <ContainerApp component="section" sx={{ py: '4rem', mb: 8 }}>
+        <TestimonialsSlider />
       </ContainerApp>
     </>
   )

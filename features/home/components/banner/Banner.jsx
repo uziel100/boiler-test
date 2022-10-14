@@ -2,7 +2,7 @@
 import { Box, Skeleton, useMediaQuery, useTheme } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { useRouter } from 'next/router'
-import { Pagination, Navigation } from 'swiper'
+import { Pagination, Navigation, Autoplay } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 const useStyles = makeStyles(() => ({
@@ -12,8 +12,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 const Banner = ({ slides = undefined }) => {
-  
-  const router = useRouter();
+  const router = useRouter()
   const classes = useStyles()
   const theme = useTheme()
   const isUpXs = useMediaQuery(theme.breakpoints.up('sm'))
@@ -28,18 +27,17 @@ const Banner = ({ slides = undefined }) => {
           height: {
             xs: '200px',
             sm: '300px',
-            md: '400px'
+            md: '500px'
           }
         }}
       />
     )
   }
 
-  if(slides?.length === 0) return null;
-
+  if (slides?.length === 0) return null
 
   const handleRedirect = (path = null) => {
-    if(!path) return;
+    if (!path) return
     router.push(path)
   }
 
@@ -61,19 +59,23 @@ const Banner = ({ slides = undefined }) => {
         spaceBetween={30}
         loop={slides?.length > 1}
         lazy
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: false
+        }}
         pagination={{
           clickable: true
         }}
         navigation={isUpXs}
-        modules={[Pagination, Navigation]}
+        modules={[Pagination, Navigation, Autoplay]}
         className={classes.swipper}
       >
-        {slides.map((item) => (
+        {slides.map(item => (
           <SwiperSlide key={item.id}>
             <Box
               component="img"
               sx={{
-                cursor: item.redirect? "pointer": "initial",
+                cursor: item.redirect ? 'pointer' : 'initial',
                 objectPosition: 'top',
                 objectFit: {
                   xs: 'contain',
