@@ -86,7 +86,7 @@ const useAuthService = () => {
       try {
         const mapperPayload = registerUserPayloadAdapter(data)
         const res = await registerUserService(apolloClient, mapperPayload)
-        return mapperUserAdaper(res.response);
+        return mapperUserAdaper(res.response)
       } catch (error) {
         throw new Error(error)
       }

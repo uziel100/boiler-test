@@ -7,15 +7,13 @@ export const logout = gql`
 `
 
 export const login = gql`
-  mutation login($email: String!, $password: String!) {
-    login: login(email: $email, password: $password) {
-      id
-      token
+  mutation login($input: LoginInput!) {
+    login: login(input: $input) {
+      authToken
       user {
         id
-        firstName
-        fullName
         email
+        description
       }
     }
   }
