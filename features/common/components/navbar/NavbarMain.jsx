@@ -1,13 +1,15 @@
 import { Box, IconButton, InputBase, Stack } from '@mui/material'
 import { ContainerApp, NavbarApp } from 'components/common'
 import { IconAccountUser, IconShoppingCart } from 'components/icons'
-import { BpTypography } from 'components/shared'
+import { SidebarAmazonProvider } from 'features/common/context'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { SidebarNav } from '../sidebar'
 
 const NavbarMain = () => {
-  const [open, setOpen] = useState(false)
   const router = useRouter()
+
+  const [open, setOpen] = useState(false)
 
   const onOpenDrawer = () => setOpen(true)
   const onCloseDrawer = () => setOpen(false)
@@ -55,7 +57,11 @@ const NavbarMain = () => {
         </ContainerApp>
       </NavbarApp>
       <NavbarApp.Drawer open={open} onClose={onCloseDrawer}>
-        <BpTypography label="Ejemplo de opcion" />
+        <SidebarAmazonProvider>
+          <Box component="nav" position="relative" padding="1rem 0 1rem 0">
+            <SidebarNav />
+          </Box>
+        </SidebarAmazonProvider>
       </NavbarApp.Drawer>
     </>
   )
