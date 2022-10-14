@@ -1,4 +1,4 @@
-  import React, { useEffect } from 'react'
+import React from 'react'
 
 import Head from 'next/head'
 import createEmotionCache from 'utils/createEmotionCache'
@@ -17,9 +17,9 @@ import store from 'store/store'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
+import 'swiper/css'
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
 import '../components/styles/styles.global.css'
 
 const clientSideEmotionCache = createEmotionCache()
