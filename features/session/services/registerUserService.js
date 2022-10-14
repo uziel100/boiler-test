@@ -4,7 +4,7 @@ const registerUserService = async (apolloClient, variables = {}, options = {}) =
   try {
     const resp = await apolloClient.mutate({
       mutation: registerUser,
-      variables: {...variables},
+      variables: { ...variables },
       ...options
     })
     return resp.data

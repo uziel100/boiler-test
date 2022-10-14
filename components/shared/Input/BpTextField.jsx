@@ -18,7 +18,7 @@ const CpTextField = ({
   disabled = false,
   fullWidth = true,
   children,
-  color = "primary",
+  color = 'primary',
   value,
   ...rest
 }) => (

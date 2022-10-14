@@ -19,10 +19,9 @@ const validationSchema = Yup.object({
     .required('Campo obligatorio')
 })
 const RegisterWizardStep2 = ({ data, setData, nextPage }) => {
-
-  const { registerUser } = useAuthService();
-  const { logError, showAlert } = useError();
-  const router = useRouter();
+  const { registerUser } = useAuthService()
+  const { logError, showAlert } = useError()
+  const router = useRouter()
 
   const formik = useFormik({
     initialValues: {
@@ -34,9 +33,9 @@ const RegisterWizardStep2 = ({ data, setData, nextPage }) => {
     onSubmit: async () => {
       try {
         const resp = await registerUser(data)
-        if(!resp) throw new Error('Ha ocurrido un error, intetelo de nuevo')  
+        if (!resp) throw new Error('Ha ocurrido un error, intetelo de nuevo')
         showAlert('Usuario registrado :)', 'success')
-        router.replace("/");
+        router.replace('/')
       } catch (error) {
         logError(error)
       }
