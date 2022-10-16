@@ -61,6 +61,7 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
           sx={{ mt: 3 }}
           placeholder="Nombre(s)"
           type="text"
+          color="secondary"
           value={formik.values.name}
           onChange={formik.handleChange}
           error={formik.touched.name && Boolean(formik.errors.name)}
@@ -71,6 +72,7 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
           id="lastName"
           name="lastName"
           sx={{ mt: 1 }}
+          color="secondary"
           placeholder="Apellido(s)"
           type="text"
           value={formik.values.lastName}
@@ -85,6 +87,7 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
           sx={{ mt: 1 }}
           placeholder="Correo electrónico"
           type="text"
+          color="secondary"
           value={formik.values.email}
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}
@@ -101,6 +104,7 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
         <InputDatePicker
           id="birthday"
           name="birthday"
+          color="secondary"
           value={formik.values.birthday}
           error={formik.touched.birthday && Boolean(formik.errors.birthday)}
           helperText={formik.touched.birthday && formik.errors.birthday}
@@ -117,7 +121,7 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
           <BpButton
             type="submit"
             variant="contained"
-            color="primary"
+            color="secondary"
             fullWidth
             disabled={!formik.isValid}
             sx={{ mt: { xs: 4, md: 2 }, width: { xs: '100%', sm: 'auto' } }}

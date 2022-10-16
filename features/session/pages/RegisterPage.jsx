@@ -30,52 +30,43 @@ const RegisterPage = () => {
       <ModalNoticeOfPrivacy open={!!router.query.q} onClose={() => router.push('/register')} />
       <ContainerAuth>
         <ContainerAuth.Left sx={{ p: '3rem 0' }}>
-          <Stack
-            height="520px"
-            maxHeight="600px"
-            direction="column"
-            justifyContent="flex-start"
-            alignItems="flex-start"
-            gap={3}
-            maxWidth={290}
-          >
-            <IconLogoUey width={99} height={62} />
-            <BpTypography
-              color="grey.800"
-              variant="h4"
-              fontWeight={700}
-              sx={{
-                lineHeight: '32px'
-              }}
+          <Box zIndex={9}>
+            <Stack
+              height="520px"
+              maxHeight="600px"
+              direction="column"
+              justifyContent="flex-start"
+              alignItems="flex-start"
+              gap={3}
+              maxWidth={290}
             >
-              Somos Uey{' '}
+              <IconLogoUey width={99} height={62} />
               <BpTypography
-                component="span"
-                color="primary.main"
-                fontWeight={700}
+                color="grey.800"
                 variant="h4"
-                label=", arma y encuentra eventos"
-              />{' '}
-              con nosotros de manera fácil y rápida.
+                fontWeight={400}
+                sx={{
+                  lineHeight: '32px'
+                }}
+              >
+                Somos Uey, arma y encuentra eventos con nosotros de manera fácil y rápida.
+              </BpTypography>
+            </Stack>
+            <BpTypography
+              sx={{
+                position: 'absolute',
+                bottom: 20,
+                zIndex: 9
+              }}
+              variant="caption"
+              color="grey.700"
+            >
+              ¿Ya tienes una cuenta?{' '}
+              <strong>
+                <Link href="/login">Inicia sesión</Link>
+              </strong>
             </BpTypography>
-            {/* <pre>{JSON.stringify(dataRegister, null, 3)}</pre>
-            {page} */}
-          </Stack>
-
-          <BpTypography
-            sx={{
-              position: 'absolute',
-              bottom: 20,
-              zIndex: 9
-            }}
-            variant="caption"
-            color="grey.700"
-          >
-            ¿Ya tienes una cuenta?{' '}
-            <strong>
-              <Link href="/login">Inicia sesión</Link>
-            </strong>
-          </BpTypography>
+          </Box>
         </ContainerAuth.Left>
         <ContainerAuth.Right>
           <CardContent
@@ -109,7 +100,7 @@ const RegisterPage = () => {
                   <Step
                     sx={{
                       '.Mui-completed > svg, .Mui-active > svg': {
-                        color: theme => theme.palette.secondary.main
+                        color: theme => theme.palette.secondary[500]
                       },
                       '.Mui-disabled > svg': {
                         color: theme => theme.palette.grey[400]

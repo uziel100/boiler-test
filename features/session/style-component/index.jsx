@@ -1,36 +1,36 @@
 import { styled, Box, Fab } from '@mui/material'
 
-export const Circle01 = styled(Box)(() => ({
-  width: '191px',
-  height: '191px',
-  background: '#DCD8E8',
+export const Circle01 = styled(Box)(({ theme }) => ({
+  width: '62px',
+  height: '65px',
+  background: theme.palette.secondary[400],
   borderRadius: '50%',
   position: 'absolute',
-  left: '-92px',
-  bottom: '-92px',
+  left: '48px',
+  bottom: '68px',
   zIndex: 4
 }))
 
-export const Circle02 = styled(Box)(() => ({
-  width: '285px',
-  height: '285px',
-  background: '#E7E3EF',
+export const Circle02 = styled(Box)(({ theme }) => ({
+  width: '32px',
+  height: '34px',
+  background: theme.palette.secondary[100],
   borderRadius: '50%',
   position: 'absolute',
-  left: '-124px',
-  bottom: '-124px',
-  zIndex: 3
+  left: '-14px',
+  bottom: '73px',
+  zIndex: 4
 }))
 
-export const Circle03 = styled(Box)(() => ({
-  width: '355px',
-  height: '355px',
-  background: '#EDE9F3',
+export const Circle03 = styled(Box)(({ theme }) => ({
+  width: '48px',
+  height: '50px',
+  background: theme.palette.secondary[100],
   borderRadius: '50%',
   position: 'absolute',
-  left: '-137px',
-  bottom: '-137px',
-  zIndex: 2
+  left: '44px',
+  bottom: '-17px',
+  zIndex: 4
 }))
 
 export const FabSocialMedia = styled(Fab)(({ theme }) => ({

@@ -47,10 +47,9 @@ const LoginPage = () => {
   return (
     <ContainerAuth>
       <ContainerAuth.Left>
-        <Stack direction="column" alignItems="center" gap={3} maxWidth={290}>
+        <Stack zIndex={9} direction="column" alignItems="center" gap={2} maxWidth={290}>
           <BpTypography color="grey.800" variant="h3" fontWeight={700}>
-            ¡Bienvenido a{' '}
-            <BpTypography component="span" color="primary.main" fontWeight={700} variant="h3" label="Uey!" />
+            ¡Bienvenido a Uey!
           </BpTypography>
           <BpTypography
             color="grey.700"
