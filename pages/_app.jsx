@@ -35,7 +35,14 @@ const WebApp = ({ Component, emotionCache = clientSideEmotionCache, pageProps })
       </Head>
       <ApolloProvider client={apolloClient}>
         <ThemeContextProvider emotionCache={emotionCache}>
-          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={esLocale}>
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
+            adapterLocale={esLocale}
+            localeText={{
+              okButtonLabel: 'Aceptar',
+              cancelButtonLabel: 'Cerrar'
+            }}
+          >
             <Provider store={store}>{getLayout(<Component {...pageProps} />)}</Provider>
             <Toaster />
           </LocalizationProvider>
