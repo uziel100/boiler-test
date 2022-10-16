@@ -115,8 +115,5 @@ const TestimonialsSlider = () => (
     </Box>
   </Box>
 )
-console.log(
-  '🚀 ~ file: TestimonialsSlider.jsx ~ line 123 ~ TestimonialsSlider ~ TestimonialsSlider',
-  TestimonialsSlider
-)
+
 export default TestimonialsSlider
