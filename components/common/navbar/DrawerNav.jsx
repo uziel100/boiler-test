@@ -13,7 +13,7 @@ const DrawerNav = ({ open, onClose, children }) => (
         overflowX: 'hidden'
       }
     }}
-    sx={{ zIndex: 9999 }}
+    sx={{ zIndex: 9999, transition: 'backdropFilter 300ms ease', backdropFilter: 'blur(4px)' }}
     onClose={onClose}
   >
     <ButtonCloseFixed onClose={onClose} />

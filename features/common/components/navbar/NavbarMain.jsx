@@ -3,16 +3,21 @@ import { ContainerApp, NavbarApp } from 'components/common'
 import { IconAccountUser, IconShoppingCart } from 'components/icons'
 import { SidebarAmazonProvider } from 'features/common/context'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { closeDrawer, openDrawer } from 'store/states/ui'
 import { SidebarNav } from '../sidebar'
 
 const NavbarMain = () => {
+  const { openDrawer: openSidebar } = useSelector(store => store.ui)
+  const dispatcher = useDispatch()
   const router = useRouter()
 
-  const [open, setOpen] = useState(false)
-
-  const onOpenDrawer = () => setOpen(true)
-  const onCloseDrawer = () => setOpen(false)
+  const onOpenDrawer = () => {
+    dispatcher(openDrawer())
+  }
+  const onCloseDrawer = () => {
+    dispatcher(closeDrawer())
+  }
 
   return (
     <>
@@ -56,7 +61,7 @@ const NavbarMain = () => {
           </Stack>
         </ContainerApp>
       </NavbarApp>
-      <NavbarApp.Drawer open={open} onClose={onCloseDrawer}>
+      <NavbarApp.Drawer open={openSidebar} onClose={onCloseDrawer}>
         <SidebarAmazonProvider>
           <Box component="nav" position="relative" padding="1rem 0 1rem 0">
             <SidebarNav />
