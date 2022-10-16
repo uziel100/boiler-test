@@ -82,26 +82,16 @@ const HomePage = () => {
         </Grid>
       </ContainerApp>
       {/* CATEGORIES */}
-      <Box component="section" sx={{ background: '#F9F9FF', py: '4rem' }}>
-        <ContainerApp sx={{ py: '3.5rem' }}>
-          <Stack direction="row" alignItems="center" gap={2} justifyContent="center" mb={3}>
-            <TitleSection title="Nuestras categorías" />
-            <IconEye style={{ display: 'block' }} />
-          </Stack>
-          <Container maxWidth="md">
-            <BpTypography variant="body2" fontWeight={400} textAlign="center">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis,
-              lectus
-            </BpTypography>
-          </Container>
+      <ContainerApp sx={{ py: '4.5rem' }}>
+        <TitleSection title="Nuestras categorías" />
+        <Box mt={6}>
           <CategoryList />
-          {/* <Carousel2 /> */}
-        </ContainerApp>
-      </Box>
-      {/* ABOUT */}
-      <ContainerApp component="section" sx={{ py: '5rem' }}>
-        <About />
+        </Box>
       </ContainerApp>
+      {/* ABOUT */}
+      {/* <ContainerApp component="section" sx={{ py: '5rem' }}>
+        <About />
+      </ContainerApp> */}
       <ContainerApp component="section" sx={{ py: '4rem', mb: 8 }}>
         <TestimonialsSlider />
       </ContainerApp>

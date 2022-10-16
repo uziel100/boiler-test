@@ -1,49 +1,68 @@
-import { Box, Card, CardContent, Slide, Stack, Button, styled } from '@mui/material'
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable max-len */
+import { Box, Card, CardContent, Stack, styled } from '@mui/material'
+import { StainCategory } from 'components/images'
 import { BpTypography } from 'components/shared'
-import { useState } from 'react'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import { IconLogoUey } from 'components/icons'
+import Image from 'next/image'
 
-const StyledCard = styled(Card)(() => ({
+const StyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
-  borderRadius: '1rem',
-  maxHeight: '175px',
-  minHeight: '175px',
-  boxShadow: '0px 0.619186px 12.3837px rgba(0, 0, 0, 0.07)',
+  borderRadius: theme.spacing(1.5),
+  maxHeight: theme.spacing(33),
+  minHeight: theme.spacing(33),
+  boxShadow:
+    '27px 35px 18px rgba(84, 84, 84, 0.01), 15px 19px 15px rgba(84, 84, 84, 0.03), 7px 9px 11px rgba(84, 84, 84, 0.05), 2px 2px 6px rgba(84, 84, 84, 0.06), 0px 0px 0px rgba(84, 84, 84, 0.06)',
   bgcolor: 'background.paper',
   position: 'relative',
-  padding: '1rem'
+  padding: theme.spacing(2),
+  cursor: 'pointer',
+  transition: 'transform 100ms ease',
+  ':hover': {
+    transform: 'scale(1.03)',
+    '.MuiCardContent-root h6': {
+      textDecoration: 'underline'
+    }
+  },
+  ':hover svg path': {}
 }))
 
-const StyledCircleContainer = styled(Box, {
-  shouldForwardProp: prop => prop !== 'size'
-})(({ theme, size }) => ({
-  minWidth: size === 'big' ? '7rem' : '4.2rem',
-  width: size === 'big' ? '7rem' : '4.2rem',
-  height: size === 'big' ? '7rem' : '4.2rem',
-  borderRadius: size === 'big' ? '7rem' : '4.2rem',
-  background: theme.palette.primary[50],
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center'
-}))
+const CardCategory = ({ title = '', imgUrl }) => (
+  <StyledCard>
+    <CardContent sx={{ zIndex: 1, width: '100%' }}>
+      <Stack
+        position="relative"
+        height="100%"
+        direction="column"
+        justifyContent="space-between"
+        alignItems="center"
+        gap={2}
+      >
+        <Box sx={{ zIndex: 1 }}>
+          <Image src={imgUrl} alt={`Categoria ${title}`} width={110} height={105} />
+        </Box>
+        <Box
+          component="span"
+          sx={{
+            position: 'absolute',
+            zIndex: 0,
+            bottom: 60
+          }}
+        >
+          <StainCategory />
+        </Box>
+        <BpTypography
+          textAlign="center"
+          fontVariant="primary"
+          variant="h6"
+          fontWeight={500}
+          label={title}
+          color="grey.700"
+        />
+      </Stack>
+    </CardContent>
 
-const CardCategory = ({ title = '', description = '' }) => {
-  const [checked, setChecked] = useState(false)
-
-  return (
-    <StyledCard onMouseOver={() => setChecked(true)} onMouseLeave={() => setChecked(false)}>
-      <Slide direction="up" in={!checked} timeout={400}>
-        <CardContent sx={{ zIndex: 1, display: !checked ? 'block' : 'none', width: '100%' }}>
-          <Stack direction="row" alignItems="center" gap={2}>
-            <StyledCircleContainer size="big">
-              <IconLogoUey width={70} height={70} />
-            </StyledCircleContainer>
-            <BpTypography fontVariant="primary" variant="h6" fontWeight={600} label={title} color="grey.800" />
-          </Stack>
-        </CardContent>
-      </Slide>
-      <Slide direction="up" in={checked} mountOnEnter unmountOnExit timeout={500}>
+    {/* </Slide> */}
+    {/* <Slide direction="up" in={checked} mountOnEnter unmountOnExit timeout={500}>
         <CardContent sx={{ display: checked ? 'block' : 'none', zIndex: 2, width: '100%' }}>
           <Stack direction="row" alignItems="flex-start" justifyContent="flex-start" gap={3}>
             <StyledCircleContainer size="small">
@@ -58,8 +77,7 @@ const CardCategory = ({ title = '', description = '' }) => {
             </Box>
           </Stack>
         </CardContent>
-      </Slide>
-    </StyledCard>
-  )
-}
+      </Slide> */}
+  </StyledCard>
+)
 export default CardCategory
