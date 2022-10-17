@@ -13,7 +13,7 @@ const ModalNoticeOfPrivacy = ({ open, onClose }) => (
     <IconButton onClick={onClose} sx={{ width: '40px', position: 'absolute', right: '10px', top: '10px' }}>
       <CloseIcon />
     </IconButton>
-    <DialogTitle id="scroll-dialog-title">
+    <DialogTitle component="div" id="scroll-dialog-title">
       <BpTypography fontWeight={600} variant="h4" color="grey.800" label="Aviso de privacidad" />
     </DialogTitle>
     <DialogContent dividers>

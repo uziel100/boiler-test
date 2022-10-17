@@ -1,4 +1,4 @@
-import { Box, Divider, InputAdornment, Stack } from '@mui/material'
+import { Box, Divider, InputAdornment, Radio, Stack } from '@mui/material'
 import { IconEmail } from 'components/icons'
 import { BpButton, BpTextField, BpTypography } from 'components/shared'
 import Link from 'next/link'
@@ -18,7 +18,8 @@ const validationSchema = Yup.object({
   name: Yup.string().max(100, 'Maximo 100 caracteres').required('Campo obligatorio'),
   lastName: Yup.string().max(100, 'Maximo 100 caracteres').required('Campo obligatorio'),
   email: Yup.string().email('Formato inválido').required('Campo obligatorio'),
-  birthday: Yup.string().required('Campo obligatorio')
+  birthday: Yup.string().required('Campo obligatorio'),
+  acceptTerms: Yup.bool().isTrue()
 })
 
 const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
@@ -27,10 +28,12 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
       email: data?.email || '',
       lastName: data?.lastName || '',
       name: data?.name || '',
-      birthday: data?.birthday || maxDate
+      birthday: data?.birthday || maxDate,
+      acceptTerms: data?.acceptTerms || false
     },
     validationSchema,
-    onSubmit: async () => {
+    onSubmit: async val => {
+      console.log({ val })
       nextPage(1)
     }
   })
@@ -111,12 +114,21 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
           onChange={currentDate => formik.setFieldValue('birthday', currentDate)}
           maxDate={maxDate}
         />
-        <BpTypography fontWeight={400} variant="caption" color="grey.700" sx={{ display: 'block', mt: 3, mb: 1 }}>
-          Al ingresar tu correo electrónico, aceptas nuestras{' '}
-          <Link href="/register?q=terms" as="/register">
-            <strong style={{ textDecoration: 'underline', cursor: 'pointer' }}>Políticas de Privacidad</strong>
-          </Link>
-        </BpTypography>
+        <Stack direction="row" alignItems="center" mt={3} mb={1}>
+          <Radio
+            id="acceptTerms"
+            name="acceptTerms"
+            checked={formik.values.acceptTerms}
+            onChange={e => formik.setFieldValue('acceptTerms', e.target.checked)}
+            color="secondary"
+          />
+          <BpTypography fontWeight={400} variant="body2" color="grey.700" sx={{ display: 'block' }}>
+            Acepta nuestras{' '}
+            <Link href="/register?q=terms" as="/register">
+              <strong style={{ textDecoration: 'underline', cursor: 'pointer' }}> Políticas de Privacidad</strong>
+            </Link>
+          </BpTypography>
+        </Stack>
         <Stack direction="row" justifyContent="center">
           <BpButton
             type="submit"

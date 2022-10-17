@@ -1,8 +1,10 @@
 import { Box, IconButton, InputBase, Stack } from '@mui/material'
 import { ContainerApp, NavbarApp } from 'components/common'
 import { IconAccountUser, IconShoppingCart } from 'components/icons'
+import { BpTypography } from 'components/shared'
 import { SidebarAmazonProvider } from 'features/common/context'
-import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeDrawer, openDrawer } from 'store/states/ui'
 import { SidebarNav } from '../sidebar'
@@ -10,7 +12,13 @@ import { SidebarNav } from '../sidebar'
 const NavbarMain = () => {
   const { openDrawer: openSidebar } = useSelector(store => store.ui)
   const dispatcher = useDispatch()
-  const router = useRouter()
+  const session = useSession()
+
+  const [anchorEl, setAnchorEl] = useState(null)
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget)
+  }
 
   const onOpenDrawer = () => {
     dispatcher(openDrawer())
@@ -61,8 +69,18 @@ const NavbarMain = () => {
               </Stack>
             </Stack>
             <Stack direction="row" gap={1}>
-              <IconButton onClick={() => router.push('/login')}>
+              <IconButton
+                onClick={session?.data ? null : handleClick}
+                sx={{
+                  borderRadius: session?.data ? 2 : 'auto'
+                }}
+              >
                 <IconAccountUser />
+                {session?.data && (
+                  <BpTypography sx={{ ml: 1 }} variant="body2">
+                    {session.data.user.fullName}
+                  </BpTypography>
+                )}
               </IconButton>
               <IconButton>
                 <IconShoppingCart />
@@ -71,6 +89,7 @@ const NavbarMain = () => {
           </Stack>
         </ContainerApp>
       </NavbarApp>
+      <NavbarApp.MenuAccount anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
       <NavbarApp.Drawer open={openSidebar} onClose={onCloseDrawer}>
         <SidebarAmazonProvider>
           <Box component="nav" position="relative" padding="1rem 0 1rem 0">

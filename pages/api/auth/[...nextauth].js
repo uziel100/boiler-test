@@ -4,7 +4,6 @@ import NextAuth from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
 import Credentials from 'next-auth/providers/credentials'
 import { initializeApollo } from 'utils'
-import { categoriesDrawer } from 'features/common/services'
 import { loginService } from 'features/session/services'
 import { loginNormalAdapter, mapperUserAdaper } from 'features/session/adapters'
 
@@ -40,8 +39,8 @@ export const authOptions = {
   ],
 
   pages: {
-    signIn: 'https://sandbox.blackpixel.mx/login',
-    newUser: 'https://sandbox.blackpixel.mx/register'
+    signIn: '/login',
+    newUser: '/register'
   },
 
   session: {

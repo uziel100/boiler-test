@@ -3,10 +3,11 @@
 import { useMemo } from 'react'
 import { ApolloClient, HttpLink, InMemoryCache, from } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
-import { concatPagination } from '@apollo/client/utilities'
+import { setContext } from '@apollo/client/link/context'
 import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
 import baseConfig from 'base.config'
+import getCookiesParsed from './getCookiesParsed'
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
@@ -20,24 +21,26 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
 
+const authLink = setContext((_, { headers }) => {
+  const cookies = getCookiesParsed()
+  return {
+    headers: {
+      ...headers,
+      authorization: cookies?.authToken ? `Bearer ${cookies.authToken}` : ''
+    }
+  }
+})
+
 const httpLink = new HttpLink({
   uri: baseConfig.httpsUri, // Server URL (must be absolute)
-  credentials: 'include' // Additional fetch() options like `credentials` or `headers`
+  credentials: 'include' // Additional fetch() options like `credentials` or `headers`,
 })
 
 function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    link: from([errorLink, httpLink]),
-    cache: new InMemoryCache({
-      typePolicies: {
-        Query: {
-          fields: {
-            allPosts: concatPagination()
-          }
-        }
-      }
-    })
+    link: from([errorLink, authLink.concat(httpLink)]),
+    cache: new InMemoryCache()
   })
 }
 

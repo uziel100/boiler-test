@@ -122,7 +122,7 @@ const LoginPage = () => {
             <BpButton
               type="submit"
               variant="contained"
-              color="primary"
+              color="secondary"
               fullWidth={false}
               disabled={!(formik.isValid && formik.dirty)}
               sx={{ mt: { xs: 4, md: 2 }, width: { xs: '100%', sm: 'auto' } }}
