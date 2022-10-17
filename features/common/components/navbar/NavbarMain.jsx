@@ -27,7 +27,17 @@ const NavbarMain = () => {
             <Stack direction="row" gap={4}>
               <NavbarApp.Logo openDrawer={onOpenDrawer} />
               <Stack direction="row" alignItems="center" gap={1}>
-                <Stack direction="row" alignItems="center" gap={1}>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  gap={1}
+                  sx={{
+                    display: {
+                      xs: 'none',
+                      sm: 'flex'
+                    }
+                  }}
+                >
                   <Box
                     sx={{
                       width: '1rem',

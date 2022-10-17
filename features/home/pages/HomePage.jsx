@@ -2,12 +2,14 @@ import { Box, Container, Grid, Stack } from '@mui/material'
 import { ContainerApp } from 'components/common'
 import { IconEye, IconLogoUey } from 'components/icons'
 import { BpTypography } from 'components/shared'
+import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import { About, Banner, CardFeature, CategoryList, TitleSection } from '../components'
+import { Banner, CardFeature, CategoryList, TitleSection } from '../components'
 import TestimonialsSlider from '../components/testimonials/TestimonialsSlider'
 
 const HomePage = () => {
   const [banners, setBanners] = useState(undefined)
+  const session = useSession()
 
   useEffect(() => {
     setTimeout(() => {
@@ -32,8 +34,12 @@ const HomePage = () => {
           description: 'Imagen de un paisaje verde'
         }
       ])
-    }, 800)
+    }, 500)
   }, [])
+
+  useEffect(() => {
+    console.log({ session })
+  }, [session])
 
   return (
     <>

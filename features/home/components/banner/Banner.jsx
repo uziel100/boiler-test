@@ -45,9 +45,8 @@ const Banner = ({ slides = undefined }) => {
     <Box
       sx={{
         width: '100%',
-        mt: { xs: 2, md: 0 },
         height: {
-          xs: '200px',
+          xs: '300px',
           sm: '340px',
           md: '520px'
         },
@@ -72,26 +71,32 @@ const Banner = ({ slides = undefined }) => {
       >
         {slides.map(item => (
           <SwiperSlide key={item.id}>
-            <Box
-              component="img"
-              sx={{
-                cursor: item.redirect ? 'pointer' : 'initial',
-                objectPosition: 'top',
-                objectFit: {
-                  xs: 'contain',
-                  sm: 'cover',
-                  md: 'cover'
-                },
-                width: '100%',
-                height: '100%'
-              }}
-              onClick={() => handleRedirect(item.redirect)}
-              width="320px"
-              height="220px"
-              loading="lazy"
-              src={item.url}
-              alt={item.description}
-            />
+            <Box component="picture" sx={{ objectFit: 'cover', background: 'red', height: '100%', width: '100%' }}>
+              <Box component="source" srcSet={`${item.url}`} media="(min-width: 720px)" />
+              <Box
+                component="img"
+                width="320px"
+                height="300px"
+                sx={{
+                  cursor: item.redirect ? 'pointer' : 'initial',
+                  width: '100%',
+                  height: {
+                    xs: '320px',
+                    sm: '400px',
+                    md: '520px'
+                  },
+                  objectFit: {
+                    xs: 'auto',
+                    sm: 'cover',
+                    md: 'cover'
+                  },
+                  objectPosition: 'top center'
+                }}
+                src="/images/banner-xs.jpg"
+                onClick={() => handleRedirect(item.redirect)}
+                alt={item.description}
+              />
+            </Box>
           </SwiperSlide>
         ))}
       </Swiper>
