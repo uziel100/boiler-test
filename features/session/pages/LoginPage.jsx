@@ -8,8 +8,8 @@ import { IconAccountUser, IconLogoUey } from 'components/icons'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { signIn } from 'next-auth/react'
 import { ButtonFacebook, ButtonGoogle, ContainerAuth } from '../components'
-import { useAuthService } from '../hooks'
 
 const validationSchema = Yup.object({
   email: Yup.string().email('Formato inválido').required('Campo obligatorio'),
@@ -17,7 +17,6 @@ const validationSchema = Yup.object({
 })
 
 const LoginPage = () => {
-  const { onLogin } = useAuthService()
   const { logError, showAlert } = useError()
   const router = useRouter()
 
@@ -29,10 +28,12 @@ const LoginPage = () => {
     onSubmit: async ({ email, password }) => {
       setLoading(true)
       try {
-        const data = await onLogin({ email, password })
-        if (!data) throw new Error('Usuario o contraseña incorrectos')
-        showAlert(`Bienvenido, ${data.fullName}`, 'success')
-        router.replace('/')
+        const resp = await signIn('credentials', { redirect: false, email, password })
+        if (resp.error) throw new Error(resp.error)
+        const { next = '/' } = router.query
+
+        showAlert('Bienvenido a Uey', 'success')
+        router.replace(next)
       } catch (error) {
         console.log(error)
         logError(error)

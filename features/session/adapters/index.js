@@ -6,7 +6,7 @@ export const mapperUserAdaper = data => ({
   fullName: data.user.fullName,
   firstName: data.user.firstName,
   email: data.user.email,
-  birthday: data.user.birthday
+  birthday: data.user?.birthday
 })
 
 export const loginNormalAdapter = data => ({

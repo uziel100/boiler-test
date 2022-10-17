@@ -15,6 +15,8 @@ import { Toaster } from 'react-hot-toast'
 import { Provider } from 'react-redux'
 import store from 'store/store'
 
+import { SessionProvider } from 'next-auth/react'
+
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import 'swiper/css'
@@ -23,7 +25,7 @@ import 'swiper/css/navigation'
 import '../components/styles/styles.global.css'
 
 const clientSideEmotionCache = createEmotionCache()
-const WebApp = ({ Component, emotionCache = clientSideEmotionCache, pageProps }) => {
+const WebApp = ({ Component, emotionCache = clientSideEmotionCache, pageProps: { session, ...pageProps } }) => {
   const apolloClient = useApollo(pageProps)
 
   const getLayout = Component.getLayout || (page => page)
@@ -33,21 +35,23 @@ const WebApp = ({ Component, emotionCache = clientSideEmotionCache, pageProps })
       <Head>
         <title>Frontend base</title>
       </Head>
-      <ApolloProvider client={apolloClient}>
-        <ThemeContextProvider emotionCache={emotionCache}>
-          <LocalizationProvider
-            dateAdapter={AdapterDateFns}
-            adapterLocale={esLocale}
-            localeText={{
-              okButtonLabel: 'Aceptar',
-              cancelButtonLabel: 'Cerrar'
-            }}
-          >
-            <Provider store={store}>{getLayout(<Component {...pageProps} />)}</Provider>
-            <Toaster />
-          </LocalizationProvider>
-        </ThemeContextProvider>
-      </ApolloProvider>
+      <SessionProvider session={session}>
+        <ApolloProvider client={apolloClient}>
+          <ThemeContextProvider emotionCache={emotionCache}>
+            <LocalizationProvider
+              dateAdapter={AdapterDateFns}
+              adapterLocale={esLocale}
+              localeText={{
+                okButtonLabel: 'Aceptar',
+                cancelButtonLabel: 'Cerrar'
+              }}
+            >
+              <Provider store={store}>{getLayout(<Component {...pageProps} />)}</Provider>
+              <Toaster />
+            </LocalizationProvider>
+          </ThemeContextProvider>
+        </ApolloProvider>
+      </SessionProvider>
     </>
   )
 }
