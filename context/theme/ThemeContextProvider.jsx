@@ -8,7 +8,7 @@ const THEMES_KEYS = {
   dark: DarkTheme
 }
 
-const PREFERS_SCHEME_COLOR = '(prefers-color-scheme: dark)'
+// const PREFERS_SCHEME_COLOR = '(prefers-color-scheme: dark)'
 const LIGHT_THEME = 'light'
 const DARK_THEME = 'dark'
 
@@ -21,7 +21,7 @@ export const ThemeCustomContext = createContext({
 })
 
 export const ThemeContextProvider = ({ children, emotionCache }) => {
-  const isDarkMode = () => Boolean(window.matchMedia(PREFERS_SCHEME_COLOR).matches)
+  // const isDarkMode = () => Boolean(window.matchMedia(PREFERS_SCHEME_COLOR).matches)
   const getTheme = () => LIGHT_THEME
 
   const [activeTheme, setActiveTheme] = useState(THEMES_KEYS[LIGHT_THEME])

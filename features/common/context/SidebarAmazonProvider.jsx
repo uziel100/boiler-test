@@ -15,7 +15,7 @@ export const SidebarAmazonProvider = ({ children }) => {
     getCategoriesDrawer()
       .then(data => {
         console.log({ data })
-        setEntryStore(data)
+        setEntryStore([])
       })
       .catch(() => {
         showAlert('Ocurrio un error al recuperar las categorias', 'error')

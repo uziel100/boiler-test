@@ -27,7 +27,7 @@ const Banner = ({ slides = undefined }) => {
           height: {
             xs: '200px',
             sm: '300px',
-            md: '500px'
+            md: '520px'
           }
         }}
       />
@@ -71,7 +71,7 @@ const Banner = ({ slides = undefined }) => {
       >
         {slides.map(item => (
           <SwiperSlide key={item.id}>
-            <Box component="picture" sx={{ objectFit: 'cover', background: 'red', height: '100%', width: '100%' }}>
+            <Box component="picture" sx={{ objectFit: 'cover', height: '100%', width: '100%' }}>
               <Box component="source" srcSet={`${item.url}`} media="(min-width: 720px)" />
               <Box
                 component="img"

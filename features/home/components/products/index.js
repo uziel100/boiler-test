@@ -1,0 +1,5 @@
+export { default as MostSelledProducts } from './MostSelledProducts'
+export { default as ProductSlider } from './ProductSlider'
+export { default as SectionProducts } from './SectionProducts'
+export { default as ServicesSlider } from './ServicesSlider'
+export { default as TitleSectionProduct } from './TitleSectionProduct'

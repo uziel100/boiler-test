@@ -1,12 +1,14 @@
 import { SHA256 } from 'crypto-js'
 
 export const mapperUserAdaper = data => ({
-  id: data.id,
-  token: data.token,
-  fullName: data.user.fullName,
+  id: data.user.id,
+  token: data.authToken,
+  // fullName: data.user.fullName,
+  fullName: `${data.user.firstName} ${data.user.lastName}`,
   firstName: data.user.firstName,
-  email: data.user.email,
-  birthday: data.user?.birthday
+  lastName: data.user.lastName,
+  email: data.user.email
+  // birthday: data.user?.birthday
 })
 
 export const loginNormalAdapter = data => ({

@@ -1,14 +1,47 @@
-import { Box, Container, Grid, Stack } from '@mui/material'
 import { ContainerApp } from 'components/common'
-import { IconEye, IconLogoUey } from 'components/icons'
-import { BpTypography } from 'components/shared'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import { Banner, CardFeature, CategoryList, TitleSection } from '../components'
+import { AboutSection, Banner, CategorySection, TitleSectionProduct } from '../components'
+import DeliverySection from '../components/delivery/DeliverySection'
+import HeroEvent from '../components/heroEvent/HeroEvent'
+import ProductSlider from '../components/products/ProductSlider'
+import SectionProducts from '../components/products/SectionProducts'
 import TestimonialsSlider from '../components/testimonials/TestimonialsSlider'
+
+const items = [
+  { id: 1, title: 'Coca cola light1', price: 20, rating: 3, img: '/images/testImages/image-01.jpg' },
+  { id: 2, title: 'Coca cola light2', price: 18, rating: 1, img: '/images/testImages/image-02.jpg' },
+  { id: 3, title: 'Coca cola light3', price: 26, rating: 2, img: '/images/testImages/image-03.jpg' },
+  { id: 4, title: 'Coca cola light4', price: 30, rating: 4, img: '/images/testImages/image-04.jpg' },
+  { id: 5, title: 'Coca cola light5', price: 30, rating: 5, img: '/images/testImages/image-02.jpg' },
+  { id: 6, title: 'Coca cola light6', price: 15, rating: 4, img: '/images/testImages/image-04.jpg' },
+  { id: 7, title: 'Coca cola light7', price: 70, rating: 5, img: '/images/testImages/image-01.jpg' },
+  { id: 8, title: 'Coca cola light8', price: 10, rating: 1, img: '/images/testImages/image-03.jpg' }
+]
+
+const itemsServices = [
+  { id: 1, title: 'Coca cola light', price: 20, rating: 3, img: '/images/testImages/image-06.jpg' },
+  { id: 2, title: 'Coca cola light', price: 18, rating: 1, img: '/images/testImages/image-07.jpg' },
+  { id: 3, title: 'Coca cola light', price: 26, rating: 2, img: '/images/testImages/image-08.jpg' },
+  { id: 4, title: 'Coca cola light', price: 30, rating: 4, img: '/images/testImages/image-09.jpg' },
+  { id: 5, title: 'Coca cola light', price: 30, rating: 5, img: '/images/testImages/image-06.jpg' },
+  { id: 6, title: 'Coca cola light', price: 15, rating: 4, img: '/images/testImages/image-08.jpg' }
+]
+
+const itemsSpaces = [
+  { id: 1, title: 'Coca cola light', price: 20, rating: 3, img: '/images/testImages/image-10.jpg' },
+  { id: 2, title: 'Coca cola light', price: 18, rating: 1, img: '/images/testImages/image-11.jpg' },
+  { id: 3, title: 'Coca cola light', price: 26, rating: 2, img: '/images/testImages/image-12.jpg' },
+  { id: 4, title: 'Coca cola light', price: 30, rating: 4, img: '/images/testImages/image-13.jpg' },
+  { id: 5, title: 'Coca cola light', price: 30, rating: 5, img: '/images/testImages/image-14.jpg' },
+  { id: 6, title: 'Coca cola light', price: 15, rating: 4, img: '/images/testImages/image-12.jpg' }
+]
 
 const HomePage = () => {
   const [banners, setBanners] = useState(undefined)
+  const [products, setProducts] = useState(undefined)
+  const [services, setServices] = useState(undefined)
+  const [spaces, setSpaces] = useState(undefined)
   const session = useSession()
 
   useEffect(() => {
@@ -35,6 +68,12 @@ const HomePage = () => {
         }
       ])
     }, 500)
+
+    setTimeout(() => {
+      setProducts(items)
+      setServices(itemsServices)
+      setSpaces(itemsSpaces)
+    }, 4000)
   }, [])
 
   useEffect(() => {
@@ -43,62 +82,17 @@ const HomePage = () => {
 
   return (
     <>
-      {/* BANNER */}
       <Banner slides={banners} />
-      {/* FEATURES */}
-      <ContainerApp component="section" sx={{ py: '3rem' }}>
-        <Stack direction="row" alignItems="center" gap={2} justifyContent="center" mb={3}>
-          <IconEye style={{ display: 'block' }} />
-          <TitleSection title="Descubre todos los beneficios de usar UEY" />
-        </Stack>
-        <Container maxWidth="md">
-          <BpTypography variant="body2" fontWeight={400} textAlign="center">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus
-            magna fringilla urna, porttitor
-          </BpTypography>
-        </Container>
-        <Grid component="div" container spacing={4} mt="5rem" data-aos="fade-up">
-          <Grid item xs={12} sm={6} md={4}>
-            <CardFeature
-              icon={<IconLogoUey width={100} height={80} />}
-              title="Arma tu evento"
-              description="NO te pierdas de esta increíble encuesta que te ayudará a descubrir lo que buscas"
-              buttonText="Arma tu evento"
-              buttonVariant="contained"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <CardFeature
-              icon={<IconLogoUey width={100} height={80} />}
-              title="Arma tu evento"
-              description="NO te pierdas de esta increíble encuesta que te ayudará a descubrir lo que buscas"
-              buttonText="Arma tu evento"
-              buttonVariant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={4}>
-            <CardFeature
-              icon={<IconLogoUey width={100} height={80} />}
-              title="Arma tu evento"
-              description="NO te pierdas de esta increíble encuesta que te ayudará a descubrir lo que buscas"
-              buttonText="Arma tu evento"
-              buttonVariant="outlined"
-            />
-          </Grid>
-        </Grid>
+      <HeroEvent />
+      <SectionProducts products={products} services={services} spaces={spaces} />
+      <DeliverySection />
+      <CategorySection />
+      <AboutSection />
+      <ContainerApp component="section">
+        <TitleSectionProduct text="Lo mas vendido" />
+        <ProductSlider items={products} />
       </ContainerApp>
-      {/* CATEGORIES */}
-      <ContainerApp sx={{ py: '4.5rem' }}>
-        <TitleSection title="Nuestras categorías" />
-        <Box mt={6}>
-          <CategoryList />
-        </Box>
-      </ContainerApp>
-      {/* ABOUT */}
-      {/* <ContainerApp component="section" sx={{ py: '5rem' }}>
-        <About />
-      </ContainerApp> */}
-      <ContainerApp component="section" sx={{ py: '4rem', mb: 8 }}>
+      <ContainerApp component="section" sx={{ mt: 10, mb: 15 }}>
         <TestimonialsSlider />
       </ContainerApp>
     </>

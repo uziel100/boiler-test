@@ -34,8 +34,9 @@ const NavbarMain = () => {
           <Stack direction="row" gap={2} alignItems="center" justifyContent="space-between">
             <Stack direction="row" gap={4}>
               <NavbarApp.Logo openDrawer={onOpenDrawer} />
-              <Stack direction="row" alignItems="center" gap={1}>
-                <Stack
+            </Stack>
+            <Stack direction="row" alignItems="center" gap={1}>
+              {/* <Stack
                   direction="row"
                   alignItems="center"
                   gap={1}
@@ -64,9 +65,8 @@ const NavbarMain = () => {
                       maxWidth: '160px'
                     }}
                   />
-                </Stack>
-                <NavbarApp.Search />
-              </Stack>
+                </Stack> */}
+              <NavbarApp.Search />
             </Stack>
             <Stack direction="row" gap={1}>
               <IconButton

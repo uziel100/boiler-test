@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-keys */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 import { useMemo } from 'react'

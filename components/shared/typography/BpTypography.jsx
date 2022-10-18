@@ -2,7 +2,8 @@ import Typography from '@mui/material/Typography'
 
 const FONT_FAMILY_VARIANT = {
   primary: 'Poppins',
-  secondary: 'Nunito'
+  secondary: 'Nunito',
+  terciary: 'Damion'
 }
 
 const BpTypography = ({
