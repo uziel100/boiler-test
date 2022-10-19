@@ -1,7 +1,7 @@
 import { IconButton } from '@mui/material'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 
-const ArrowButtonNext = ({ onClick }) => (
+const ArrowButtonNext = ({ onClick, sx = {} }) => (
   <IconButton
     disableRipple
     onClick={onClick}
@@ -15,7 +15,8 @@ const ArrowButtonNext = ({ onClick }) => (
         md: '-2%'
       },
       top: '40%',
-      background: '#0000000d'
+      background: '#0000000d',
+      ...sx
     }}
   >
     <KeyboardArrowRightIcon />

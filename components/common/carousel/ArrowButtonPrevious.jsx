@@ -1,7 +1,7 @@
 import { IconButton } from '@mui/material'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 
-const ArrowButtonPrevious = ({ onClick }) => (
+const ArrowButtonPrevious = ({ onClick, sx = {} }) => (
   <IconButton
     disableRipple
     onClick={onClick}
@@ -13,10 +13,10 @@ const ArrowButtonPrevious = ({ onClick }) => (
       left: {
         xs: 0,
         md: '-4%'
-        // md: onClick ? '-3%' : '-1%'
       },
       top: '40%',
-      background: '#0000000d'
+      background: '#0000000d',
+      ...sx
     }}
   >
     <KeyboardArrowLeftIcon />

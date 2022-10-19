@@ -1,21 +1,51 @@
 /* eslint-disable @next/next/no-img-element */
-import { Box, Skeleton, useMediaQuery, useTheme } from '@mui/material'
-import { makeStyles } from '@mui/styles'
+import { Box, Skeleton, styled } from '@mui/material'
+import ArrowButtonNext from 'components/common/carousel/ArrowButtonNext'
+import ArrowButtonPrevious from 'components/common/carousel/ArrowButtonPrevious'
 import { useRouter } from 'next/router'
-import { Pagination, Navigation, Autoplay } from 'swiper'
-import { Swiper, SwiperSlide } from 'swiper/react'
+import Slider from 'react-slick'
 
-const useStyles = makeStyles(() => ({
-  swipper: {
-    height: '100%'
+const StyledContainer = styled(Box)(() => ({
+  position: 'relative',
+  '& .slick-dots': {
+    bottom: 18
+  },
+  '& .slick-slide > div': {
+    padding: '0'
+  },
+  '.slick-dots li.slick-active button:before': {
+    color: theme => theme.palette.secondary.main
+  },
+  '& button.button-next': {
+    display: {
+      xs: 'none',
+      md: 'flex'
+    }
+  },
+  '& button.button-prev': {
+    display: {
+      xs: 'none',
+      md: 'flex'
+    }
   }
 }))
 
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  initialSlide: 0,
+  lazyLoad: true,
+  prevArrow: <ArrowButtonPrevious sx={{ left: 10, background: '#fff' }} />,
+  nextArrow: <ArrowButtonNext sx={{ right: 10, background: '#fff' }} />,
+  arrows: true,
+  autoplay: true
+}
+
 const Banner = ({ slides = undefined }) => {
   const router = useRouter()
-  const classes = useStyles()
-  const theme = useTheme()
-  const isUpXs = useMediaQuery(theme.breakpoints.up('sm'))
 
   if (!slides) {
     return (
@@ -42,65 +72,38 @@ const Banner = ({ slides = undefined }) => {
   }
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        height: {
-          xs: '300px',
-          sm: '340px',
-          md: '520px'
-        },
-        display: 'block'
-      }}
-    >
-      <Swiper
-        slidesPerView={1}
-        spaceBetween={30}
-        loop={slides?.length > 1}
-        lazy
-        autoplay={{
-          delay: 4000,
-          disableOnInteraction: false
-        }}
-        pagination={{
-          clickable: true
-        }}
-        navigation={isUpXs}
-        modules={[Pagination, Navigation, Autoplay]}
-        className={classes.swipper}
-      >
+    <StyledContainer>
+      <Slider {...settings}>
         {slides.map(item => (
-          <SwiperSlide key={item.id}>
-            <Box component="picture" sx={{ objectFit: 'cover', height: '100%', width: '100%' }}>
-              <Box component="source" srcSet={`${item.url}`} media="(min-width: 720px)" />
-              <Box
-                component="img"
-                width="320px"
-                height="300px"
-                sx={{
-                  cursor: item.redirect ? 'pointer' : 'initial',
-                  width: '100%',
-                  height: {
-                    xs: '320px',
-                    sm: '400px',
-                    md: '520px'
-                  },
-                  objectFit: {
-                    xs: 'auto',
-                    sm: 'cover',
-                    md: 'cover'
-                  },
-                  objectPosition: 'top center'
-                }}
-                src="/images/banner-xs.jpg"
-                onClick={() => handleRedirect(item.redirect)}
-                alt={item.description}
-              />
-            </Box>
-          </SwiperSlide>
+          <Box key={item.id} component="picture" sx={{ objectFit: 'cover', height: '100%', width: '100%' }}>
+            <Box component="source" srcSet={`${item.url}`} media="(min-width: 720px)" />
+            <Box
+              component="img"
+              width="320px"
+              height="300px"
+              sx={{
+                cursor: item.redirect ? 'pointer' : 'initial',
+                width: '100%',
+                height: {
+                  xs: '320px',
+                  sm: '400px',
+                  md: '520px'
+                },
+                objectFit: {
+                  xs: 'auto',
+                  sm: 'cover',
+                  md: 'cover'
+                },
+                objectPosition: 'top center'
+              }}
+              src="/images/banner-xs.jpg"
+              onClick={() => handleRedirect(item.redirect)}
+              alt={item.description}
+            />
+          </Box>
         ))}
-      </Swiper>
-    </Box>
+      </Slider>
+    </StyledContainer>
   )
 }
 export default Banner
