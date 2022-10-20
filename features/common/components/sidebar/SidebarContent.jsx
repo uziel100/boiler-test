@@ -1,14 +1,16 @@
 import { useSidebarAmazonContextProvider } from 'features/common/context'
-import { Box, Button, List, ListItem, ListItemButton, ListItemText, MenuList, Stack } from '@mui/material'
+import { Box, List, ListItem, ListItemButton, ListItemText, MenuList, Stack } from '@mui/material'
 import { IconLogoUey } from 'components/icons'
-import LogoutIcon from '@mui/icons-material/Logout'
 import { BpButton, BpTypography } from 'components/shared'
+import { ButtonLogout } from 'components/common'
+import useSessionApp from 'hooks/useSessionApp'
 import SidebarTitle from './SidebarTitle'
 import SidebarRow from './SidebarRow'
 import SidebarTitleButton from './SidebarTitleButton'
 
 const SidebarContent = () => {
   const { entryStore } = useSidebarAmazonContextProvider()
+  const { session } = useSessionApp()
 
   return (
     <Box pb={10}>
@@ -72,22 +74,20 @@ const SidebarContent = () => {
           </ListItemButton>
         </ListItem>
       </List>
-      <Box
-        sx={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          background: '#fff',
-          width: { xs: '300px', sm: '340px', md: '350px' },
-          padding: '0.5rem 1rem'
-        }}
-      >
-        <Button startIcon={<LogoutIcon />} variant="text" color="secondary" fullWidth={false}>
-          <BpTypography fontWeight={500} color="grey.700" variant="body2">
-            Desconectarse
-          </BpTypography>
-        </Button>
-      </Box>
+      {session.data && (
+        <Box
+          sx={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            background: '#fff',
+            width: { xs: '300px', sm: '340px', md: '350px' },
+            padding: '0.5rem 1rem'
+          }}
+        >
+          <ButtonLogout />
+        </Box>
+      )}
     </Box>
   )
 }

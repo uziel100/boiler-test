@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { LayoutMain } from 'components/layouts'
 import useTheme from 'hooks/useTheme'
 import LoginPage from 'features/session/pages/LoginPage'
-import { getToken } from 'next-auth/jwt'
 
 const LoginPageRoot = () => {
   const { toggleTheme } = useTheme()
@@ -29,23 +28,6 @@ LoginPageRoot.getLayout = function getLayout(page) {
       {page}
     </LayoutMain>
   )
-}
-
-export async function getServerSideProps({ req }) {
-  const session = await getToken({ req })
-  if (session) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: true
-      }
-    }
-  }
-  console.log({ session })
-
-  return {
-    props: {} // will be passed to the page component as props
-  }
 }
 
 export default LoginPageRoot

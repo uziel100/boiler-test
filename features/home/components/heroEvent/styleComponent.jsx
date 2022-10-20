@@ -36,7 +36,7 @@ export const FlashImage = () => (
       maxWidth: '565px',
       minWidth: '328px',
       width: '100%',
-      zIndex: 2
+      zIndex: -1
     }}
     component="img"
     loading="lazy"

@@ -1,5 +1,7 @@
 import { Box, Divider, Menu, MenuItem } from '@mui/material'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
+import { ButtonLogout } from '../button'
 
 const LINKS = [
   {
@@ -14,12 +16,34 @@ const LINKS = [
   }
 ]
 
+const LINKS_PROFILE = [
+  {
+    id: 'account',
+    url: '/account',
+    text: 'Mi cuenta'
+  },
+  {
+    id: 'experiencies',
+    url: '/',
+    text: 'Mis experiencias'
+  },
+  {
+    id: 'help',
+    url: '/',
+    text: 'Ayuda'
+  }
+]
+
 const MenuAccount = ({ anchorEl, setAnchorEl }) => {
+  const { data: session } = useSession()
+
   const open = Boolean(anchorEl)
 
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  const LINKS_TO_USE = session ? LINKS_PROFILE : LINKS
 
   return (
     <Menu
@@ -59,7 +83,7 @@ const MenuAccount = ({ anchorEl, setAnchorEl }) => {
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
-      {LINKS.map(item => (
+      {LINKS_TO_USE.map(item => (
         <MenuItem key={item.id} onClick={null}>
           <Link to={item.url} href={item.url} passHref>
             <Box
@@ -74,9 +98,14 @@ const MenuAccount = ({ anchorEl, setAnchorEl }) => {
           </Link>
         </MenuItem>
       ))}
-
       <Divider />
-      <MenuItem>Ayuda</MenuItem>
+      {!session ? (
+        <MenuItem>Ayuda</MenuItem>
+      ) : (
+        <MenuItem>
+          <ButtonLogout />
+        </MenuItem>
+      )}
     </Menu>
   )
 }

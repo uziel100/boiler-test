@@ -1,5 +1,5 @@
-import { Box, IconButton, InputBase, Stack } from '@mui/material'
-import { ContainerApp, NavbarApp } from 'components/common'
+import { Box, IconButton, Stack, Tooltip } from '@mui/material'
+import { ContainerApp, NavbarApp, SkeletonUserNav } from 'components/common'
 import { IconAccountUser, IconShoppingCart } from 'components/icons'
 import { BpTypography } from 'components/shared'
 import { SidebarAmazonProvider } from 'features/common/context'
@@ -69,19 +69,25 @@ const NavbarMain = () => {
               <NavbarApp.Search />
             </Stack>
             <Stack direction="row" gap={1}>
-              <IconButton
-                onClick={session?.data ? null : handleClick}
-                sx={{
-                  borderRadius: session?.data ? 2 : 'auto'
-                }}
-              >
-                <IconAccountUser />
-                {session?.data && (
-                  <BpTypography sx={{ ml: 1 }} variant="body2">
-                    {session.data.user.fullName}
-                  </BpTypography>
-                )}
-              </IconButton>
+              {session.status === 'loading' ? (
+                <SkeletonUserNav />
+              ) : (
+                <Tooltip title="Perfil">
+                  <IconButton
+                    onClick={handleClick}
+                    sx={{
+                      borderRadius: session?.data ? 2 : 'auto'
+                    }}
+                  >
+                    <IconAccountUser />
+                    {session?.data && (
+                      <BpTypography sx={{ ml: 1 }} variant="body2">
+                        {session.data.user.fullName}
+                      </BpTypography>
+                    )}
+                  </IconButton>
+                </Tooltip>
+              )}
               <IconButton>
                 <IconShoppingCart />
               </IconButton>

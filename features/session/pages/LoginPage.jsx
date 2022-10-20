@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { ButtonFacebook, ButtonGoogle, ContainerAuth } from '../components'
-import { useAuthService } from '../hooks'
+// import { useAuthService } from '../hooks'
 
 const validationSchema = Yup.object({
   email: Yup.string().email('Formato inválido').required('Campo obligatorio'),
@@ -19,7 +19,7 @@ const validationSchema = Yup.object({
 
 const LoginPage = () => {
   const { logError, showAlert } = useError()
-  const { onLogin } = useAuthService()
+  // const { onLogin } = useAuthService()
   const router = useRouter()
 
   const [loading, setLoading] = useState(false)
@@ -30,8 +30,8 @@ const LoginPage = () => {
     onSubmit: async ({ email, password }) => {
       setLoading(true)
       try {
-        // const resp = await signIn('credentials', { redirect: false, email, password })
-        const resp = await onLogin({ email, password })
+        const resp = await signIn('credentials', { redirect: false, email, password })
+        // const resp = await onLogin({ email, password })
         console.log({ resp })
         if (resp.error) throw new Error(resp.error)
         const { next = '/' } = router.query

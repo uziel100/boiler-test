@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
 export { default as SkeletonProductSmall } from './SkeletonProductSmall'
+export { default as SkeletonUserNav } from './SkeletonUserNav'
