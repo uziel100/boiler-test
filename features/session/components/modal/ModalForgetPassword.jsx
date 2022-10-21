@@ -1,13 +1,13 @@
 import { Box, Stack } from '@mui/material'
 import { BpModal, BpTypography } from 'components/shared'
-import Image from 'next/image'
+import LocalPostOfficeOutlinedIcon from '@mui/icons-material/LocalPostOfficeOutlined'
 
 const ModalForgetPassword = ({ open, onClose, email }) => (
   <BpModal open={open} onClose={onClose}>
     <Box maxWidth="466px" textAlign="center">
       <Stack
         sx={{
-          bgcolor: 'primary.100',
+          bgcolor: 'secondary.100',
           width: '48px',
           height: '48px',
           margin: '0 auto',
@@ -16,13 +16,7 @@ const ModalForgetPassword = ({ open, onClose, email }) => (
         alignItems="center"
         justifyContent="center"
       >
-        <Image
-          src="/images/icon-email-degraded-min.svg"
-          alt="Mensaje del correo electronico enviado"
-          width={32.67}
-          height={30.33}
-          fixed="1x"
-        />
+        <LocalPostOfficeOutlinedIcon color="secondary" fontSize="large" />
       </Stack>
       <BpTypography sx={{ mt: 3 }} fontWeight={600} color="grey.800" variant="subtitle1" label="Revisa tu correo" />
       <BpTypography fontWeight={400} color="grey.600" variant="body2" sx={{ mt: 2, mb: 2 }}>

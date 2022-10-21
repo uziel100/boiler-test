@@ -67,6 +67,7 @@ const ForgetPassword = () => {
           sx={{ mt: 3 }}
           placeholder="Correo electrónico"
           type="text"
+          color="secondary"
           value={formik.values.email}
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}

@@ -1,7 +1,7 @@
 import { Box, Stack } from '@mui/material'
 import { BpButton, BpModal, BpTypography } from 'components/shared'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
+import LocalPostOfficeOutlinedIcon from '@mui/icons-material/LocalPostOfficeOutlined'
 
 const ModalSuccesChangePassword = ({ open, onClose }) => {
   const router = useRouter()
@@ -19,7 +19,7 @@ const ModalSuccesChangePassword = ({ open, onClose }) => {
       >
         <Stack
           sx={{
-            bgcolor: 'primary.100',
+            bgcolor: 'secondary.100',
             width: '48px',
             height: '48px',
             margin: '0 auto',
@@ -28,13 +28,7 @@ const ModalSuccesChangePassword = ({ open, onClose }) => {
           alignItems="center"
           justifyContent="center"
         >
-          <Image
-            src="/images/icon-email-degraded-min.svg"
-            alt="Mensaje del correo electronico enviado"
-            width={32.67}
-            height={30.33}
-            fixed="1x"
-          />
+          <LocalPostOfficeOutlinedIcon color="secondary" fontSize="large" />
         </Stack>
         <BpTypography
           sx={{ mt: 3 }}
@@ -46,7 +40,7 @@ const ModalSuccesChangePassword = ({ open, onClose }) => {
         <BpTypography fontWeight={400} color="grey.600" variant="body2" sx={{ mt: 1, mb: 2 }}>
           Contraseña restablecida con éxito
         </BpTypography>
-        <BpButton fullWidth={false} variant="contained" color="primary" onClick={goToLogin}>
+        <BpButton fullWidth={false} variant="contained" color="secondary" onClick={goToLogin}>
           Iniciar sesión
         </BpButton>
       </Box>

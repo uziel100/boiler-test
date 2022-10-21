@@ -38,6 +38,7 @@ const ResetPasswordPage = () => {
         showAlert('Contraseña actualizada correctamente', 'success')
         setOpenModal(true)
       } catch (error) {
+        console.log('hola', error)
         logError(error)
       } finally {
         setLoading(false)
@@ -101,6 +102,7 @@ const ResetPasswordPage = () => {
             id="password"
             name="password"
             placeholder="Contraseña"
+            color="secondary"
             value={formik.values.password}
             onChange={formik.handleChange}
             disabled={loading}
@@ -126,6 +128,7 @@ const ResetPasswordPage = () => {
             id="passwordConfirm"
             name="passwordConfirm"
             placeholder="Confirma tu contraseña"
+            color="secondary"
             disabled={!formik.values.validStrengthPassword || loading}
             value={formik.values.passwordConfirm}
             onChange={formik.handleChange}
