@@ -73,7 +73,7 @@ const useAuthService = () => {
       try {
         const mapperPayload = changePasswordPayloadAdapter(data)
         const res = await changePasswordService(apolloClient, mapperPayload)
-        return mapperUserAdaper(res.response)
+        return res.response
       } catch (error) {
         throw new Error(error)
       }
