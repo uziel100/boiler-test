@@ -5,17 +5,7 @@ import ArrowButtonPrevious from 'components/common/carousel/ArrowButtonPrevious'
 import { useRouter } from 'next/router'
 import Slider from 'react-slick'
 
-const StyledContainer = styled(Box)(() => ({
-  position: 'relative',
-  '& .slick-dots': {
-    bottom: 18
-  },
-  '& .slick-slide > div': {
-    padding: '0'
-  },
-  '.slick-dots li.slick-active button:before': {
-    color: theme => theme.palette.secondary.main
-  },
+const customSx = {
   '& button.button-next': {
     display: {
       xs: 'none',
@@ -27,6 +17,18 @@ const StyledContainer = styled(Box)(() => ({
       xs: 'none',
       md: 'flex'
     }
+  }
+}
+const StyledContainer = styled(Box)(() => ({
+  position: 'relative',
+  '& .slick-dots': {
+    bottom: 18
+  },
+  '& .slick-slide > div': {
+    padding: '0'
+  },
+  '.slick-dots li.slick-active button:before': {
+    color: theme => theme.palette.secondary.main
   }
 }))
 
@@ -72,7 +74,7 @@ const Banner = ({ slides = undefined }) => {
   }
 
   return (
-    <StyledContainer>
+    <StyledContainer sx={customSx}>
       <Slider {...settings}>
         {slides.map(item => (
           <Box key={item.id} component="picture" sx={{ objectFit: 'cover', height: '100%', width: '100%' }}>
@@ -92,7 +94,7 @@ const Banner = ({ slides = undefined }) => {
                 objectFit: {
                   xs: 'auto',
                   sm: 'cover',
-                  md: 'cover'
+                  md: 'fill'
                 },
                 objectPosition: 'top center'
               }}
