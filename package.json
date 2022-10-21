@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "start:test": "cross-env NODE_ENV=test next dev",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "eslint ./ --fix",
