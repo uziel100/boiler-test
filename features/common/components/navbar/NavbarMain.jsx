@@ -52,7 +52,7 @@ const NavbarMain = () => {
                       width: '1rem',
                       height: '1rem',
                       borderRadius: '2rem',
-                      bgcolor: 'secondary.main'
+                      bgcolor: 'primary.main'
                     }}
                   />
                   <InputBase

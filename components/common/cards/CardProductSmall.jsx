@@ -27,7 +27,7 @@ const CardProductSmall = ({ img, title, price, rating = 0 }) => (
           alignItems="center"
           gap="2px"
         >
-          <StarRoundedIcon color="secondary" sx={{ fontSize: '18px' }} fontSize="small" />
+          <StarRoundedIcon color="primary" sx={{ fontSize: '18px' }} fontSize="small" />
           <BpTypography fontWeight={400} variant="caption" color="grey.700">
             {`${rating.toFixed(1)}`}
           </BpTypography>

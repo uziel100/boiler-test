@@ -10,7 +10,7 @@ const ButtonLogout = () => {
       onClick={() => signOut({ redirect: false, callbackUrl: '/' })}
       startIcon={<LogoutIcon />}
       variant="text"
-      color="secondary"
+      color="primary"
       fullWidth={false}
     >
       <BpTypography fontWeight={500} color="grey.700" variant="body2">

@@ -123,7 +123,7 @@ const RegisterWizardStep2 = ({ data, setData, nextPage }) => {
           <BpButton
             type="submit"
             variant="contained"
-            color="secondary"
+            color="primary"
             fullWidth={false}
             sx={{
               px: 4

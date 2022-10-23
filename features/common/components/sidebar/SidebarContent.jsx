@@ -42,7 +42,7 @@ const SidebarContent = () => {
             Lorem ipsum dolor sit amet, conse adipiscing elit ut aliquam, purus sit amet luctus venenatis
           </BpTypography>
         </Box>
-        <BpButton sx={{ height: '36px', ml: '12%' }} color="secondary" fullWidth={false}>
+        <BpButton sx={{ height: '36px', ml: '12%' }} color="primary" fullWidth={false}>
           Convertirse en proveedor
         </BpButton>
       </Stack>

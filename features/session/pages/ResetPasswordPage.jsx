@@ -102,7 +102,7 @@ const ResetPasswordPage = () => {
             id="password"
             name="password"
             placeholder="Contraseña"
-            color="secondary"
+            color="primary"
             value={formik.values.password}
             onChange={formik.handleChange}
             disabled={loading}
@@ -128,7 +128,7 @@ const ResetPasswordPage = () => {
             id="passwordConfirm"
             name="passwordConfirm"
             placeholder="Confirma tu contraseña"
-            color="secondary"
+            color="primary"
             disabled={!formik.values.validStrengthPassword || loading}
             value={formik.values.passwordConfirm}
             onChange={formik.handleChange}
@@ -141,7 +141,7 @@ const ResetPasswordPage = () => {
         <BpButton
           type="submit"
           variant="contained"
-          color="secondary"
+          color="primary"
           fullWidth={false}
           loading={loading}
           disabled={!(formik.isValid && formik.dirty)}

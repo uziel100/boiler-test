@@ -7,16 +7,6 @@ const Theme = createTheme({
     ...BaseTheme.palette,
     mode: 'light',
     primary: {
-      main: '#DD4786',
-      contrastText: '#fff',
-      50: '#FFF9FD',
-      100: '#FCEDF3',
-      200: '#F8DAE7',
-      300: '#F5C8DB',
-      400: '#EDA2C2',
-      500: '#E675A4'
-    },
-    secondary: {
       main: '#6A50FC',
       contrastText: '#fff',
       100: '#F4F3FF',
@@ -25,6 +15,16 @@ const Theme = createTheme({
       400: '#D3CBFF',
       500: '#B4A7FD',
       600: '#8F7CFD'
+    },
+    secondary: {
+      main: '#DD4786',
+      contrastText: '#fff',
+      50: '#FFF9FD',
+      100: '#FCEDF3',
+      200: '#F8DAE7',
+      300: '#F5C8DB',
+      400: '#EDA2C2',
+      500: '#E675A4'
     },
     success: {
       main: '#43C568'

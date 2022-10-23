@@ -100,7 +100,7 @@ const RegisterPage = () => {
                   <Step
                     sx={{
                       '.Mui-completed > svg, .Mui-active > svg': {
-                        color: theme => theme.palette.secondary[500]
+                        color: theme => theme.palette.primary[500]
                       },
                       '.Mui-disabled > svg': {
                         color: theme => theme.palette.grey[400]

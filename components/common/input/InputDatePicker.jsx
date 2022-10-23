@@ -25,7 +25,7 @@ const InputDatePicker = ({
         name={name}
         helperText={helperText}
         error={error}
-        color="secondary"
+        color="primary"
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

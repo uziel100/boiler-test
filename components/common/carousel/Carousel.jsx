@@ -54,7 +54,7 @@ const Carousel = ({ children }) => (
     sx={{
       position: 'relative',
       '.slick-dots li.slick-active button:before': {
-        color: theme => theme.palette.secondary.main
+        color: theme => theme.palette.primary.main
       },
       '& .slick-list > .slick-track': {
         padding: '3rem 0 3rem 0',

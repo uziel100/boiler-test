@@ -64,7 +64,7 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
           sx={{ mt: 3 }}
           placeholder="Nombre(s)"
           type="text"
-          color="secondary"
+          color="primary"
           value={formik.values.name}
           onChange={formik.handleChange}
           error={formik.touched.name && Boolean(formik.errors.name)}
@@ -75,7 +75,7 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
           id="lastName"
           name="lastName"
           sx={{ mt: 1 }}
-          color="secondary"
+          color="primary"
           placeholder="Apellido(s)"
           type="text"
           value={formik.values.lastName}
@@ -90,7 +90,7 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
           sx={{ mt: 1 }}
           placeholder="Correo electrónico"
           type="text"
-          color="secondary"
+          color="primary"
           value={formik.values.email}
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}
@@ -107,7 +107,7 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
         <InputDatePicker
           id="birthday"
           name="birthday"
-          color="secondary"
+          color="primary"
           value={formik.values.birthday}
           error={formik.touched.birthday && Boolean(formik.errors.birthday)}
           helperText={formik.touched.birthday && formik.errors.birthday}
@@ -120,7 +120,7 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
             name="acceptTerms"
             checked={formik.values.acceptTerms}
             onChange={e => formik.setFieldValue('acceptTerms', e.target.checked)}
-            color="secondary"
+            color="primary"
           />
           <BpTypography fontWeight={400} variant="body2" color="grey.700" sx={{ display: 'block' }}>
             Acepta nuestras{' '}
@@ -133,7 +133,7 @@ const RegisterWizardStep1 = ({ data, setData, nextPage }) => {
           <BpButton
             type="submit"
             variant="contained"
-            color="secondary"
+            color="primary"
             fullWidth
             disabled={!formik.isValid}
             sx={{ mt: { xs: 4, md: 2 }, width: { xs: '100%', sm: 'auto' } }}

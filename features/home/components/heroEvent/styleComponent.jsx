@@ -90,7 +90,7 @@ export const Circle01 = () => (
       },
       borderRadius: '50%',
       zIndex: 1,
-      bgcolor: 'secondary.300'
+      bgcolor: 'primary.300'
     }}
     component="span"
   />
@@ -118,7 +118,7 @@ export const Circle02 = () => (
       },
       borderRadius: '50%',
       zIndex: 1,
-      bgcolor: 'secondary.300'
+      bgcolor: 'primary.300'
     }}
     loading="lazy"
     component="span"
@@ -147,7 +147,7 @@ export const Circle3 = () => (
       },
       borderRadius: '50%',
       zIndex: 1,
-      bgcolor: 'secondary.300'
+      bgcolor: 'primary.300'
     }}
     component="span"
   />

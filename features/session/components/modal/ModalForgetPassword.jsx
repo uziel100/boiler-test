@@ -7,7 +7,7 @@ const ModalForgetPassword = ({ open, onClose, email }) => (
     <Box maxWidth="466px" textAlign="center">
       <Stack
         sx={{
-          bgcolor: 'secondary.100',
+          bgcolor: 'primary.100',
           width: '48px',
           height: '48px',
           margin: '0 auto',
@@ -16,7 +16,7 @@ const ModalForgetPassword = ({ open, onClose, email }) => (
         alignItems="center"
         justifyContent="center"
       >
-        <LocalPostOfficeOutlinedIcon color="secondary" fontSize="large" />
+        <LocalPostOfficeOutlinedIcon color="primary" fontSize="large" />
       </Stack>
       <BpTypography sx={{ mt: 3 }} fontWeight={600} color="grey.800" variant="subtitle1" label="Revisa tu correo" />
       <BpTypography fontWeight={400} color="grey.600" variant="body2" sx={{ mt: 2, mb: 2 }}>

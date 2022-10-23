@@ -6,7 +6,7 @@ const TestimonialCard = ({ inFocus }) => (
   <Card
     elevation={0}
     sx={{
-      border: theme => `1px solid ${theme.palette.secondary.main}`,
+      border: theme => `1px solid ${theme.palette.primary.main}`,
       borderRadius: theme => (inFocus ? theme.spacing(4) : theme.spacing(3)),
       // maxWidth: inFocus ? '450px' : '300px',
       maxHeight: '400px',
@@ -17,11 +17,11 @@ const TestimonialCard = ({ inFocus }) => (
     <CardContent>
       <Stack flexDirection="column" alignItems="center" justifyContent="center">
         <Stack direction="row">
-          <StarRoundedIcon color="secondary" fontSize="large" />
-          <StarRoundedIcon color="secondary" fontSize="large" />
-          <StarRoundedIcon color="secondary" fontSize="large" />
-          <StarRoundedIcon color="secondary" fontSize="large" />
-          <StarRoundedIcon color="secondary" fontSize="large" />
+          <StarRoundedIcon color="primary" fontSize="large" />
+          <StarRoundedIcon color="primary" fontSize="large" />
+          <StarRoundedIcon color="primary" fontSize="large" />
+          <StarRoundedIcon color="primary" fontSize="large" />
+          <StarRoundedIcon color="primary" fontSize="large" />
         </Stack>
         <Box mt={3} mb={2}>
           <BpTypography

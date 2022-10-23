@@ -12,11 +12,11 @@ const ButtonCloseFixed = ({ onClose }) => (
       height: '42px',
       borderRadius: '50%',
       bgcolor: '#fff',
-      border: theme => `7px solid ${theme.palette.secondary.main}`
+      border: theme => `7px solid ${theme.palette.primary.main}`
     }}
     onClick={onClose}
   >
-    <KeyboardArrowLeftIcon color="secondary" />
+    <KeyboardArrowLeftIcon color="primary" />
   </ButtonBase>
 )
 export default ButtonCloseFixed

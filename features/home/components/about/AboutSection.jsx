@@ -97,7 +97,7 @@ const AboutSection = () => {
             bottom: '-40px'
           },
           '.slick-dots li.slick-active button:before': {
-            color: theme => theme.palette.secondary.main
+            color: theme => theme.palette.primary.main
           }
         }}
       >

@@ -19,7 +19,7 @@ const ModalSuccesChangePassword = ({ open, onClose }) => {
       >
         <Stack
           sx={{
-            bgcolor: 'secondary.100',
+            bgcolor: 'primary.100',
             width: '48px',
             height: '48px',
             margin: '0 auto',
@@ -28,7 +28,7 @@ const ModalSuccesChangePassword = ({ open, onClose }) => {
           alignItems="center"
           justifyContent="center"
         >
-          <LocalPostOfficeOutlinedIcon color="secondary" fontSize="large" />
+          <LocalPostOfficeOutlinedIcon color="primary" fontSize="large" />
         </Stack>
         <BpTypography
           sx={{ mt: 3 }}
@@ -40,7 +40,7 @@ const ModalSuccesChangePassword = ({ open, onClose }) => {
         <BpTypography fontWeight={400} color="grey.600" variant="body2" sx={{ mt: 1, mb: 2 }}>
           Contraseña restablecida con éxito
         </BpTypography>
-        <BpButton fullWidth={false} variant="contained" color="secondary" onClick={goToLogin}>
+        <BpButton fullWidth={false} variant="contained" color="primary" onClick={goToLogin}>
           Iniciar sesión
         </BpButton>
       </Box>

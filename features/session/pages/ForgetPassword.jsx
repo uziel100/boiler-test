@@ -67,7 +67,7 @@ const ForgetPassword = () => {
           sx={{ mt: 3 }}
           placeholder="Correo electrónico"
           type="text"
-          color="secondary"
+          color="primary"
           value={formik.values.email}
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}
@@ -84,7 +84,7 @@ const ForgetPassword = () => {
         <BpButton
           type="submit"
           variant="contained"
-          color="secondary"
+          color="primary"
           fullWidth={false}
           loading={loading}
           disabled={!(formik.isValid && formik.dirty)}
