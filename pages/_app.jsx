@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import Head from 'next/head'
 import createEmotionCache from 'utils/createEmotionCache'
@@ -23,12 +23,17 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import '../components/styles/styles.global.css'
+import { AppContextProvider } from 'context/app/AppContext'
 
 const clientSideEmotionCache = createEmotionCache()
 const WebApp = ({ Component, emotionCache = clientSideEmotionCache, pageProps: { session, ...pageProps } }) => {
   const apolloClient = useApollo(pageProps)
 
   const getLayout = Component.getLayout || (page => page)
+
+  useEffect(() => {
+    // inicializar local storage
+  }, [])
 
   return (
     <>
@@ -46,7 +51,9 @@ const WebApp = ({ Component, emotionCache = clientSideEmotionCache, pageProps: {
                 cancelButtonLabel: 'Cerrar'
               }}
             >
-              <Provider store={store}>{getLayout(<Component {...pageProps} />)}</Provider>
+              <Provider store={store}>
+                <AppContextProvider>{getLayout(<Component {...pageProps} />)}</AppContextProvider>
+              </Provider>
               <Toaster />
             </LocalizationProvider>
           </ThemeContextProvider>

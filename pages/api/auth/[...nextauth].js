@@ -2,6 +2,8 @@
 /* eslint-disable no-param-reassign */
 import NextAuth from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
+import GoogleProvider from 'next-auth/providers/google'
+import FacebookProvider from 'next-auth/providers/facebook'
 import Credentials from 'next-auth/providers/credentials'
 import { initializeApollo } from 'utils'
 import { loginService } from 'features/session/services'
@@ -12,6 +14,14 @@ export const authOptions = {
     GithubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET
     }),
     Credentials({
       name: 'Custom login',
@@ -38,10 +48,10 @@ export const authOptions = {
     })
   ],
 
-  pages: {
-    signIn: '/login',
-    newUser: '/register'
-  },
+  // pages: {
+  //   signIn: '/login',
+  //   newUser: '/register'
+  // },
 
   session: {
     maxAge: 2592000,

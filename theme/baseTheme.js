@@ -56,11 +56,13 @@ const BaseTheme = {
     MuiCssBaseline: {
       styleOverrides: {
         '*::-webkit-scrollbar': {
-          width: '0.12em'
+          width: '0.12em',
+          height: '3px'
         },
         '*::-webkit-scrollbar-thumb': {
           borderRadius: '20px',
-          backgroundColor: '#6c6c6c',
+          backgroundColor: '#eee',
+          height: '3px',
           opacity: 0.25
         }
       }

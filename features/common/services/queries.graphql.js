@@ -1,4 +1,4 @@
-const { gql } = require('@apollo/client')
+import { gql } from '@apollo/client'
 
 // eslint-disable-next-line import/prefer-default-export
 export const categoriesDrawer = gql`
@@ -36,27 +36,27 @@ export const categoriesDrawer = gql`
             name
             img
             order
-          }
-          categories {
-            id
-            slug
-            name
-            img
-            order
-          }
-          categories {
-            id
-            slug
-            name
-            img
-            order
-          }
-          categories {
-            id
-            slug
-            name
-            img
-            order
+            categories {
+              id
+              slug
+              name
+              img
+              order
+              categories {
+                id
+                slug
+                name
+                img
+                order
+                categories {
+                  id
+                  slug
+                  name
+                  img
+                  order
+                }
+              }
+            }
           }
         }
       }

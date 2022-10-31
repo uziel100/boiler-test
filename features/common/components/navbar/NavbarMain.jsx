@@ -1,7 +1,9 @@
-import { Box, IconButton, Stack, Tooltip } from '@mui/material'
+import { Badge, Box, IconButton, Stack, Tooltip } from '@mui/material'
 import { ContainerApp, NavbarApp, SkeletonUserNav } from 'components/common'
 import { IconAccountUser, IconShoppingCart } from 'components/icons'
 import { BpTypography } from 'components/shared'
+import { MenuShoppingCart } from 'features/cart/components'
+import { useShoppingCart } from 'features/cart/hooks'
 import { SidebarAmazonProvider } from 'features/common/context'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
@@ -12,13 +14,17 @@ import { SidebarNav } from '../sidebar'
 const NavbarMain = () => {
   const { openDrawer: openSidebar } = useSelector(store => store.ui)
   const dispatcher = useDispatch()
+  const { totalProducts } = useShoppingCart()
   const session = useSession()
 
   const [anchorEl, setAnchorEl] = useState(null)
+  const [anchorCartShoppingEl, setAnchorCartShoppingEl] = useState(null)
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
   }
+
+  const openMenuShoppingCart = event => setAnchorCartShoppingEl(event.currentTarget)
 
   const onOpenDrawer = () => {
     dispatcher(openDrawer())
@@ -88,14 +94,17 @@ const NavbarMain = () => {
                   </IconButton>
                 </Tooltip>
               )}
-              <IconButton>
-                <IconShoppingCart />
+              <IconButton onClick={openMenuShoppingCart}>
+                <Badge color="secondary" badgeContent={totalProducts} max={99}>
+                  <IconShoppingCart />
+                </Badge>
               </IconButton>
             </Stack>
           </Stack>
         </ContainerApp>
       </NavbarApp>
       <NavbarApp.MenuAccount anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+      <MenuShoppingCart anchorEl={anchorCartShoppingEl} setAnchorEl={setAnchorCartShoppingEl} />
       <NavbarApp.Drawer open={openSidebar} onClose={onCloseDrawer}>
         <SidebarAmazonProvider>
           <Box component="nav" position="relative" padding="1rem 0 1rem 0">

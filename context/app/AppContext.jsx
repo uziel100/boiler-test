@@ -1,17 +1,18 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { initializeCart } from 'store/states/cart'
 
-export const AppContext = createContext({
-  agent: null,
-  session: null,
-  timezone: null,
-  setSession: () => {},
-  loggedOut: true,
-  loggedIn: false
-})
+export const AppContext = createContext(null)
 
-export const AppContextProvider = ({ children, value }) => (
-  <AppContext.Provider value={value}>{children}</AppContext.Provider>
-)
+export const AppContextProvider = ({ children, value = {} }) => {
+  const dispatcher = useDispatch()
+
+  useEffect(() => {
+    dispatcher(initializeCart())
+  }, [])
+
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>
+}
 
 export const useAppContextProvider = () => {
   const context = useContext(AppContext)
