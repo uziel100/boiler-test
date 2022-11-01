@@ -15,7 +15,9 @@ const FilterRating = ({ name = 'rating', value, onChange }) => {
       size="large"
       icon={<StarRoundedIcon color="primary" fontSize="inherit" />}
       emptyIcon={<StarBorderRoundedIcon fontSize="inherit" />}
-      onChange={(event, newValue) => handleChange(newValue)}
+      onChange={(event, newValue) => {
+        handleChange(+newValue)
+      }}
     />
   )
 }

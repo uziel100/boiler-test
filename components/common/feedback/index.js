@@ -1,2 +1,6 @@
+export { default as SkeletonCategoryProductHistory } from './SkeletonCategoryProductHistory'
+export { default as SkeletonCategoryProducts } from './SkeletonCategoryProducts'
+export { default as SkeletonDrawer } from './SkeletonDrawer'
+export { default as SkeletonProductNormal } from './SkeletonProductNormal'
 export { default as SkeletonProductSmall } from './SkeletonProductSmall'
 export { default as SkeletonUserNav } from './SkeletonUserNav'

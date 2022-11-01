@@ -35,3 +35,45 @@ export const PRODUCTS = gql`
     }
   }
 `
+
+export const PRODUCTS_CATEGORY = gql`
+  query ($where: RootQueryToProductCategoryConnectionWhereArgs) {
+    response: productCategories(where: $where) {
+      nodes {
+        count
+        description
+        id
+        isRestricted
+        name
+        slug
+        menuOrder
+        menuOrder
+        image {
+          sourceUrl
+        }
+        parent {
+          node {
+            id
+            name
+            slug
+          }
+        }
+        children {
+          nodes {
+            id
+            name
+            slug
+            children {
+              nodes {
+                id
+                name
+                slug
+                count
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`

@@ -10,15 +10,19 @@ export const SidebarAmazonProvider = ({ children }) => {
   const [subContainer, setSubContainer] = useState(false)
   const [subContainerEntries, setSubContainerEntries] = useState(null)
   const [entryStore, setEntryStore] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
     getCategoriesDrawer()
       .then(data => {
-        // console.log({ data })
         setEntryStore(data)
       })
       .catch(() => {
         showAlert('Ocurrio un error al recuperar las categorias', 'error')
+      })
+      .finally(() => {
+        setLoading(false)
       })
   }, [])
 
@@ -28,9 +32,10 @@ export const SidebarAmazonProvider = ({ children }) => {
       subContainer,
       subContainerEntries,
       setSubContainer,
-      setSubContainerEntries
+      setSubContainerEntries,
+      loading
     }),
-    [entryStore, subContainer, subContainerEntries]
+    [entryStore, subContainer, subContainerEntries, loading]
   )
 
   return <SidebarAmazonContext.Provider value={memorized}>{children}</SidebarAmazonContext.Provider>

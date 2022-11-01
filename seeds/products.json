@@ -1,6 +1,388 @@
-[
-  {
-    "id": "",
-    "title": "Nombre del producto"
-  }
-]
+{
+  "totalCount": 10,
+  "totalEdges": 10,
+  "hasMore": false,
+  "pag": 0,
+  "edges": [
+    {
+      "node": {
+        "id": "bd7cd47b-a20a-4767-ac7d-89092b6049f2",
+        "slug": null,
+        "name": "Cheese - Manchego, Spanish",
+        "description": "Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.\n\nIn sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.",
+        "details": null,
+        "freeShipping": false,
+        "price": 6.75,
+        "score": 2,
+        "stock": 60,
+        "discountRate": 0,
+        "limit": 10,
+        "images": [
+          {
+            "id": "me54GqKI53",
+            "url": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            "order": null
+          },
+          {
+            "id": "I5bRd6Kltg",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          },
+          {
+            "id": "XsUaObo7fv",
+            "url": "https://images.unsplash.com/photo-1627384113743-6bd5a479fffd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            "order": null
+          }
+        ],
+        "categoryBase": {
+          "id": "d8516bf2-4020-11ed-b878-0242ac120002",
+          "slug": "products",
+          "name": "Productos",
+          "img": ""
+        }
+      }
+    },
+    {
+      "node": {
+        "id": "e8fa7a1b-de5e-430d-9bcb-a6c71378153b",
+        "slug": null,
+        "name": "Vector Energy Bar",
+        "description": "Fusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
+        "details": null,
+        "freeShipping": true,
+        "price": 119.67,
+        "score": 5,
+        "stock": 36,
+        "discountRate": 0,
+        "limit": 5,
+        "images": [
+          {
+            "id": "I5bRd6Kltg",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          },
+          {
+            "id": null,
+            "url": null,
+            "order": null
+          }
+        ],
+        "categoryBase": {
+          "id": "d8516bf2-4020-11ed-b878-0242ac120002",
+          "slug": "products",
+          "name": "Productos",
+          "img": ""
+        }
+      }
+    },
+    {
+      "node": {
+        "id": "44a9ea1e-ed96-43f7-930c-d5fcb00d3fcc",
+        "slug": null,
+        "name": "Buffalo - Short Rib Fresh",
+        "description": "Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.\n\nSed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.",
+        "details": null,
+        "freeShipping": true,
+        "price": 114.57,
+        "score": 0,
+        "stock": 23,
+        "discountRate": 0,
+        "limit": 5,
+        "images": [
+          {
+            "id": "VLGhyR3sJp",
+            "url": "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80",
+            "order": null
+          },
+          {
+            "id": null,
+            "url": null,
+            "order": null
+          },
+          {
+            "id": "Eff6UIV2o7",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          }
+        ],
+        "categoryBase": {
+          "id": "d8516bf2-4020-11ed-b878-0242ac120002",
+          "slug": "products",
+          "name": "Productos",
+          "img": ""
+        }
+      }
+    },
+    {
+      "node": {
+        "id": "a8504592-0b80-47ee-89c7-4dd6679b3ca3",
+        "slug": null,
+        "name": "Pork - Smoked Kassler",
+        "description": "Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.",
+        "details": null,
+        "freeShipping": false,
+        "price": 222.52,
+        "score": 5,
+        "stock": 39,
+        "discountRate": 7,
+        "limit": 9,
+        "images": [
+          {
+            "id": "yb7R8GWaWg",
+            "url": "https://images.unsplash.com/photo-1532413992378-f169ac26fff0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
+            "order": null
+          },
+          {
+            "id": "UPYaI9fZOi",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          },
+          {
+            "id": "bN8LgKjstb",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          },
+          {
+            "id": "bm1CqYJ4G2",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          }
+        ],
+        "categoryBase": null
+      }
+    },
+    {
+      "node": {
+        "id": "61181452-82cb-4221-a20d-85e5ed2790f5",
+        "slug": null,
+        "name": "Beef - Sushi Flat Iron Steak",
+        "description": "Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.\n\nFusce consequat. Nulla nisl. Nunc nisl.",
+        "details": null,
+        "freeShipping": true,
+        "price": 182.46,
+        "score": 2,
+        "stock": 82,
+        "discountRate": 0,
+        "limit": 6,
+        "images": [
+          {
+            "id": "oyLLtsQ7rW",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          },
+          {
+            "id": "IEOuBouGcd",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          },
+          {
+            "id": "xWwYJ5YFZp",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          }
+        ],
+        "categoryBase": {
+          "id": "d8516bf2-4020-11ed-b878-0242ac120002",
+          "slug": "products",
+          "name": "Productos",
+          "img": ""
+        }
+      }
+    },
+    {
+      "node": {
+        "id": "1749c0cc-eb31-4dee-937e-3c6114d47463",
+        "slug": null,
+        "name": "Carbonated Water - Lemon Lime",
+        "description": "Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.\n\nPhasellus in felis. Donec semper sapien a libero. Nam dui.",
+        "details": null,
+        "freeShipping": false,
+        "price": 36.03,
+        "score": 0,
+        "stock": 31,
+        "discountRate": 7,
+        "limit": 4,
+        "images": [
+          {
+            "id": "1VpttBeBaW",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          },
+          {
+            "id": "ITVUXifwQP",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          }
+        ],
+        "categoryBase": {
+          "id": "d8516bf2-4020-11ed-b878-0242ac120002",
+          "slug": "products",
+          "name": "Productos",
+          "img": ""
+        }
+      }
+    },
+    {
+      "node": {
+        "id": "a3314da5-2778-48d0-9037-0268b19c43e4",
+        "slug": null,
+        "name": "Cookie Dough - Peanut Butter",
+        "description": "Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.\n\nNam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.\n\nCurabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
+        "details": null,
+        "freeShipping": false,
+        "price": 16.76,
+        "score": 4,
+        "stock": 97,
+        "discountRate": 0,
+        "limit": 8,
+        "images": [
+          {
+            "id": "I5bRd6Kltg",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          },
+          {
+            "id": "1H2KzPHZWa",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          },
+          {
+            "id": "xWwYJ5YFZp",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          },
+          {
+            "id": "8MsBemqGI6",
+            "url": "https://images.unsplash.com/photo-1532413992378-f169ac26fff0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
+            "order": null
+          },
+          {
+            "id": "Eff6UIV2o7",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          }
+        ],
+        "categoryBase": {
+          "id": "d8516bf2-4020-11ed-b878-0242ac120002",
+          "slug": "products",
+          "name": "Productos",
+          "img": ""
+        }
+      }
+    },
+    {
+      "node": {
+        "id": "4b6d3b91-cb76-4ab7-a92f-c4dbd9f8104f",
+        "slug": null,
+        "name": "Wine - Tio Pepe Sherry Fino",
+        "description": "Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.\n\nIn quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.\n\nMaecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.",
+        "details": null,
+        "freeShipping": true,
+        "price": 191.98,
+        "score": 1,
+        "stock": 84,
+        "discountRate": 10,
+        "limit": 7,
+        "images": [
+          {
+            "id": "I5bRd6Kltg",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          },
+          {
+            "id": "me54GqKI53",
+            "url": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            "order": null
+          },
+          {
+            "id": "yb7R8GWaWg",
+            "url": "https://images.unsplash.com/photo-1532413992378-f169ac26fff0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
+            "order": null
+          },
+          {
+            "id": "me54GqKI53",
+            "url": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            "order": null
+          }
+        ],
+        "categoryBase": {
+          "id": "d8516bf2-4020-11ed-b878-0242ac120002",
+          "slug": "products",
+          "name": "Productos",
+          "img": ""
+        }
+      }
+    },
+    {
+      "node": {
+        "id": "838de04b-f332-4aa3-82b5-58fac4e6de17",
+        "slug": null,
+        "name": "Pizza Pizza Dough",
+        "description": "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.",
+        "details": null,
+        "freeShipping": true,
+        "price": 47.68,
+        "score": 1,
+        "stock": 57,
+        "discountRate": 0,
+        "limit": 6,
+        "images": [
+          {
+            "id": "ITVUXifwQP",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          },
+          {
+            "id": "UPYaI9fZOi",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          }
+        ],
+        "categoryBase": {
+          "id": "d8516bf2-4020-11ed-b878-0242ac120002",
+          "slug": "products",
+          "name": "Productos",
+          "img": ""
+        }
+      }
+    },
+    {
+      "node": {
+        "id": "48b33c6d-95f1-4a0f-ba7e-0ffe8655f202",
+        "slug": null,
+        "name": "Lobster - Canned Premium",
+        "description": "In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.\n\nSed ante. Vivamus tortor. Duis mattis egestas metus.",
+        "details": null,
+        "freeShipping": true,
+        "price": 227.84,
+        "score": 5,
+        "stock": 60,
+        "discountRate": 0,
+        "limit": 9,
+        "images": [
+          {
+            "id": "oyLLtsQ7rW",
+            "url": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=60",
+            "order": null
+          },
+          {
+            "id": "XsUaObo7fv",
+            "url": "https://images.unsplash.com/photo-1627384113743-6bd5a479fffd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            "order": null
+          },
+          {
+            "id": "me54GqKI53",
+            "url": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            "order": null
+          }
+        ],
+        "categoryBase": {
+          "id": "d8516bf2-4020-11ed-b878-0242ac120002",
+          "slug": "products",
+          "name": "Productos",
+          "img": ""
+        }
+      }
+    }
+  ]
+}

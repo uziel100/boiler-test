@@ -1,14 +1,17 @@
+import { useRouter } from 'next/router'
 import { Box, ButtonBase, Card, CardContent, List, ListItem, ListItemButton, Stack } from '@mui/material'
 import { BpTypography } from 'components/shared'
+import { SkeletonCategoryProducts } from 'components/common'
 import FilterFreeShipping from './FilterFreeShipping'
 import AccordionFilters from './AccordionFilters'
-import FilterPriceRange from './FilterPriceRange'
+import FilterPriceRange from './price/FilterPriceRange'
 import FilterRating from './FilterRating'
 
-const FilterContainer = ({ categories, filters, changeFilters, resetFilters, setEntry }) => {
- 
-  const handleClick = ({ currentCategory, parent }, level = 1) => {
-    setEntry({ ...currentCategory, parent, level })
+const FilterContainer = ({ categories, filters, changeFilters, resetFilters }) => {
+  const router = useRouter()
+
+  const handleClick = currentCategorySlug => {
+    changeFilters({ category: currentCategorySlug })
   }
 
   return (
@@ -33,7 +36,16 @@ const FilterContainer = ({ categories, filters, changeFilters, resetFilters, set
         />
         {/* filtros por rango de precio */}
         <AccordionFilters title="Rango de precio" defaultChecked>
-          <FilterPriceRange onChange={changeFilters} valueMin={filters.priceMin} valueMax={filters.priceMax} />
+          <FilterPriceRange onChange={changeFilters} valueMin={filters.priceMin} valueMax={filters.priceMax}>
+            {({ priceMin, setPriceMin, priceMax, setPriceMax }) => (
+              <>
+                <FilterPriceRange.Input value={priceMin} onChange={e => setPriceMin(e.target.value)} />
+                <span>-</span>
+                <FilterPriceRange.Input value={priceMax} onChange={e => setPriceMax(e.target.value)} />
+                <FilterPriceRange.Submit />
+              </>
+            )}
+          </FilterPriceRange>
         </AccordionFilters>
         {/* filtro por estrellas */}
         <AccordionFilters title="Calificación" defaultChecked>
@@ -43,16 +55,18 @@ const FilterContainer = ({ categories, filters, changeFilters, resetFilters, set
           <BpTypography fontWeight={600} variant="body1" color="primary.main">
             Categorías
           </BpTypography>
+          {!categories && <SkeletonCategoryProducts />}
           {categories &&
             categories.map(entry => (
               <List key={entry.id} disablePadding dense sx={{ mt: 1 }}>
                 <ListItem
+                  selected={entry.slug === router.query?.ctg}
                   sx={{
                     borderBottom: theme => `1px solid ${theme.palette.primary.main}`
                   }}
                   disableGutters
                   secondaryAction={
-                    <ButtonBase onClick={() => handleClick({ currentCategory: entry, parent: null }, 1)}>
+                    <ButtonBase onClick={() => handleClick(entry.slug)}>
                       <BpTypography fontWeight={400} variant="body2" color="grey.700">
                         Ver todo
                       </BpTypography>
@@ -68,7 +82,8 @@ const FilterContainer = ({ categories, filters, changeFilters, resetFilters, set
                     {entry.categories.map(category => (
                       <ListItemButton
                         key={category.id}
-                        onClick={() => handleClick({ currentCategory: category, parent: entry }, 2)}
+                        selected={category.slug === router.query?.ctg}
+                        onClick={() => handleClick(category.slug)}
                         disableGutters
                         sx={{
                           '&.Mui-selected': {

@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState } from 'react'
+import { createContext, useEffect, useMemo, useState } from 'react'
 
 export const FilterProductContext = createContext(null)
 
@@ -12,6 +12,10 @@ const initialState = {
 
 export const FilterProductContextProvider = ({ children, initial = null }) => {
   const [filters, setFilters] = useState(initial || initialState)
+
+  useEffect(() => {
+    setFilters({ ...initial })
+  }, [initial])
 
   const memoFilters = useMemo(
     () => ({

@@ -1,6 +1,4 @@
 import { Box, Slider, styled } from '@mui/material'
-import React from 'react'
-import { formatMoney } from 'utils'
 
 const AirbnbSlider = styled(Slider)(({ theme }) => ({
   color: theme.palette.primary.main,
@@ -45,32 +43,35 @@ const AirbnbSlider = styled(Slider)(({ theme }) => ({
     }
   }
 }))
-const BpSliderRange = () => {
-  const minDistance = 50
-  const [value1, setValue1] = React.useState([0, 50])
+const BpSliderRange = ({ value, setValue, onChange }) => {
+  const minDistance = 20
 
-  const handleChange1 = (event, newValue, activeThumb) => {
+  const handleChange = (event, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) {
       return
     }
 
     if (activeThumb === 0) {
-      setValue1([Math.min(newValue[0], value1[1] - minDistance), value1[1]])
+      setValue([Math.min(newValue[0], value[1] - minDistance), value[1]])
+      onChange({ min: Math.min(newValue[0], value[1] - minDistance), max: value[1] })
     } else {
-      setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)])
+      setValue([value[0], Math.max(newValue[1], value[0] + minDistance)])
+      onChange({ min: value[0], max: Math.max(newValue[1], value[0] + minDistance) })
     }
   }
+
   return (
-    <Box sx={{ ml: value1[0] === 0 ? 1.2 : 'auto', mr: value1[1] === 300 ? 1.2 : 'auto' }} mt={4}>
+    <Box sx={{ ml: value[0] === 0 ? 1.2 : 'auto', mr: value[1] === 300 ? 1.2 : 'auto' }} mt={4}>
       <AirbnbSlider
         min={0}
         max={300}
-        value={value1}
-        onChange={handleChange1}
+        value={value}
+        onChange={handleChange}
         getAriaLabel={index => (index === 0 ? 'Minimum price' : 'Maximum price')}
         valueLabelDisplay="on"
-        step={2}
-        valueLabelFormat={x => `${formatMoney(x, undefined, 2)}`}
+        step={1}
+        // valueLabelFormat={x => `${formatMoney(x, undefined, 2)}`}
+        valueLabelFormat={x => `$${x}`}
         disableSwap
       />
     </Box>

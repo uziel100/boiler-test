@@ -1,11 +1,11 @@
 /* eslint-disable react/no-array-index-key */
-import { Box, Button, FormControl, IconButton, MenuItem, Select, Stack, Tooltip } from '@mui/material'
-import { CardProductNomal, ContainerApp } from 'components/common'
+import { Backdrop, Box, Button, FormControl, IconButton, MenuItem, Select, Stack, Tooltip } from '@mui/material'
+import { CardProductNomal, ContainerApp, SkeletonCategoryProductHistory } from 'components/common'
 import { BpButton, BpTypography } from 'components/shared'
 import FilterContainer from 'features/products/components/filters/FilterContainer'
 import Image from 'next/image'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useProductService } from 'features/products/hooks'
 import { useShoppingCart } from 'features/cart/hooks'
 import { useError } from 'hooks'
@@ -19,34 +19,43 @@ import FilterMobil from '../components/filters/FilterMobil'
 import FilterOrderBy from '../components/filters/FilterOrderBy'
 
 const ProductFilterPage = () => {
-  const { findAllProducts } = useProductService()
+  const { findAllProducts, getProductsCategory, getCategoryHistory } = useProductService()
   const { handleStockProduct } = useShoppingCart()
-  const { getCategoriesDrawer } = useCategoryService()
   const { filters, setFilters, resetFilters } = useFilterProducts()
-  const { showAlert } = useError()
+  const { showAlert, logError } = useError()
   const router = useRouter()
   const [firstMount, setFirstMount] = useState(true)
+  const [secondMount, setSecondMount] = useState(true)
 
   const [products, setProducts] = useState(null)
   const [categoryProducts, setCategoryProducts] = useState(null)
 
   const [entry, setEntry] = useState(null)
 
-  useEffect(() => {
-    findAllProducts({}, { fetchPolicy: 'no-cache' })
-      .then(data => {
-        setTimeout(() => {
-          setProducts(data.edges.map(({ node }) => ({ ...node })))
-        }, 4000)
-      })
-      .catch(console.log)
-  }, [])
+  // useEffect(() => {
+  //   findAllProducts({}, { fetchPolicy: 'no-cache' })
+  //     .then(data => {
+  //       // console.log(data)
+  //       setTimeout(() => {
+  //         setProducts(data.edges.map(({ node }) => ({ ...node })))
+  //       }, 3000)
+  //     })
+  //     .catch(logError)
+  //   // setProducts([])
+  // }, [])
 
   useEffect(() => {
-    getCategoriesDrawer().then(data => {
-      setCategoryProducts(data[0].categories)
+    setCategoryProducts(null)
+    getProductsCategory({
+      where: {
+        slug: router.query.slug
+      }
     })
-  }, [])
+      .then(resp => {
+        setCategoryProducts(resp)
+      })
+      .catch(logError)
+  }, [router.query?.slug])
 
   const handleAddToCart = (product, count) => {
     handleStockProduct(product, count)
@@ -58,38 +67,74 @@ const ProductFilterPage = () => {
       setFirstMount(false)
       return
     }
+
+    if (secondMount) {
+      setSecondMount(false)
+      return
+    }
+
+    // console.log('change filtes..............')
     // console.log('🚀 ~ file: ProductFilterPage.jsx ~ line 49 ~ ProductFilterPage ~ filters', filters)
 
-    const query = []
-    query.push(`type=${'products'}`)
+    // const query = []
+    // query.push(`type=${'products'}`)
     // query.push(`pag=${0}`)
     // query.push(`ord=${'hola'}`)
     // query.push(`num=${12}`)
     // query.push(`asc=${true}`)
-    query.push(`rating=${filters.rating}`)
-    query.push(`priceMin=${filters.priceMin}`)
-    query.push(`priceMax=${filters.priceMax}`)
-    query.push(`freeShipping=${filters.freeShipping}`)
-    query.push(`orderBy=${filters.orderBy}`)
-
-    const customUrl = `${router.pathname}?${query.join('&')}`
-
+    // query.push(`rating=${filters.rating}`)
+    // query.push(`priceMin=${filters.priceMin}`)
+    // query.push(`priceMax=${filters.priceMax}`)
+    // query.push(`freeShipping=${filters.freeShipping}`)
+    // query.push(`orderBy=${filters.orderBy}`)
+    // console.log('::::::::::::::::::0', filters)
+    // const customUrl = `${router.asPath.split('?')[0]}?${query.join('&')}`
+    const { slug = null, ...otherQuery } = router.query
     router.push(
       {
-        pathname: router.pathname,
+        pathname: router.asPath.split('?')[0],
         query: {
+          ...otherQuery,
           rating: filters.rating,
           freeShipping: filters.freeShipping,
           priceMin: filters.priceMin,
-          princeMax: filters.priceMax
+          priceMax: filters.priceMax,
+          ctg: filters?.category || router.query?.ctg,
+          orderBy: filters?.orderBy || 'none'
         }
       },
-      customUrl,
+      undefined,
       {
         shallow: true
       }
     )
+    setProducts(null)
+    findAllProducts({}, { fetchPolicy: 'no-cache' })
+      .then(data => {
+        setTimeout(() => {
+          setProducts(data.edges.map(({ node }) => ({ ...node })))
+        }, 1000)
+      })
+      .catch(logError)
   }, [filters])
+
+  useEffect(() => {
+    setEntry(null)
+    setProducts(null)
+    getCategoryHistory(router.query?.slug, { where: { slug: [router.query?.ctg] } })
+      .then(data => {
+        setEntry(data)
+      })
+      .catch(logError)
+    findAllProducts({}, { fetchPolicy: 'no-cache' })
+      .then(data => {
+        // console.log(data)
+        setTimeout(() => {
+          setProducts(data.edges.map(({ node }) => ({ ...node })))
+        }, 1000)
+      })
+      .catch(logError)
+  }, [router.query?.ctg])
 
   const [open, setOpen] = React.useState(false)
 
@@ -97,7 +142,13 @@ const ProductFilterPage = () => {
 
   return (
     <>
-      <FilterMobil open={open} handleClose={handleClose} />
+      <FilterMobil
+        changeFilters={currentFilters => setFilters(data => ({ ...data, ...currentFilters }))}
+        open={open}
+        handleClose={handleClose}
+        filters={filters}
+      />
+
       <ContainerApp sx={{ mt: 4, mb: 20 }}>
         <Box
           display="grid"
@@ -126,78 +177,82 @@ const ProductFilterPage = () => {
               mb={2}
               sx={{ boxShadow: '0px 1px 20px rgba(0, 0, 0, 0.07)', borderRadius: '8px', py: 1, px: 2 }}
             >
-              <Stack direction="row" justifyContent="space-between" gap={1.5}>
-                <Stack
-                  direction="row"
-                  gap={1}
-                  alignItems="center"
-                  sx={{
-                    maxWidth: entry?.level > 1 && entry?.categories?.length > 0 ? '200px' : 'auto',
-                    overflow: 'hidden',
-                    pr: 1
-                  }}
-                >
+              {!entry && <SkeletonCategoryProductHistory />}
+              {entry && (
+                <Stack direction="row" justifyContent="space-between" gap={1.5}>
+                  <Stack
+                    direction="row"
+                    gap={1}
+                    alignItems="center"
+                    sx={{
+                      maxWidth: entry?.parent && entry?.categories?.length > 0 ? '200px' : 'auto',
+                      overflow: 'hidden',
+                      pr: 1
+                    }}
+                  >
+                    {entry && (
+                      <>
+                        {entry?.parent && (
+                          <IconButton
+                            onClick={() => setFilters(data => ({ ...data, category: entry?.parent.slug }))}
+                            sx={{ flexShrink: 0 }}
+                          >
+                            <KeyboardArrowLeftIcon />
+                          </IconButton>
+                        )}
+                        <Tooltip title={entry.name} placement="top">
+                          <Stack direction="row" alignItems="center" gap={0.5}>
+                            <Image objectFit="contain" src={entry.img} width={38} height={47} />
+                            <BpTypography fontWeight={600} variant="body2" noWrap>
+                              {entry.name}
+                            </BpTypography>
+                          </Stack>
+                        </Tooltip>
+                      </>
+                    )}
+                  </Stack>
                   {entry && (
-                    <>
-                      {entry?.level > 1 && (
-                        <IconButton onClick={() => setEntry({ ...entry.parent })} sx={{ flexShrink: 0 }}>
-                          <KeyboardArrowLeftIcon />
-                        </IconButton>
-                      )}
-                      <Tooltip title={entry.name} placement="top">
-                        <Stack direction="row" alignItems="center" gap={1.5}>
-                          <Image
-                            objectFit="contain"
-                            src="/images/category/category-comida.svg"
-                            width={35}
-                            height={47}
-                          />
-                          <BpTypography fontWeight={600} variant="body2" noWrap>
-                            {entry.name}
-                          </BpTypography>
-                        </Stack>
-                      </Tooltip>
-                    </>
+                    <Stack
+                      maxWidth="320px"
+                      overflow="scroll"
+                      direction="row"
+                      alignItems="center"
+                      justifyContent="space-between"
+                      gap={1}
+                    >
+                      {entry.categories?.map(category => (
+                        <Tooltip key={category.id} title={category.name} placement="top">
+                          <Button
+                            sx={{
+                              boxShadow: 0,
+                              bgcolor: 'grey.200',
+                              color: 'grey.700',
+                              borderRadius: 2,
+                              maxWidth: '120px'
+                            }}
+                            disableElevation
+                            disableFocusRipple
+                            color="inherit"
+                            variant="contained"
+                            onClick={() => setFilters(data => ({ ...data, category: category.slug }))}
+                          >
+                            <BpTypography fontWeight={500} variant="caption" noWrap>
+                              {category.name}
+                            </BpTypography>
+                          </Button>
+                        </Tooltip>
+                      ))}
+                    </Stack>
                   )}
                 </Stack>
-                {entry && entry.level > 1 && (
-                  <Stack
-                    maxWidth="320px"
-                    overflow="scroll"
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="space-between"
-                    gap={1}
-                  >
-                    {entry.categories?.map(category => (
-                      <Tooltip key={category.id} title={category.name} placement="top">
-                        <Button
-                          sx={{
-                            boxShadow: 0,
-                            bgcolor: 'grey.200',
-                            color: 'grey.700',
-                            borderRadius: 2,
-                            maxWidth: '120px'
-                          }}
-                          disableElevation
-                          disableFocusRipple
-                          color="inherit"
-                          variant="contained"
-                          onClick={() => setEntry({ ...category, parent: entry, level: entry.level + 1 })}
-                        >
-                          <BpTypography fontWeight={500} variant="caption" noWrap>
-                            {category.name}
-                          </BpTypography>
-                        </Button>
-                      </Tooltip>
-                    ))}
-                  </Stack>
-                )}
-              </Stack>
-              <BpButton fullWidth={false} variant="text" onClick={() => setOpen(true)}>
+              )}
+              {/* <BpButton fullWidth={false} variant="text" onClick={() => setOpen(true)}>
                 open
-              </BpButton>
-              <FilterOrderBy value="none" />
+              </BpButton> */}
+              <FilterOrderBy
+                value={filters.orderBy}
+                onChange={e => setFilters(prev => ({ ...prev, orderBy: e.target.value }))}
+              />
             </Stack>
             <ProductsContainer products={products}>
               {({ loading, items }) => (

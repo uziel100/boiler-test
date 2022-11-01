@@ -8,6 +8,7 @@ const useError = () => {
   // const { enqueueSnackbar } = useSnackbar()
 
   const logError = (error, message) => {
+    console.log(error)
     if (error.message.includes('[custom]')) {
       const messageText = error.message.split(':').pop().trim()
       toast.error(messageText)

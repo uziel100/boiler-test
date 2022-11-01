@@ -1,9 +1,9 @@
-import { categoriesDrawer } from './queries.graphql'
+import { DRAWER_CATEGORIES } from './queries.graphql'
 
 const categoriesService = async (apolloClient, variables = {}, options = {}) => {
   try {
     const resp = await apolloClient.query({
-      query: categoriesDrawer,
+      query: DRAWER_CATEGORIES,
       variables: { ...variables },
       ...options
     })

@@ -15,7 +15,7 @@ const FilterPriceRange = ({ onChange, valueMin, valueMax }) => {
     const valuePriceMax = parseInt(priceMax, 10)
 
     if (valuePriceMax < valuePriceMin) {
-      showAlert('Rango de precios invalido', 'error')
+      showAlert('Rango de precios inválido', 'error')
       return
     }
 

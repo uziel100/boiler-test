@@ -2,7 +2,7 @@ import { List, ListItem, ListItemButton, ListItemIcon } from '@mui/material'
 import { useSidebarAmazonContextProvider } from 'features/common/context'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import SidebarRow from './SidebarRow'
-import SidebarTitle from './SidebarTitle'
+// import SidebarTitle from './SidebarTitle'
 
 const SidebarSubcontainer = () => {
   const { setSubContainer, subContainerEntries } = useSidebarAmazonContextProvider()
@@ -20,12 +20,19 @@ const SidebarSubcontainer = () => {
         </ListItemButton>
       </ListItem>
       <List>
-        {subContainerEntries?.categories?.map(category => (
+        {subContainerEntries?.children?.nodes?.map(category => (
           <div key={category.id}>
-            <SidebarTitle name={`${category.name}-${subContainerEntries.root}`} />
-            {category?.categories?.map(entry => (
+            <SidebarRow
+              key={category.id}
+              root={subContainerEntries.root}
+              rootSlug={subContainerEntries.rootSlug}
+              name={category.name}
+              entry={category}
+            />
+            {/* <SidebarTitle name={`${category.name}-${subContainerEntries.root}`} />
+            {category?.children?.nodes?.map(entry => (
               <SidebarRow key={entry.id} root={subContainerEntries.root} name={entry.name} entry={entry} />
-            ))}
+            ))} */}
           </div>
         ))}
       </List>
