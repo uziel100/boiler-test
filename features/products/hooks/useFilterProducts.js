@@ -1,7 +1,7 @@
 // import { useContext } from 'react'
 // import { FilterProductContext } from '../context/FilterProductContext'
 
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { FilterProductContext } from '../context/FilterProductContext'
 
 const initialState = {
@@ -13,20 +13,37 @@ const initialState = {
 }
 
 const useFilterProducts = () => {
-  // const [filters, setFilters] = useState(initialState)
   const { filters, setFilters } = useContext(FilterProductContext)
-
-  // console.log('xxx---', filters)
+  const [countFilters, setCountFilters] = useState(0)
 
   const resetFilters = () => {
-    // console.log('reset filters ----', initialState)
     setFilters(initialState)
   }
+
+  const changeFilters = customFilters => {
+    setFilters(prev => ({ ...prev, ...customFilters }))
+  }
+
+  const calculateCountFilters = () => {
+    let count = 0
+    if (initialState.freeShipping !== filters.freeShipping) count++
+    if (initialState.priceMin + filters.priceMax > 0) count++
+    if (initialState.orderBy !== filters.orderBy) count++
+    if (initialState.rating !== filters.rating) count++
+
+    setCountFilters(count)
+  }
+
+  useEffect(() => {
+    calculateCountFilters()
+  }, [filters])
 
   return {
     filters,
     setFilters,
-    resetFilters
+    resetFilters,
+    changeFilters,
+    countFilters
   }
 }
 export default useFilterProducts

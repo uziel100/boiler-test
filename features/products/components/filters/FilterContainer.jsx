@@ -11,7 +11,7 @@ const FilterContainer = ({ categories, filters, changeFilters, resetFilters }) =
   const router = useRouter()
 
   const handleClick = currentCategorySlug => {
-    changeFilters({ category: currentCategorySlug })
+    changeFilters({ ctg: currentCategorySlug })
   }
 
   return (

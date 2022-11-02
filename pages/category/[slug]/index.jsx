@@ -1,16 +1,16 @@
-// import { Backdrop } from '@mui/material'
 import { LayoutMain } from 'components/layouts'
 import { FilterProductContextProvider } from 'features/products/context/FilterProductContext'
 import ProductFilterPage from 'features/products/pages/ProductFilterPage'
+import { parseFiltersUrlProducts } from 'features/products/utils'
+import { addApolloState, initializeApollo } from 'utils'
 
 // eslint-disable-next-line arrow-body-style
-const CategoriesRootPage = ({ filterSSR, products }) => {
+const CategoriesRootPage = ({ filtersSSR }) => {
   // console.log({ products })
-
+  console.log({ filtersSSR })
   return (
-    <FilterProductContextProvider initial={filterSSR}>
+    <FilterProductContextProvider initial={filtersSSR}>
       <ProductFilterPage />
-      {/* <Backdrop sx={{ zIndex: 9999, overflow: 'hidden' }} open /> */}
     </FilterProductContextProvider>
   )
 }
@@ -20,28 +20,23 @@ CategoriesRootPage.getLayout = function getLayout(page) {
 }
 
 export async function getServerSideProps({ query = {} }) {
-  const filters = {
+  const apolloClient = initializeApollo()
+
+  const DEFAULT_FILTERS = {
     freeShipping: false,
     priceMin: 0,
     priceMax: 0,
     orderBy: 'none',
     rating: 0
   }
-  if (query?.rating) filters.rating = parseInt(query.rating, 10)
-  if (query?.freeShipping === 'true') filters.freeShipping = true
-  if (query?.freeShipping === 'false') filters.freeShipping = false
-  if (query?.priceMin) filters.priceMin = parseInt(query.priceMin, 10)
-  if (query?.priceMax) filters.priceMax = parseInt(query.priceMax, 10)
-  if (query?.orderBy) filters.orderBy = query.orderBy
-  const filterSSR = { ...query, ...filters }
-  console.log('🚀 ~ file: index.jsx ~ line 37 ~ getServerSideProps ~ filterSSR', filterSSR)
+  const filtersSSR = parseFiltersUrlProducts(query, DEFAULT_FILTERS)
 
-  return {
+  return addApolloState(apolloClient, {
     props: {
-      filterSSR: Object.entries(filterSSR).length > 0 ? filterSSR : null,
-      products: Array.from(Array(3)).map(() => Math.random())
-    } // will be passed to the page component as props
-  }
+      filtersSSR
+      // products: Array.from(Array(3)).map(() => Math.random())
+    }
+  })
 }
 
 export default CategoriesRootPage

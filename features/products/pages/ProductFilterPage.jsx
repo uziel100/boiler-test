@@ -1,15 +1,14 @@
 /* eslint-disable react/no-array-index-key */
-import { Backdrop, Box, Button, FormControl, IconButton, MenuItem, Select, Stack, Tooltip } from '@mui/material'
+import { Box, Button, IconButton, Stack, Tooltip } from '@mui/material'
 import { CardProductNomal, ContainerApp, SkeletonCategoryProductHistory } from 'components/common'
 import { BpButton, BpTypography } from 'components/shared'
 import FilterContainer from 'features/products/components/filters/FilterContainer'
 import Image from 'next/image'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useProductService } from 'features/products/hooks'
 import { useShoppingCart } from 'features/cart/hooks'
 import { useError } from 'hooks'
-import { useCategoryService } from 'features/common/hooks'
 import { useRouter } from 'next/router'
 import SkeletonProductNormal from 'components/common/feedback/SkeletonProductNormal'
 import useFilterProducts from '../hooks/useFilterProducts'
@@ -17,11 +16,12 @@ import ProductsContainer from '../components/products/ProductsContainer'
 import ProductsPagination from '../components/products/ProductsPagination'
 import FilterMobil from '../components/filters/FilterMobil'
 import FilterOrderBy from '../components/filters/FilterOrderBy'
+import { parseFiltersUrlProducts } from '../utils'
 
 const ProductFilterPage = () => {
   const { findAllProducts, getProductsCategory, getCategoryHistory } = useProductService()
   const { handleStockProduct } = useShoppingCart()
-  const { filters, setFilters, resetFilters } = useFilterProducts()
+  const { filters, resetFilters, changeFilters } = useFilterProducts()
   const { showAlert, logError } = useError()
   const router = useRouter()
   const [firstMount, setFirstMount] = useState(true)
@@ -32,30 +32,9 @@ const ProductFilterPage = () => {
 
   const [entry, setEntry] = useState(null)
 
-  // useEffect(() => {
-  //   findAllProducts({}, { fetchPolicy: 'no-cache' })
-  //     .then(data => {
-  //       // console.log(data)
-  //       setTimeout(() => {
-  //         setProducts(data.edges.map(({ node }) => ({ ...node })))
-  //       }, 3000)
-  //     })
-  //     .catch(logError)
-  //   // setProducts([])
-  // }, [])
+  const [open, setOpen] = React.useState(false)
 
-  useEffect(() => {
-    setCategoryProducts(null)
-    getProductsCategory({
-      where: {
-        slug: router.query.slug
-      }
-    })
-      .then(resp => {
-        setCategoryProducts(resp)
-      })
-      .catch(logError)
-  }, [router.query?.slug])
+  const handleClose = () => setOpen(false)
 
   const handleAddToCart = (product, count) => {
     handleStockProduct(product, count)
@@ -72,36 +51,12 @@ const ProductFilterPage = () => {
       setSecondMount(false)
       return
     }
+    const customFilters = parseFiltersUrlProducts(router.query, filters, false)
 
-    // console.log('change filtes..............')
-    // console.log('🚀 ~ file: ProductFilterPage.jsx ~ line 49 ~ ProductFilterPage ~ filters', filters)
-
-    // const query = []
-    // query.push(`type=${'products'}`)
-    // query.push(`pag=${0}`)
-    // query.push(`ord=${'hola'}`)
-    // query.push(`num=${12}`)
-    // query.push(`asc=${true}`)
-    // query.push(`rating=${filters.rating}`)
-    // query.push(`priceMin=${filters.priceMin}`)
-    // query.push(`priceMax=${filters.priceMax}`)
-    // query.push(`freeShipping=${filters.freeShipping}`)
-    // query.push(`orderBy=${filters.orderBy}`)
-    // console.log('::::::::::::::::::0', filters)
-    // const customUrl = `${router.asPath.split('?')[0]}?${query.join('&')}`
-    const { slug = null, ...otherQuery } = router.query
     router.push(
       {
         pathname: router.asPath.split('?')[0],
-        query: {
-          ...otherQuery,
-          rating: filters.rating,
-          freeShipping: filters.freeShipping,
-          priceMin: filters.priceMin,
-          priceMax: filters.priceMax,
-          ctg: filters?.category || router.query?.ctg,
-          orderBy: filters?.orderBy || 'none'
-        }
+        query: customFilters
       },
       undefined,
       {
@@ -123,6 +78,7 @@ const ProductFilterPage = () => {
     setProducts(null)
     getCategoryHistory(router.query?.slug, { where: { slug: [router.query?.ctg] } })
       .then(data => {
+        console.log(data)
         setEntry(data)
       })
       .catch(logError)
@@ -136,14 +92,23 @@ const ProductFilterPage = () => {
       .catch(logError)
   }, [router.query?.ctg])
 
-  const [open, setOpen] = React.useState(false)
-
-  const handleClose = () => setOpen(false)
+  useEffect(() => {
+    setCategoryProducts(null)
+    getProductsCategory({
+      where: {
+        slug: router.query.slug
+      }
+    })
+      .then(resp => {
+        setCategoryProducts(resp)
+      })
+      .catch(logError)
+  }, [router.query?.slug])
 
   return (
     <>
       <FilterMobil
-        changeFilters={currentFilters => setFilters(data => ({ ...data, ...currentFilters }))}
+        changeFilters={currentFilters => changeFilters({ ...currentFilters })}
         open={open}
         handleClose={handleClose}
         filters={filters}
@@ -164,10 +129,9 @@ const ProductFilterPage = () => {
           <Box sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
             <FilterContainer
               filters={filters}
-              changeFilters={currentFilters => setFilters(data => ({ ...data, ...currentFilters }))}
+              changeFilters={currentFilters => changeFilters({ ...currentFilters })}
               resetFilters={resetFilters}
               categories={categoryProducts}
-              setEntry={setEntry}
             />
           </Box>
           <Box>
@@ -193,10 +157,7 @@ const ProductFilterPage = () => {
                     {entry && (
                       <>
                         {entry?.parent && (
-                          <IconButton
-                            onClick={() => setFilters(data => ({ ...data, category: entry?.parent.slug }))}
-                            sx={{ flexShrink: 0 }}
-                          >
+                          <IconButton onClick={() => changeFilters({ ctg: entry?.parent.slug })} sx={{ flexShrink: 0 }}>
                             <KeyboardArrowLeftIcon />
                           </IconButton>
                         )}
@@ -234,7 +195,7 @@ const ProductFilterPage = () => {
                             disableFocusRipple
                             color="inherit"
                             variant="contained"
-                            onClick={() => setFilters(data => ({ ...data, category: category.slug }))}
+                            onClick={() => changeFilters({ ctg: category.slug })}
                           >
                             <BpTypography fontWeight={500} variant="caption" noWrap>
                               {category.name}
@@ -246,13 +207,10 @@ const ProductFilterPage = () => {
                   )}
                 </Stack>
               )}
-              {/* <BpButton fullWidth={false} variant="text" onClick={() => setOpen(true)}>
+              <BpButton fullWidth={false} variant="text" onClick={() => setOpen(true)}>
                 open
-              </BpButton> */}
-              <FilterOrderBy
-                value={filters.orderBy}
-                onChange={e => setFilters(prev => ({ ...prev, orderBy: e.target.value }))}
-              />
+              </BpButton>
+              <FilterOrderBy value={filters.orderBy} onChange={e => changeFilters({ orderBy: e.target.value })} />
             </Stack>
             <ProductsContainer products={products}>
               {({ loading, items }) => (
@@ -267,6 +225,7 @@ const ProductFilterPage = () => {
                         price={product.price}
                         title={product.name}
                         rating={product.score}
+                        discount={product.discountRate > 0}
                         freeShipping={product.freeShipping}
                         onAddToCart={count => handleAddToCart(product, count)}
                       />
