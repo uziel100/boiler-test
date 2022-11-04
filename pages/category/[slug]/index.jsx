@@ -27,7 +27,7 @@ export async function getServerSideProps({ query = {} }) {
     priceMin: 0,
     priceMax: 0,
     orderBy: 'none',
-    // ctg: query.slug,
+    ctg: query?.ctg || query.slug,
     rating: 0
   }
   const filtersSSR = parseFiltersUrlProducts(query, DEFAULT_FILTERS)

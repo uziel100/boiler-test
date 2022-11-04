@@ -27,6 +27,7 @@ const ProductFilterPage = () => {
   const router = useRouter()
   const [firstMount, setFirstMount] = useState(true)
   const [secondMount, setSecondMount] = useState(true)
+  const [thirthMount, setThirthMount] = useState(true)
 
   const [products, setProducts] = useState(null)
   const [categoryProducts, setCategoryProducts] = useState(null)
@@ -76,7 +77,11 @@ const ProductFilterPage = () => {
   }, [filters])
 
   useEffect(() => {
-    getCategoryHistory(router.query?.slug, !isDeviceDesktop, { where: { slug: [router.query?.ctg] } })
+    if (thirthMount) {
+      setThirthMount(false)
+      return
+    }
+    getCategoryHistory(router.query?.slug, !isDeviceDesktop, { where: { slug: [router.query?.ctg || filters?.ctg] } })
       .then(data => {
         setEntry(data)
       })
@@ -87,7 +92,7 @@ const ProductFilterPage = () => {
     setEntry(null)
     setProducts(null)
     // changeFilters({ ctg: router.query?.ctg })
-    getCategoryHistory(router.query?.slug, !isDeviceDesktop, { where: { slug: [router.query?.ctg] } })
+    getCategoryHistory(router.query?.slug, !isDeviceDesktop, { where: { slug: [router.query?.ctg || filters?.ctg] } })
       .then(data => {
         setEntry(data)
       })
