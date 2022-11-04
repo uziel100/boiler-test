@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import {
   AppBar,
   Box,
+  ButtonBase,
   CardContent,
   Dialog,
   FormControl,
@@ -51,13 +52,18 @@ const OptionsOrderBy = [
   }
 ]
 
-const FilterMobil = ({ open, handleClose, changeFilters, filters: customFilter }) => {
+const FilterMobil = ({ open, handleClose, changeFilters, filters: customFilter, resetFilters }) => {
   const [filters, setFilters] = useState(customFilter)
 
   const [value, setValue] = React.useState([0, 50])
 
   const handleChange = (name, newValue) => {
     setFilters(prev => ({ ...prev, [name]: newValue }))
+  }
+
+  const handleResetFilters = () => {
+    resetFilters()
+    handleClose()
   }
 
   const applyFilters = e => {
@@ -90,7 +96,9 @@ const FilterMobil = ({ open, handleClose, changeFilters, filters: customFilter }
         </Toolbar>
       </AppBar>
       <Box component="form" onSubmit={applyFilters}>
-        <CardContent sx={{ mt: 5, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <CardContent
+          sx={{ mt: 5, display: 'flex', flexDirection: 'column', gap: '1.5rem', overflowY: 'scroll', pb: 16 }}
+        >
           <Box>
             <BpTypography textAlign="left" fontWeight={500} variant="body1" color="grey.800" component="p">
               Ordenar por
@@ -189,16 +197,18 @@ const FilterMobil = ({ open, handleClose, changeFilters, filters: customFilter }
         </CardContent>
         <AppBar elevation={4} color="default" position="fixed" sx={{ top: 'auto', bottom: 0 }}>
           <Toolbar variant="regular" sx={{ gap: 2, justifyContent: 'space-between' }}>
-            <BpTypography
-              sx={{ display: 'block', minWidth: '100px' }}
-              textAlign="left"
-              fontWeight={500}
-              variant="body2"
-              color="grey.700"
-              component="p"
-            >
-              Quitar filtros
-            </BpTypography>
+            <ButtonBase onClick={handleResetFilters}>
+              <BpTypography
+                sx={{ display: 'block', minWidth: '100px' }}
+                textAlign="left"
+                fontWeight={500}
+                variant="body2"
+                color="grey.700"
+                component="p"
+              >
+                Quitar filtros
+              </BpTypography>
+            </ButtonBase>
             <BpButton
               type="submit"
               onClick={applyFilters}

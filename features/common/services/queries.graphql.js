@@ -134,6 +134,9 @@ export const CATEGORY_HISTORY = gql`
             id
             name
             slug
+            image {
+              sourceUrl
+            }
           }
         }
       }

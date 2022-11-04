@@ -2,12 +2,13 @@ import { useApolloClient } from '@apollo/client'
 import productsSeeds from 'seeds/products'
 import { useCallback } from 'react'
 import { produtcsCategoryAdapter, produtcsCategoryHistoryAdapter } from '../adapters'
-import { categoryHistoryService, productsCategoryService, productsService } from '../services'
+import { categoryHistoryService, productsCategoryService } from '../services'
 
 const useProductService = () => {
   const apolloClient = useApolloClient()
 
   const findAllProducts = useCallback(
+    // eslint-disable-next-line no-unused-vars
     async (variables, options = {}) => {
       try {
         // const data = await productsService(apolloClient, variables, options)
@@ -33,10 +34,10 @@ const useProductService = () => {
   )
 
   const getCategoryHistory = useCallback(
-    async (slugBaseCategory, variables) => {
+    async (slugBaseCategory, isMobil, variables) => {
       try {
         const data = await categoryHistoryService(apolloClient, variables, { fetchPolicy: 'cache' })
-        return produtcsCategoryHistoryAdapter(data.response, slugBaseCategory)
+        return produtcsCategoryHistoryAdapter(data.response, slugBaseCategory, isMobil)
       } catch (error) {
         throw new Error(error)
       }

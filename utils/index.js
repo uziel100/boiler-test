@@ -1,4 +1,5 @@
 export * from './apolloClient'
+export { default as capitalize } from './capitalize'
 export { default as createEmotionCache } from './createEmotionCache'
 export { default as formatMoney } from './formatMoney'
 export { default as getCookiesParsed } from './getCookiesParsed'

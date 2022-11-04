@@ -5,18 +5,17 @@ import { useError } from 'hooks'
 import React from 'react'
 
 const repeatSkeleton = (num, component) => {
-  const items = new Array(num).fill(0);
+  const items = new Array(num).fill(0)
 
-
-  return items.map(() => component )
+  return items.map(() => component)
 }
 
 const ProductsContainer = ({ products = undefined, children }) => {
   // const { handleStockProduct } = useShoppingCart()
   // const { showAlert } = useError()
 
-  const loading = !products;
-  const items = products || [];
+  const loading = !products
+  const items = products || []
 
   // const handleAddToCart = (product, count) => {
   //   handleStockProduct(product, count)
@@ -39,7 +38,7 @@ const ProductsContainer = ({ products = undefined, children }) => {
         }
       }}
     >
-        { children({ loading, items }) }
+      {children({ loading, items })}
     </Box>
   )
 }

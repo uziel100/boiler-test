@@ -1,4 +1,4 @@
-import { Box, Stack } from '@mui/material'
+import { Stack } from '@mui/material'
 import ItemControlCounter from './ItemControlCounter'
 import ItemMedia from './ItemMedia'
 import ItemSubTotalProduct from './ItemSubTotalProduct'
@@ -19,7 +19,7 @@ const ItemProduct = ({
     sx={{
       borderBottom: theme => `1px solid ${theme.palette.grey[300]}`,
       mt: 1,
-      pb: 0.4,
+      pb: 0.4
     }}
   >
     <ItemMedia alt={product.name} imgUrl={product.images[0].url} />
@@ -31,8 +31,7 @@ const ItemProduct = ({
         price={product.price}
         handleRemoveOfCart={handleRemoveOfCart}
       />
-      <Stack sx={{
-      }} width="100%" direction="row" justifyContent="space-between" alignItems="center">
+      <Stack sx={{}} width="100%" direction="row" justifyContent="space-between" alignItems="center">
         <ItemControlCounter product={product} count={count} handleChange={handleIncremetDecrementProduct} />
         <ItemSubTotalProduct total={calculateTotalByProduct(product.price, count)} />
       </Stack>

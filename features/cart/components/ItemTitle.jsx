@@ -3,7 +3,6 @@ import { BpTypography } from 'components/shared'
 import { IconTrash } from 'components/icons'
 import { formatMoney } from 'utils'
 
-
 const ItemTitle = ({ name, description, productId, price = 0, handleRemoveOfCart }) => (
   <>
     <Stack width="100%" direction="row" justifyContent="space-between" alignItems="flex-start" gap={1}>
@@ -15,8 +14,8 @@ const ItemTitle = ({ name, description, productId, price = 0, handleRemoveOfCart
           {description}
         </BpTypography>
       </Box>
-      <Box sx={{mt:-1}}>
-        <IconButton  onClick={() => handleRemoveOfCart(productId)}>
+      <Box sx={{ mt: -1 }}>
+        <IconButton onClick={() => handleRemoveOfCart(productId)}>
           <IconTrash />
         </IconButton>
       </Box>

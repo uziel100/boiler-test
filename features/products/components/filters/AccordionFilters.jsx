@@ -3,8 +3,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { BpTypography } from 'components/shared'
 import { useState } from 'react'
 
-const AccordionFilters = ({ title,  children, defaultChecked = true }) => {
-
+const AccordionFilters = ({ title, children, defaultChecked = true }) => {
   const [checked, setChecked] = useState(defaultChecked)
 
   return (
@@ -39,6 +38,5 @@ const AccordionFilters = ({ title,  children, defaultChecked = true }) => {
       <AccordionDetails sx={{ p: 0, mt: 0 }}>{children}</AccordionDetails>
     </Accordion>
   )
-
 }
 export default AccordionFilters

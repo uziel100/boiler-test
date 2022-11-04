@@ -36,7 +36,7 @@ const NavbarMain = () => {
   return (
     <>
       <NavbarApp>
-        <ContainerApp>
+        <ContainerApp sx={{ px: 0 }}>
           <Stack direction="row" gap={2} alignItems="center" justifyContent="space-between">
             <Stack direction="row" gap={4}>
               <NavbarApp.Logo openDrawer={onOpenDrawer} />
