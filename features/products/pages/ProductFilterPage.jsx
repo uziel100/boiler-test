@@ -1,8 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-array-index-key */
-import { Box, Button, IconButton, Stack, Tooltip, useMediaQuery } from '@mui/material'
-import { ButtonFilterProduct, CardProductNomal, ContainerApp, SkeletonCategoryProductHistory } from 'components/common'
+import { Box, Button, Chip, IconButton, Stack, Tooltip, useMediaQuery } from '@mui/material'
+import {
+  BannerQuoteWithoutPaying,
+  ButtonFilterProduct,
+  CardProductNomal,
+  ContainerApp,
+  SkeletonCategoryProductHistory
+} from 'components/common'
 import { BpButton, BpTypography } from 'components/shared'
+import ClearIcon from '@mui/icons-material/Clear'
 import FilterContainer from 'features/products/components/filters/FilterContainer'
 import Image from 'next/image'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
@@ -19,10 +26,44 @@ import FilterMobil from '../components/filters/FilterMobil'
 import FilterOrderBy from '../components/filters/FilterOrderBy'
 import { parseFiltersUrlProducts } from '../utils'
 
+const OptionsOrderBy = [
+  {
+    id: 0,
+    value: 'none',
+    text: 'Ninguno'
+  },
+  {
+    id: 1,
+    value: 'popular',
+    text: 'Populares'
+  },
+  {
+    id: 2,
+    value: 'opinion',
+    text: 'Opinion media de los clientes'
+  },
+  {
+    id: 3,
+    value: 'new',
+    text: 'Nuevo'
+  },
+  {
+    id: 4,
+    value: 'mayor',
+    text: 'Mayor precio'
+  },
+  {
+    id: 5,
+    value: 'menor',
+    text: 'Menor precio'
+  }
+]
+
 const ProductFilterPage = () => {
   const { findAllProducts, getProductsCategory, getCategoryHistory } = useProductService()
   const { handleStockProduct } = useShoppingCart()
-  const { filters, resetFilters, changeFilters, countFilters } = useFilterProducts()
+  const { filters, resetFilters, changeFilters, countFilters, chipFilters, handleDeleteChipFilter } =
+    useFilterProducts()
   const { showAlert, logError } = useError()
   const router = useRouter()
   const [firstMount, setFirstMount] = useState(true)
@@ -120,6 +161,8 @@ const ProductFilterPage = () => {
       .catch(logError)
   }, [router.query?.slug])
 
+  const handleDeleteChip = key => handleDeleteChipFilter(key)
+
   return (
     <>
       <FilterMobil
@@ -153,42 +196,7 @@ const ProductFilterPage = () => {
               resetFilters={resetFilters}
               categories={categoryProducts}
             />
-            <Box
-              position="relative"
-              overflow="hidden"
-              mt={3}
-              borderRadius={2}
-              bgcolor="primary.100"
-              padding="16px 12px"
-              zIndex={1}
-            >
-              <BpTypography fontWeight={500} variant="body2" color="grey.800">
-                ¿No encuentras lo que buscas?
-              </BpTypography>
-              <BpTypography sx={{ lineHeight: '20px', mt: 1 }} fontWeight={500} variant="body2" color="grey.700">
-                En UEY te ofrecemos la opción de <strong> Cotizar sin pagar</strong>, ¡Ve ahora!
-              </BpTypography>
-              <Box
-                zIndex={-1}
-                left="-63px"
-                top="36px"
-                position="absolute"
-                bgcolor="primary.300"
-                width="124px"
-                height="116px"
-                borderRadius="50%"
-              />
-              <Box
-                zIndex={-1}
-                right="-55px"
-                top="-52px"
-                position="absolute"
-                bgcolor="primary.300"
-                width="124px"
-                height="116px"
-                borderRadius="50%"
-              />
-            </Box>
+            <BannerQuoteWithoutPaying />
           </Box>
           <Box>
             {isDeviceDesktop ? (
@@ -271,88 +279,113 @@ const ProductFilterPage = () => {
                 <FilterOrderBy value={filters.orderBy} onChange={e => changeFilters({ orderBy: e.target.value })} />
               </Stack>
             ) : (
-              <Stack direction="row" justifyContent="space-between" mb={2}>
-                {!entry && <SkeletonCategoryProductHistory />}
-                {entry && (
-                  <Box width="100%">
-                    <Stack direction="row" gap={0} alignItems="center" justifyContent="space-between">
-                      {router.query.slug !== entry.slug && (
-                        <Stack direction="row" gap={0} alignItems="center">
-                          {entry?.parent && (
-                            <IconButton
-                              onClick={() => changeFilters({ ctg: entry?.parent.slug })}
-                              sx={{ flexShrink: 0, ml: -2 }}
-                            >
-                              <KeyboardArrowLeftIcon />
-                            </IconButton>
-                          )}
-                          <Tooltip title={entry.name} placement="top">
-                            <Stack direction="row" alignItems="center" gap={0.5}>
-                              <Image objectFit="contain" src={entry.img} width={38} height={47} />
-                              <BpTypography fontWeight={600} variant="body1" color="grey.800" noWrap>
-                                {entry.name}
-                              </BpTypography>
-                            </Stack>
-                          </Tooltip>
-                        </Stack>
-                      )}
-                      {entry.categories?.length === 0 && (
-                        <ButtonFilterProduct onClick={() => setOpen(true)} count={countFilters} />
-                      )}
-                    </Stack>
-                    {entry.categories?.length > 0 && (
-                      <Box mt={1}>
-                        <BpTypography
-                          fontWeight={router.query.slug === entry.slug ? 500 : 600}
-                          fontVariant={router.query.slug === entry.slug ? 'primary' : 'secondary'}
-                          variant="body2"
-                          color="grey.700"
-                          noWrap
-                        >
-                          {router.query.slug !== entry.slug ? 'Explora la categoría' : 'Selecciona una categoría'}
-                        </BpTypography>
-                        <Box mt={1} display="grid" gridTemplateColumns="1fr 50px" alignItems="center" gap={1}>
-                          <Stack direction="row" alignItems="center" gap={1} overflow="scroll">
-                            {entry.categories?.map(category => (
-                              <Tooltip key={category.id} title={category.name} placement="top">
-                                <Button
-                                  sx={{
-                                    boxShadow: 0,
-                                    bgcolor: 'grey.200',
-                                    color: 'grey.700',
-                                    borderRadius: 2,
-                                    height: '100%',
-                                    maxWidth: {
-                                      xs: 'auto'
-                                      // md: '120px'
-                                    },
-                                    minWidth: 'auto',
-                                    gap: '4px'
-                                  }}
-                                  disableElevation
-                                  disableFocusRipple
-                                  color="inherit"
-                                  variant="contained"
-                                  onClick={() => changeFilters({ ctg: category.slug })}
-                                >
-                                  {router.query.slug === entry.slug && (
-                                    <img alt={category.name} src={category.img} width={38} height={40} />
-                                  )}
-                                  <BpTypography color="grey.700" fontWeight={500} variant="caption" noWrap>
-                                    {category.name}
-                                  </BpTypography>
-                                </Button>
-                              </Tooltip>
-                            ))}
+              <>
+                <Stack direction="row" justifyContent="space-between" mb={2}>
+                  {!entry && <SkeletonCategoryProductHistory />}
+                  {entry && (
+                    <Box width="100%">
+                      <Stack direction="row" gap={0} alignItems="center" justifyContent="space-between">
+                        {router.query.slug !== entry.slug && (
+                          <Stack direction="row" gap={0} alignItems="center">
+                            {entry?.parent && (
+                              <IconButton
+                                onClick={() => changeFilters({ ctg: entry?.parent.slug })}
+                                sx={{ flexShrink: 0, ml: -2 }}
+                              >
+                                <KeyboardArrowLeftIcon />
+                              </IconButton>
+                            )}
+                            <Tooltip title={entry.name} placement="top">
+                              <Stack direction="row" alignItems="center" gap={0.5}>
+                                <Image objectFit="contain" src={entry.img} width={38} height={47} />
+                                <BpTypography fontWeight={600} variant="body1" color="grey.800" noWrap>
+                                  {entry.name}
+                                </BpTypography>
+                              </Stack>
+                            </Tooltip>
                           </Stack>
+                        )}
+                        {entry.categories?.length === 0 && (
                           <ButtonFilterProduct onClick={() => setOpen(true)} count={countFilters} />
+                        )}
+                      </Stack>
+                      {entry.categories?.length > 0 && (
+                        <Box mt={1}>
+                          <BpTypography
+                            fontWeight={router.query.slug === entry.slug ? 500 : 600}
+                            fontVariant={router.query.slug === entry.slug ? 'primary' : 'secondary'}
+                            variant="body2"
+                            color="grey.700"
+                            noWrap
+                          >
+                            {router.query.slug !== entry.slug ? 'Explora la categoría' : 'Selecciona una categoría'}
+                          </BpTypography>
+                          <Box mt={1} display="grid" gridTemplateColumns="1fr 50px" alignItems="center" gap={1}>
+                            <Stack direction="row" alignItems="center" gap={1} overflow="scroll">
+                              {entry.categories?.map(category => (
+                                <Tooltip key={category.id} title={category.name} placement="top">
+                                  <Button
+                                    sx={{
+                                      boxShadow: 0,
+                                      bgcolor: 'grey.200',
+                                      color: 'grey.700',
+                                      borderRadius: 2,
+                                      height: '100%',
+                                      maxWidth: {
+                                        xs: 'auto'
+                                        // md: '120px'
+                                      },
+                                      minWidth: 'auto',
+                                      gap: '4px'
+                                    }}
+                                    disableElevation
+                                    disableFocusRipple
+                                    color="inherit"
+                                    variant="contained"
+                                    onClick={() => changeFilters({ ctg: category.slug })}
+                                  >
+                                    {router.query.slug === entry.slug && (
+                                      <img alt={category.name} src={category.img} width={38} height={40} />
+                                    )}
+                                    <BpTypography color="grey.700" fontWeight={500} variant="caption" noWrap>
+                                      {category.name}
+                                    </BpTypography>
+                                  </Button>
+                                </Tooltip>
+                              ))}
+                            </Stack>
+                            <ButtonFilterProduct onClick={() => setOpen(true)} count={countFilters} />
+                          </Box>
                         </Box>
-                      </Box>
-                    )}
-                  </Box>
-                )}
-              </Stack>
+                      )}
+                    </Box>
+                  )}
+                </Stack>
+                <Box display="grid" gridTemplateColumns="1fr" overflow="scroll">
+                  <Stack width="100%" minWidth="320px" gap={1} mb={2} direction="row" justifyContent="flex-start">
+                    {chipFilters.map(item => (
+                      <Chip
+                        key={item.key}
+                        size="small"
+                        sx={{
+                          bgcolor: 'grey.200',
+                          fontSize: '12px',
+                          color: theme => theme.palette.grey[800]
+                        }}
+                        label={
+                          item.key !== 'orderBy'
+                            ? item.value
+                            : OptionsOrderBy.find(itemT => itemT.value === item.value).text
+                        }
+                        onDelete={() => handleDeleteChip(item.key)}
+                        deleteIcon={<ClearIcon sx={{ path: { color: theme => theme.palette.grey[800] } }} />}
+                      />
+                    ))}
+                  </Stack>
+                </Box>
+              </>
             )}
+
             <ProductsContainer products={products}>
               {({ loading, items }) => (
                 <>
@@ -381,6 +414,12 @@ const ProductFilterPage = () => {
                 </BpTypography>
               </BpButton>
             </Box>
+            <BannerQuoteWithoutPaying
+              display={{
+                xs: 'block',
+                md: 'none'
+              }}
+            />
           </Box>
         </Box>
       </ContainerApp>

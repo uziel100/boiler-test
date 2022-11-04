@@ -66,8 +66,15 @@ const CardProductNormal = ({
         flexDirection="row"
         sx={{
           bgcolor: 'grey.200',
-          width: '50px',
-          height: '25px',
+          paddingX: 0.3,
+          width: {
+            sm: '40px',
+            md: '50px'
+          },
+          height: {
+            xs: '20px',
+            md: '25px'
+          },
           borderRadius: '1.5rem',
           display: {
             xs: 'flex',
@@ -82,8 +89,24 @@ const CardProductNormal = ({
         alignItems="center"
         gap="2px"
       >
-        <StarRoundedIcon color="primary" sx={{ fontSize: '18px' }} fontSize="small" />
-        <BpTypography fontWeight={400} variant="caption" color="grey.700">
+        <StarRoundedIcon
+          color="primary"
+          sx={{
+            fontSize: {
+              xs: '15px',
+              md: '18px'
+            }
+          }}
+          fontSize="small"
+        />
+        <BpTypography
+          sx={{
+            fontSize: { xs: '10x', sm: '12px' }
+          }}
+          fontWeight={400}
+          variant="caption"
+          color="grey.700"
+        >
           {`${rating.toFixed(1)}`}
         </BpTypography>
       </Stack>
@@ -146,8 +169,16 @@ const CardProductNormal = ({
             flexDirection="row"
             sx={{
               bgcolor: 'grey.200',
-              width: '50px',
-              height: '25px',
+              // width: '50px',
+              // height: '25px',
+              width: {
+                sm: '40px',
+                md: '50px'
+              },
+              height: {
+                xs: '20px',
+                md: '25px'
+              },
               borderRadius: '1.5rem',
               display: {
                 xs: 'none',

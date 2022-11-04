@@ -11,6 +11,7 @@ const initialState = {
 }
 
 export const FilterProductContextProvider = ({ children, initial = null }) => {
+  const [initialFilters] = useState(initial || initialState)
   const [filters, setFilters] = useState(initial || initialState)
 
   useEffect(() => {
@@ -20,7 +21,8 @@ export const FilterProductContextProvider = ({ children, initial = null }) => {
   const memoFilters = useMemo(
     () => ({
       filters,
-      setFilters
+      setFilters,
+      initialFilters
     }),
     [filters]
   )
