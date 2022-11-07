@@ -132,7 +132,6 @@ const ProductFilterPage = () => {
   useEffect(() => {
     setEntry(null)
     setProducts(null)
-    // changeFilters({ ctg: router.query?.ctg })
     getCategoryHistory(router.query?.slug, !isDeviceDesktop, { where: { slug: [router.query?.ctg || filters?.ctg] } })
       .then(data => {
         setEntry(data)
@@ -140,7 +139,6 @@ const ProductFilterPage = () => {
       .catch(logError)
     findAllProducts({}, { fetchPolicy: 'no-cache' })
       .then(data => {
-        // console.log(data)
         setTimeout(() => {
           setProducts(data.edges.map(({ node }) => ({ ...node })))
         }, 1000)

@@ -7,7 +7,8 @@ const initialState = {
   priceMin: 0,
   priceMax: 0,
   orderBy: 'none',
-  rating: 0
+  rating: 0,
+  tags: []
 }
 
 export const FilterProductContextProvider = ({ children, initial = null }) => {

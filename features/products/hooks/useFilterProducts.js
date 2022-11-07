@@ -5,21 +5,23 @@ import { useContext, useEffect, useState } from 'react'
 import { formatMoney } from 'utils'
 import { FilterProductContext } from '../context/FilterProductContext'
 
-const initialState = {
+const initialFilters = {
   freeShipping: false,
   priceMin: 0,
   priceMax: 0,
   orderBy: 'none',
-  rating: 0
+  rating: 0,
+  tags: []
 }
 
 const useFilterProducts = () => {
-  const { filters, setFilters, initialFilters } = useContext(FilterProductContext)
+  const { filters, setFilters } = useContext(FilterProductContext)
   const [countFilters, setCountFilters] = useState(0)
   const [chipFilters, setChipFilters] = useState([])
 
   const resetFilters = () => {
-    setFilters(initialState)
+    // const { ctg, ...rest } = initialFilters
+    setFilters(initialFilters)
   }
 
   const changeFilters = customFilters => {
@@ -29,28 +31,28 @@ const useFilterProducts = () => {
   const calculateCountFilters = () => {
     let count = 0
     const filtersSelected = {}
-    if (initialState.freeShipping !== filters.freeShipping) {
+    if (initialFilters.freeShipping !== filters.freeShipping) {
       filtersSelected.freeShipping = {
         key: 'freeShipping',
         value: 'Envío gratis'
       }
       count++
     }
-    if (initialState.priceMin + filters.priceMax > 0) {
+    if (initialFilters.priceMin + filters.priceMax > 0) {
       filtersSelected.priceRange = {
         key: 'priceRange',
         value: `${formatMoney(filters.priceMin)} - ${formatMoney(filters.priceMax)}`
       }
       count++
     }
-    if (initialState.orderBy !== filters.orderBy) {
+    if (initialFilters.orderBy !== filters.orderBy) {
       filtersSelected.orderBy = {
         key: 'orderBy',
         value: `${filters.orderBy}`
       }
       count++
     }
-    if (initialState.rating !== filters.rating) {
+    if (initialFilters.rating !== filters.rating) {
       filtersSelected.rating = {
         key: 'rating',
         value: `Calif. ${filters.rating}.0`
@@ -59,7 +61,6 @@ const useFilterProducts = () => {
     }
 
     setCountFilters(count)
-    // console.log(Object.values(filtersSelected))
     setChipFilters(Object.values(filtersSelected))
   }
 

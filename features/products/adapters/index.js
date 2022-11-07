@@ -35,3 +35,13 @@ export const produtcsCategoryHistoryAdapter = (data, slugBaseCategory, isMobil =
 
   return categoryBase
 }
+
+export const tagsListAdapter = data =>
+  data?.nodes?.map(
+    item =>
+      ({
+        id: item.id,
+        title: item.name,
+        text: item.name
+      } || [])
+  )

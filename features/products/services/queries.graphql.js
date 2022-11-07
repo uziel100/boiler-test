@@ -77,3 +77,15 @@ export const PRODUCTS_CATEGORY = gql`
     }
   }
 `
+
+export const TAGS_PRODUCTS = gql`
+  query ($where: RootQueryToTagConnectionWhereArgs) {
+    response: tags(where: $where) {
+      nodes {
+        id
+        description
+        name
+      }
+    }
+  }
+`

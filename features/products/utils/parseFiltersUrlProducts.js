@@ -12,6 +12,7 @@ const parseFiltersUrlProducts = (query = {}, defaultFilters = {}, srr = true) =>
   if (query?.priceMax) filters.priceMax = parseInt(query.priceMax, 10)
   if (query?.orderBy) filters.orderBy = query.orderBy
   if (query?.category) filters.ctg = query.category
+  if (query?.tags) filters.tags = typeof query.tags === 'string' ? [query.tags] : query.tags
 
   filters = { ...queryRest, ...filters }
 

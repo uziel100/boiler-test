@@ -21,6 +21,7 @@ import { BpButton, BpSliderRange, BpTypography } from 'components/shared'
 import FilterFreeShipping from './FilterFreeShipping'
 import FilterPriceRange from './price/FilterPriceRange'
 import FilterRating from './FilterRating'
+import FilterByTags from './FilterByTags'
 
 const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />)
 
@@ -71,6 +72,13 @@ const FilterMobil = ({ open, handleClose, changeFilters, filters: customFilter, 
     changeFilters({ ...filters })
 
     handleClose()
+  }
+
+  const handleChangeFilterTags = (tagsSelected = []) => {
+    handleChange(
+      'tags',
+      tagsSelected.map(item => item.id)
+    )
   }
 
   useEffect(() => {
@@ -193,6 +201,23 @@ const FilterMobil = ({ open, handleClose, changeFilters, filters: customFilter, 
               onChange={({ rating }) => handleChange('rating', rating)}
             />
           </Stack>
+          <Box>
+            <BpTypography
+              sx={{ mb: 1 }}
+              textAlign="left"
+              fontWeight={500}
+              variant="body1"
+              color="grey.800"
+              component="p"
+            >
+              Etiquetas
+            </BpTypography>
+            <FilterByTags
+              size="medium"
+              defaultValues={filters?.tags}
+              onChange={tagsSelected => handleChangeFilterTags(tagsSelected)}
+            />
+          </Box>
           {/* <pre>{JSON.stringify(filters, null, 3)}</pre> */}
         </CardContent>
         <AppBar elevation={4} color="default" position="fixed" sx={{ top: 'auto', bottom: 0 }}>

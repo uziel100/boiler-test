@@ -6,12 +6,17 @@ import FilterFreeShipping from './FilterFreeShipping'
 import AccordionFilters from './AccordionFilters'
 import FilterPriceRange from './price/FilterPriceRange'
 import FilterRating from './FilterRating'
+import FilterByTags from './FilterByTags'
 
 const FilterContainer = ({ categories, filters, changeFilters, resetFilters }) => {
   const router = useRouter()
 
   const handleClick = currentCategorySlug => {
     changeFilters({ ctg: currentCategorySlug })
+  }
+
+  const handleChangeFilterTags = (tagsSelected = []) => {
+    changeFilters({ tags: tagsSelected.map(item => item.id) })
   }
 
   return (
@@ -51,6 +56,13 @@ const FilterContainer = ({ categories, filters, changeFilters, resetFilters }) =
         <AccordionFilters title="Calificación" defaultChecked>
           <FilterRating name="filter-rating" value={filters.rating} onChange={changeFilters} />
         </AccordionFilters>
+        {/* filtro por tags */}
+        <Box my={2}>
+          <BpTypography fontWeight={600} variant="body2" color="grey.700" sx={{ fontSize: '14px', mb: 1 }}>
+            Etiquetas
+          </BpTypography>
+          <FilterByTags defaultValues={filters?.tags} onChange={tagsSelected => handleChangeFilterTags(tagsSelected)} />
+        </Box>
         <Box>
           <BpTypography fontWeight={600} variant="body1" color="primary.main">
             Categorías
