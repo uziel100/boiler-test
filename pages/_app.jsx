@@ -22,6 +22,7 @@ import 'slick-carousel/slick/slick-theme.css'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
+import 'photoswipe/style.css'
 import '../components/styles/styles.global.css'
 import { AppContextProvider } from 'context/app/AppContext'
 
