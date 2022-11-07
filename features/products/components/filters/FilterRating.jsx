@@ -1,6 +1,4 @@
-import StarRoundedIcon from '@mui/icons-material/StarRounded'
-import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded'
-import { Rating } from '@mui/material'
+import { InputRating } from 'components/common'
 
 const FilterRating = ({ name = 'rating', value, onChange }) => {
   const handleChange = newValue => {
@@ -8,13 +6,11 @@ const FilterRating = ({ name = 'rating', value, onChange }) => {
   }
 
   return (
-    <Rating
+    <InputRating
       name={name}
       value={value}
       color="primary"
       size="large"
-      icon={<StarRoundedIcon color="primary" fontSize="inherit" />}
-      emptyIcon={<StarBorderRoundedIcon fontSize="inherit" />}
       onChange={(event, newValue) => {
         handleChange(+newValue)
       }}

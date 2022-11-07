@@ -7,7 +7,6 @@ import { addApolloState, initializeApollo } from 'utils'
 // eslint-disable-next-line arrow-body-style
 const CategoriesRootPage = ({ filtersSSR }) => {
   // console.log({ products })
-  console.log({ filtersSSR })
   return (
     <FilterProductContextProvider initial={filtersSSR}>
       <ProductFilterPage />
@@ -28,6 +27,7 @@ export async function getServerSideProps({ query = {} }) {
     priceMax: 0,
     orderBy: 'none',
     ctg: query?.ctg || query.slug,
+    tags: [],
     rating: 0
   }
   const filtersSSR = parseFiltersUrlProducts(query, DEFAULT_FILTERS)
