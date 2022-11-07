@@ -5,8 +5,8 @@ import { formatMoney } from 'utils'
 import { Box, CardActions, CardContent, Stack, useMediaQuery } from '@mui/material'
 import { BpButton, BpTextField, BpTypography } from 'components/shared'
 import StarRoundedIcon from '@mui/icons-material/StarRounded'
-import { IconCartDelivery } from 'components/icons'
 import { StyledCard } from './StyledCommon'
+import { ChipFreeShipping } from '../chips'
 
 const CardProductNormal = ({
   img,
@@ -122,24 +122,9 @@ const CardProductNormal = ({
           alt={title}
         />
         {freeShipping && (
-          <Stack
-            direction="row"
-            alignItems="center"
-            gap={1}
-            sx={{
-              bgcolor: 'grey.100',
-              borderRadius: 4,
-              padding: '4px 8px',
-              position: 'absolute',
-              bottom: 15,
-              left: 10
-            }}
-          >
-            <IconCartDelivery />
-            <BpTypography color="grey.700" fontWeight={400} sx={{ fontSize: '10px' }}>
-              ¡Envío gratis!
-            </BpTypography>
-          </Stack>
+          <Box position="absolute" bottom={15} left={10}>
+            <ChipFreeShipping />
+          </Box>
         )}
       </Box>
       <Stack flexDirection="column" alignContent="space-between" gap={1} pt={1} pb={2} px={1}>

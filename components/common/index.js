@@ -1,6 +1,7 @@
 export * from './button'
 export * from './cards'
 export * from './carousel'
+export * from './chips'
 export * from './feedback'
 export * from './footer'
 export * from './input'
