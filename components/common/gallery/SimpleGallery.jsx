@@ -51,7 +51,15 @@ export default function SimpleGallery({ galleryID, images, onCurrentImage, curre
           }}
           onClick={() => onCurrentImage(image)}
         >
-          <Image objectFit="cover" width={64} height={64} src={image.thumbnailURL} alt="Imagen galey" />
+          <Image
+            placeholder="blur"
+            blurDataURL="/images/blur-xs.jpg"
+            objectFit="cover"
+            width={64}
+            height={64}
+            src={image.thumbnailURL}
+            alt="Imagen galey"
+          />
         </Button>
       ))}
     </Box>

@@ -1,14 +1,21 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/anchor-has-content */
-import { Avatar, Box, CardContent, Divider, Stack } from '@mui/material'
+import { Avatar, Box, Button, ButtonGroup, CardContent, Divider, Stack } from '@mui/material'
 import { ChipFreeShipping, ContainerApp, ContainerCard, InputRating } from 'components/common'
 import { LayoutMain } from 'components/layouts'
 import { BpButton, BpTextField, BpTypography } from 'components/shared'
 import React, { useEffect, useState } from 'react'
 import { addApolloState, initializeApollo } from 'utils'
+import CheckIcon from '@mui/icons-material/Check'
 import PhotoSwipeLightbox from 'photoswipe/lightbox'
 import Image from 'next/image'
 import SimpleGallery from 'components/common/gallery/SimpleGallery'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Pagination } from 'swiper'
+import IconAdd from '@mui/icons-material/Add'
+import IconRemove from '@mui/icons-material/Remove'
+import { useCounter } from 'features/common/hooks'
 
 const IMAGES = [
   {
@@ -90,6 +97,7 @@ const ProductDetailPageRoot = () => {
 
   const [count, setCount] = useState(1)
   const [currentImage, setCurrentImage] = useState(IMAGES[0].largeURL)
+  const { count: countValue, decrementCount, incrementCount } = useCounter({ initialValue: 1, min: 1, max: 10 })
 
   const onChangeCount = e => {
     setCount(e.target.value)
@@ -114,60 +122,167 @@ const ProductDetailPageRoot = () => {
     }
   }, [])
 
+  console.log({ countValue })
+
   return (
     <>
       {/* <DialogFulLScreen open={viewerIsOpen} onClose={() => setViewerIsOpen(false)} /> */}
-      <ContainerApp sx={{ my: 10 }}>
+      <ContainerApp sx={{ mt: 6, mb: 5 }}>
         {/* <Button onClick={() => setViewerIsOpen(true)}>Opne</Button> */}
-        <Stack direction="row" justifyContent="space-between">
-          <SimpleGallery
-            currentImage={currentImage}
-            onCurrentImage={item => setCurrentImage(item.largeURL)}
-            galleryID="my-test-gallery"
-            images={IMAGES}
-          />
-          <Box
-            sx={{
-              width: '528px',
-              height: '528px',
-              bgcolor: 'grey.200'
-            }}
-            id="my-test-gallery"
-            className="pswp-gallery"
-          >
-            {IMAGES.map(image =>
-              image.largeURL === currentImage ? (
-                <a
-                  key={image.largeURL}
-                  href={currentImage}
-                  data-pswp-width={1200}
-                  data-pswp-height={1200}
-                  target="_blank"
-                  style={{ position: 'relative' }}
-                  rel="noreferrer"
-                >
-                  <Image
-                    placeholder="blur"
-                    blurDataURL="/images/banner-xs.jpg"
-                    width={528}
-                    height={528}
-                    src={currentImage}
-                  />
-                </a>
-              ) : (
-                <a
-                  key={image.largeURL}
-                  href={image.largeURL}
-                  data-pswp-width={1200}
-                  data-pswp-height={1200}
-                  target="_blank"
-                  style={{ position: 'relative' }}
-                  rel="noreferrer"
-                />
-              )
-            )}
+        {/* <Box display="flex" gap={3}>
+          <Box display="flex" flexDirection="column" gap={3}>
+            <Box display="flex" flexDirection="row" gap={4}>
+              <SimpleGallery
+                currentImage={currentImage}
+                onCurrentImage={item => setCurrentImage(item.largeURL)}
+                // galleryID="my-test-gallery"
+                images={IMAGES}
+              />
+              <Box
+                sx={{
+                  minWidth: '0px',
+                  maxWidth: '680px',
+                  // width: '640px',
+                  // flexBasis: '40%',
+                  // height: 'auto',
+                  bgcolor: 'grey.200',
+                  borderRadius: '12px'
+                }}
+                // id="my-test-gallery"
+                className="pswp-gallery"
+              >
+                {IMAGES.map(image =>
+                  image.largeURL === currentImage ? (
+                    <a
+                      key={image.largeURL}
+                      href={currentImage}
+                      data-pswp-width={1200}
+                      data-pswp-height={1200}
+                      target="_blank"
+                      style={{ position: 'relative' }}
+                      rel="noreferrer"
+                    >
+                      <Image
+                        placeholder="blur"
+                        blurDataURL="/images/blur-sm.jpg"
+                        width={680}
+                        objectFit="cover"
+                        height={646}
+                        src={currentImage}
+                        style={{ borderRadius: '12px' }}
+                      />
+                    </a>
+                  ) : (
+                    <a
+                      key={image.largeURL}
+                      href={image.largeURL}
+                      data-pswp-width={1200}
+                      data-pswp-height={1200}
+                      target="_blank"
+                      style={{ position: 'relative' }}
+                      rel="noreferrer"
+                    />
+                  )
+                )}
+              </Box>
+            </Box>
+            <ContainerCard>
+              <CardContent>
+                <Stack flexDirection="column" gap={1}>
+                  <Box>
+                    <BpTypography color="grey.800" component="p" fontWeight={600} variant="h5" sx={{ mb: 1 }}>
+                      Descripción
+                    </BpTypography>
+                    <BpTypography
+                      color="grey.600"
+                      fontVariant="secondary"
+                      component="p"
+                      fontWeight={400}
+                      variant="body1"
+                    >
+                      Para consentirte y disfrutar, nada como el refrescante sabor de Coca-Cola Original. Disfruta de su
+                      delicioso sabor en todo momento y con tus platillos favoritos. Coca-Cola. Siente el sabor. Haz más
+                      ricas tus comidas con el delicioso y refrescante sabor de Coca-Cola. Coca-Cola. Siente el sabor.
+                    </BpTypography>
+                  </Box>
+                  <Box>
+                    <BpTypography
+                      fontVariant="secondary"
+                      color="grey.700"
+                      component="p"
+                      fontWeight={600}
+                      variant="body2"
+                      sx={{ mb: 1 }}
+                    >
+                      Incluye:
+                    </BpTypography>
+                    <Box display="flex" gap={1} flexDirection="column" component="div">
+                      <Box component="div" display="flex" alignItems="center" gap={2}>
+                        <CheckIcon color="primary" sx={{ display: 'inline' }} />
+                        <BpTypography
+                          fontVariant="secondary"
+                          color="grey.600"
+                          component="p"
+                          fontWeight={400}
+                          variant="body2"
+                          sx={{ display: 'inline' }}
+                        >
+                          Mesa alta rectangular (1.80 x 0.60 x 1.00 mts.)
+                        </BpTypography>
+                      </Box>
+                      <Box component="div" display="flex" alignItems="center" gap={2}>
+                        <CheckIcon color="primary" sx={{ display: 'inline' }} />
+                        <BpTypography
+                          fontVariant="secondary"
+                          color="grey.600"
+                          component="p"
+                          fontWeight={400}
+                          variant="body2"
+                          sx={{ display: 'inline' }}
+                        >
+                          Mesa alta rectangular (1.80 x 0.60 x 1.00 mts.)
+                        </BpTypography>
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Box mt={1}>
+                    <BpTypography color="grey.800" component="p" fontWeight={600} variant="h5" sx={{ mb: 1 }}>
+                      Características
+                    </BpTypography>
+                    <Box mt={2} flexWrap="wrap" display="flex" gap={2} flexDirection="row" component="div">
+                      <Box component="div" display="flex" alignItems="flex-start" gap={2}>
+                        <CheckIcon color="primary" sx={{ display: 'inline' }} />
+                        <BpTypography
+                          fontVariant="secondary"
+                          color="grey.600"
+                          component="p"
+                          fontWeight={400}
+                          variant="body2"
+                          sx={{ display: 'inline' }}
+                        >
+                          Acerca de la característica
+                        </BpTypography>
+                      </Box>
+                      <Box component="div" display="flex" alignItems="flex-start" gap={2}>
+                        <CheckIcon color="primary" sx={{ display: 'inline' }} />
+                        <BpTypography
+                          fontVariant="secondary"
+                          color="grey.600"
+                          component="p"
+                          fontWeight={400}
+                          variant="body2"
+                          sx={{ display: 'inline' }}
+                        >
+                          Acerca de la característica
+                        </BpTypography>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Stack>
+              </CardContent>
+            </ContainerCard>
           </Box>
-          <Box maxWidth={420}>
+          <Box display="flex" flexDirection="column" gap={3}>
             <ContainerCard>
               <CardContent>
                 <Stack flexDirection="column" gap={1}>
@@ -237,8 +352,57 @@ const ProductDetailPageRoot = () => {
                 </Stack>
               </CardContent>
             </ContainerCard>
+            <ContainerCard>
+              <CardContent>
+                <BpTypography color="grey.800" component="p" fontWeight={600} variant="h5">
+                  Información del proveedor
+                </BpTypography>
+                <Stack mt={2.5} gap={2} direction="row" justifyContent="flex-start" alignItems="center">
+                  <Avatar src={undefined} sx={{ width: '4.25rem', height: '4.25rem' }} />
+                  <BpTypography color="grey.700" component="p" fontWeight={600} variant="h5">
+                    Nombre del proveedor
+                  </BpTypography>
+                </Stack>
+                <Stack width="100%" mt={4} gap={1} direction="row" justifyContent="flex-start" alignItems="center">
+                  <Box width="100%" textAlign="center" padding="1.4rem 1rem" bgcolor="grey.200" borderRadius="0.75rem">
+                    <BpTypography color="primary.main" component="p" fontWeight={500} variant="h4">
+                      + 2 años
+                    </BpTypography>
+                    <BpTypography sx={{ mt: 1 }} color="grey.600" component="p" fontWeight={400} variant="body2">
+                      vendiendo con UEY
+                    </BpTypography>
+                  </Box>
+                  <Box width="100%" textAlign="center" padding="1.4rem 1rem" bgcolor="grey.200" borderRadius="0.75rem">
+                    <BpTypography color="primary.main" component="p" fontWeight={500} variant="h4">
+                      + 2 años
+                    </BpTypography>
+                    <BpTypography sx={{ mt: 1 }} color="grey.600" component="p" fontWeight={400} variant="body2">
+                      vendiendo con UEY
+                    </BpTypography>
+                  </Box>
+                  <Box width="100%" textAlign="center" padding="1.4rem 1rem" bgcolor="grey.200" borderRadius="0.75rem">
+                    <BpTypography color="primary.main" component="p" fontWeight={500} variant="h4">
+                      + 2 años
+                    </BpTypography>
+                    <BpTypography sx={{ mt: 1 }} color="grey.600" component="p" fontWeight={400} variant="body2">
+                      vendiendo con UEY
+                    </BpTypography>
+                  </Box>
+                </Stack>
+                <BpTypography
+                  sx={{ mt: 4 }}
+                  textAlign="right"
+                  color="grey.600"
+                  component="p"
+                  fontWeight={600}
+                  variant="body1"
+                >
+                  Ver más acerca del proveedor
+                </BpTypography>
+              </CardContent>
+            </ContainerCard>
           </Box>
-        </Stack>
+        </Box> */}
         <Box>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             <BpTypography color="grey.600" component="p" fontWeight={500} variant="body2">
@@ -250,58 +414,108 @@ const ProductDetailPageRoot = () => {
             <BpTypography color="grey.800" component="h1" fontWeight={600} variant="h5">
               Refresco Coca-Cola Regular 2.5L Lorem ipsum dolor sit
             </BpTypography>
+            <Box my={1} maxWidth="110px">
+              <ChipFreeShipping bgcolor="grey.200" />
+            </Box>
           </Box>
-        </Box>
-
-        <ContainerCard>
-          <CardContent>
-            <BpTypography color="grey.800" component="p" fontWeight={600} variant="h5">
-              Información del proveedor
+          <Swiper
+            pagination={{
+              dynamicBullets: true
+            }}
+            modules={[Pagination]}
+            // className="pswp-gallery"
+            className="mySwiper pswp-gallery"
+            id="my-test-gallery"
+          >
+            {IMAGES.map(image => (
+              <SwiperSlide key={image.largeURL} style={{ width: '300px' }}>
+                <a
+                  href={image.largeURL}
+                  data-pswp-width={1200}
+                  data-pswp-height={1200}
+                  target="_blank"
+                  style={{ position: 'relative', width: '300px' }}
+                  rel="noreferrer"
+                >
+                  <Image
+                    placeholder="blur"
+                    blurDataURL="/images/blur-sm.jpg"
+                    width={328}
+                    layout="responsive"
+                    objectFit="cover"
+                    height={328}
+                    src={image.largeURL}
+                    style={{ borderRadius: '12px' }}
+                  />
+                </a>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <Stack mt={2.25} flexDirection="row" justifyContent="space-between" alignItems="center">
+            <BpTypography color="grey.800" component="p" fontWeight={600} variant="h4">
+              $ 39,00
             </BpTypography>
-            <Stack mt={2.5} gap={2} direction="row" justifyContent="flex-start" alignItems="center">
-              <Avatar src={undefined} sx={{ width: '4.25rem', height: '4.25rem' }} />
-              <BpTypography color="grey.700" component="p" fontWeight={600} variant="h5">
-                Nombre del proveedor
-              </BpTypography>
-            </Stack>
-            <Stack width="100%" mt={4} gap={1} direction="row" justifyContent="flex-start" alignItems="center">
-              <Box width="100%" textAlign="center" padding="1.4rem 1rem" bgcolor="grey.200" borderRadius="0.75rem">
-                <BpTypography color="primary.main" component="p" fontWeight={500} variant="h4">
-                  + 2 años
-                </BpTypography>
-                <BpTypography sx={{ mt: 1 }} color="grey.600" component="p" fontWeight={400} variant="body2">
-                  vendiendo con UEY
-                </BpTypography>
-              </Box>
-              <Box width="100%" textAlign="center" padding="1.4rem 1rem" bgcolor="grey.200" borderRadius="0.75rem">
-                <BpTypography color="primary.main" component="p" fontWeight={500} variant="h4">
-                  + 2 años
-                </BpTypography>
-                <BpTypography sx={{ mt: 1 }} color="grey.600" component="p" fontWeight={400} variant="body2">
-                  vendiendo con UEY
-                </BpTypography>
-              </Box>
-              <Box width="100%" textAlign="center" padding="1.4rem 1rem" bgcolor="grey.200" borderRadius="0.75rem">
-                <BpTypography color="primary.main" component="p" fontWeight={500} variant="h4">
-                  + 2 años
-                </BpTypography>
-                <BpTypography sx={{ mt: 1 }} color="grey.600" component="p" fontWeight={400} variant="body2">
-                  vendiendo con UEY
-                </BpTypography>
-              </Box>
-            </Stack>
-            <BpTypography
-              sx={{ mt: 4 }}
-              textAlign="right"
-              color="grey.600"
-              component="p"
-              fontWeight={600}
-              variant="body1"
+            <ButtonGroup
+              sx={{
+                alignItems: 'center',
+                // gap: 1,
+                height: '40px',
+                '& > .button-contain': {
+                  bgcolor: 'grey.200',
+                  height: '100%',
+                  borderRight: 'none !important'
+                }
+              }}
+              disableElevation
+              variant="contained"
+              aria-label="Disabled elevation buttons"
             >
-              Ver más acerca del proveedor
+              <Button onClick={() => decrementCount()} color="grey" className="button-contain">
+                <IconRemove sx={{ color: 'grey.500' }} />
+              </Button>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                width="100%"
+                height="100%"
+                className="button-contain"
+              >
+                <BpTypography color="grey.700" component="p" fontWeight={600} variant="body1">
+                  {countValue}
+                </BpTypography>
+              </Box>
+              <Button onClick={() => incrementCount()} color="grey" className="button-contain">
+                <IconAdd sx={{ color: 'grey.500' }} />
+              </Button>
+            </ButtonGroup>
+          </Stack>
+          <Box>
+            <BpTypography color="grey.800" component="p" fontWeight={600} variant="h5" sx={{ mb: 1 }}>
+              Descripción
             </BpTypography>
-          </CardContent>
-        </ContainerCard>
+            <BpTypography color="grey.600" fontVariant="secondary" component="p" fontWeight={400} variant="body1">
+              Para consentirte y disfrutar, nada como el refrescante sabor de Coca-Cola Original. Disfruta de su
+              delicioso sabor en todo momento y con tus platillos favoritos. Coca-Cola. Siente el sabor. Haz más ricas
+              tus comidas con el delicioso y refrescante sabor de Coca-Cola. Coca-Cola. Siente el sabor.
+            </BpTypography>
+          </Box>
+          <BpTypography
+            sx={{ mt: 2 }}
+            textAlign="right"
+            color="grey.600"
+            component="p"
+            fontWeight={500}
+            variant="body2"
+          >
+            Ver políticas de envío
+          </BpTypography>
+          <BpButton color="primary" fullWidth type="submit">
+            <BpTypography color="inherit" variant="body2">
+              Añadir al carrito
+            </BpTypography>
+          </BpButton>
+        </Box>
       </ContainerApp>
     </>
   )
