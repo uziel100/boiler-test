@@ -22,8 +22,8 @@ const ItemProduct = ({
       pb: 0.4
     }}
   >
-    <ItemMedia alt={product.name} imgUrl={product.images[0].url} />
-    <Stack gap={1} justifyContent="space-between">
+    <ItemMedia alt={product.name} imgUrl={product.imgUrl} />
+    <Stack width="100%" gap={1} justifyContent="space-between">
       <ItemTitle
         productId={product.id}
         name={product.name}

@@ -4,7 +4,7 @@ import { IconTrash } from 'components/icons'
 import { formatMoney } from 'utils'
 
 const ItemTitle = ({ name, description, productId, price = 0, handleRemoveOfCart }) => (
-  <>
+  <Box width="100%">
     <Stack width="100%" direction="row" justifyContent="space-between" alignItems="flex-start" gap={1}>
       <Box maxWidth="18rem">
         <BpTypography color="grey.800" variant="body2" fontWeight={500} noWrap>
@@ -25,6 +25,6 @@ const ItemTitle = ({ name, description, productId, price = 0, handleRemoveOfCart
         {formatMoney(price)}
       </BpTypography>
     </Box>
-  </>
+  </Box>
 )
 export default ItemTitle
