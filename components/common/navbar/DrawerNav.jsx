@@ -2,13 +2,18 @@ import PropTypes from 'prop-types'
 import { Drawer } from '@mui/material'
 import ButtonCloseFixed from './ButtonCloseFixed'
 
-const DrawerNav = ({ open, onClose, children }) => (
+const WIDTH_TYPE = {
+  menu: { xs: '300px', sm: '340px', md: '350px' },
+  shoppingCart: { xs: '310px', sm: '420px' }
+}
+
+const DrawerNav = ({ open, onClose, children, type = 'menu', anchor = 'left' }) => (
   <Drawer
-    anchor="left"
+    anchor={anchor}
     open={open}
     PaperProps={{
       sx: {
-        width: { xs: '300px', sm: '340px', md: '350px' },
+        width: WIDTH_TYPE[type],
         overflowY: 'scroll',
         overflowX: 'hidden'
       }
@@ -16,7 +21,7 @@ const DrawerNav = ({ open, onClose, children }) => (
     sx={{ zIndex: 9999, transition: 'backdropFilter 300ms ease', backdropFilter: 'blur(4px)' }}
     onClose={onClose}
   >
-    <ButtonCloseFixed onClose={onClose} />
+    <ButtonCloseFixed direction={anchor} onClose={onClose} />
     {children}
   </Drawer>
 )

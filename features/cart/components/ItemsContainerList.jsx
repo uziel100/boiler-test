@@ -1,11 +1,10 @@
 import { Stack } from '@mui/material'
 
-const ItemsContainerList = ({ children }) => (
+const ItemsContainerList = ({ children, maxHeight = '380px' }) => (
   <Stack
     sx={{
-      maxHeight: '380px',
-      // background: 'red',
-      // paddingRight: '6rem',
+      minHeight: maxHeight,
+      maxHeight,
       overflow: 'scroll',
       '& > .cart-product:last-child': {
         borderBottom: 'none'

@@ -1,13 +1,19 @@
 import { ButtonBase } from '@mui/material'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 
-const ButtonCloseFixed = ({ onClose }) => (
+const POSITION = {
+  left: { xs: 280, sm: 320, md: 328 },
+  right: { xs: 290, sm: 400, md: 328 }
+}
+
+const ButtonCloseFixed = ({ onClose, direction = 'left' }) => (
   <ButtonBase
     sx={{
       position: 'fixed',
       top: 30,
-      left: { xs: 280, sm: 320, md: 328 },
-      zIndex: 99999,
+      [direction]: POSITION[direction],
+      zIndex: 9999,
       width: '42px',
       height: '42px',
       borderRadius: '50%',
@@ -16,7 +22,8 @@ const ButtonCloseFixed = ({ onClose }) => (
     }}
     onClick={onClose}
   >
-    <KeyboardArrowLeftIcon color="primary" />
+    {direction === 'left' && <KeyboardArrowLeftIcon color="primary" />}
+    {direction === 'right' && <KeyboardArrowRightIcon color="primary" />}
   </ButtonBase>
 )
 export default ButtonCloseFixed

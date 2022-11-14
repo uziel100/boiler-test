@@ -3,10 +3,10 @@ import { BpTypography } from 'components/shared'
 import { IconTrash } from 'components/icons'
 import { formatMoney } from 'utils'
 
-const ItemTitle = ({ name, description, productId, price = 0, handleRemoveOfCart }) => (
+const ItemTitle = ({ name, description, productId, type = 'normal', price = 0, handleRemoveOfCart }) => (
   <Box width="100%">
     <Stack width="100%" direction="row" justifyContent="space-between" alignItems="flex-start" gap={1}>
-      <Box maxWidth="18rem">
+      <Box maxWidth={{ xs: '8rem', sm: '18rem' }}>
         <BpTypography color="grey.800" variant="body2" fontWeight={500} noWrap>
           {name}
         </BpTypography>
@@ -20,11 +20,13 @@ const ItemTitle = ({ name, description, productId, price = 0, handleRemoveOfCart
         </IconButton>
       </Box>
     </Stack>
-    <Box>
-      <BpTypography color="grey.700" variant="body2" fontWeight={600}>
-        {formatMoney(price)}
-      </BpTypography>
-    </Box>
+    {type === 'normal' && (
+      <Box>
+        <BpTypography color="grey.700" variant="body2" fontWeight={600}>
+          {formatMoney(price)}
+        </BpTypography>
+      </Box>
+    )}
   </Box>
 )
 export default ItemTitle

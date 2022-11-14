@@ -1,4 +1,4 @@
-import { Badge, Box, IconButton, Stack, Tooltip } from '@mui/material'
+import { Badge, Box, IconButton, Stack, Tooltip, useMediaQuery, useTheme } from '@mui/material'
 import { ContainerApp, NavbarApp, SkeletonUserNav } from 'components/common'
 import { IconAccountUser, IconShoppingCart } from 'components/icons'
 import { BpTypography } from 'components/shared'
@@ -8,15 +8,18 @@ import { SidebarAmazonProvider } from 'features/common/context'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { closeDrawer, openDrawer } from 'store/states/ui'
+import { closeDrawer, closeDrawerShoppingCart, openDrawer, openDrawerShoppingCart } from 'store/states/ui'
 import { SidebarNav } from '../sidebar'
+import SidebarShoppingCart from '../sidebarShoppingCart/SidebarShoppingCart'
 
 const NavbarMain = () => {
-  const { openDrawer: openSidebar } = useSelector(store => store.ui)
+  const { openDrawer: openSidebar, openMenuShoppingCart: openSidebarCart } = useSelector(store => store.ui)
   const dispatcher = useDispatch()
   const { totalProducts } = useShoppingCart()
   const session = useSession()
 
+  const theme = useTheme()
+  const isDeviceSm = useMediaQuery(theme.breakpoints.down('md'))
   const [anchorEl, setAnchorEl] = useState(null)
   const [anchorCartShoppingEl, setAnchorCartShoppingEl] = useState(null)
 
@@ -24,13 +27,23 @@ const NavbarMain = () => {
     setAnchorEl(event.currentTarget)
   }
 
-  const openMenuShoppingCart = event => setAnchorCartShoppingEl(event.currentTarget)
-
   const onOpenDrawer = () => {
     dispatcher(openDrawer())
   }
   const onCloseDrawer = () => {
     dispatcher(closeDrawer())
+  }
+
+  const onOpenDrawerShoppingCart = () => {
+    dispatcher(openDrawerShoppingCart())
+  }
+  const onCloseDrawerShoppingCart = () => {
+    dispatcher(closeDrawerShoppingCart())
+  }
+
+  const openMenuShoppingCart = event => {
+    if (!isDeviceSm) setAnchorCartShoppingEl(event.currentTarget)
+    else onOpenDrawerShoppingCart()
   }
 
   return (
@@ -104,14 +117,21 @@ const NavbarMain = () => {
         </ContainerApp>
       </NavbarApp>
       <NavbarApp.MenuAccount anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
-      <MenuShoppingCart anchorEl={anchorCartShoppingEl} setAnchorEl={setAnchorCartShoppingEl} />
-      <NavbarApp.Drawer open={openSidebar} onClose={onCloseDrawer}>
-        <SidebarAmazonProvider>
-          <Box component="nav" position="relative" padding="1rem 0 1rem 0">
-            <SidebarNav />
-          </Box>
-        </SidebarAmazonProvider>
-      </NavbarApp.Drawer>
+      {!isDeviceSm && <MenuShoppingCart anchorEl={anchorCartShoppingEl} setAnchorEl={setAnchorCartShoppingEl} />}
+      {openSidebarCart && isDeviceSm && (
+        <NavbarApp.Drawer type="shoppingCart" anchor="right" open={openSidebarCart} onClose={onCloseDrawerShoppingCart}>
+          <SidebarShoppingCart />
+        </NavbarApp.Drawer>
+      )}
+      {openSidebar && (
+        <NavbarApp.Drawer open={openSidebar} onClose={onCloseDrawer}>
+          <SidebarAmazonProvider>
+            <Box component="nav" position="relative" padding="1rem 0 1rem 0">
+              <SidebarNav />
+            </Box>
+          </SidebarAmazonProvider>
+        </NavbarApp.Drawer>
+      )}
     </>
   )
 }
