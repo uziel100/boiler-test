@@ -1,38 +1,6 @@
 import { FormControl, MenuItem, Select, Stack } from '@mui/material'
 import { BpTypography } from 'components/shared'
-
-const OptionsOrderBy = [
-  {
-    id: 0,
-    value: 'none',
-    text: 'Ninguno'
-  },
-  {
-    id: 1,
-    value: 'popular',
-    text: 'Populares'
-  },
-  {
-    id: 2,
-    value: 'opinion',
-    text: 'Opinion media de los clientes'
-  },
-  {
-    id: 3,
-    value: 'new',
-    text: 'Nuevo'
-  },
-  {
-    id: 4,
-    value: 'mayor',
-    text: 'Mayor precio'
-  },
-  {
-    id: 5,
-    value: 'menor',
-    text: 'Menor precio'
-  }
-]
+import { DEFAULT_OPTIONS_ORDER_BY } from 'features/products/consts'
 
 const FilterOrderBy = ({ value, onChange }) => (
   <Stack
@@ -53,7 +21,7 @@ const FilterOrderBy = ({ value, onChange }) => (
         displayEmpty
         inputProps={{ 'aria-label': 'Without label' }}
       >
-        {OptionsOrderBy.map(item => (
+        {DEFAULT_OPTIONS_ORDER_BY.map(item => (
           <MenuItem key={item.id} value={item.value}>
             {item.text}
           </MenuItem>

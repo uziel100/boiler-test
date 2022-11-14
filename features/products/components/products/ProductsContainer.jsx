@@ -1,27 +1,29 @@
 import { Box } from '@mui/material'
-import { CardProductNomal } from 'components/common'
-import { useShoppingCart } from 'features/cart/hooks'
-import { useError } from 'hooks'
-import React from 'react'
-
-const repeatSkeleton = (num, component) => {
-  const items = new Array(num).fill(0)
-
-  return items.map(() => component)
-}
+import { BpTypography } from 'components/shared'
+import { EMPTY_RESULT } from 'const/products'
+import Image from 'next/image'
 
 const ProductsContainer = ({ products = undefined, children }) => {
-  // const { handleStockProduct } = useShoppingCart()
-  // const { showAlert } = useError()
-
   const loading = !products
   const items = products || []
 
-  // const handleAddToCart = (product, count) => {
-  //   handleStockProduct(product, count)
-  //   showAlert(`Producto añadido a tu cesta`, 'success')
-  // }
-
+  if (!loading && items?.length === 0) {
+    return (
+      <Box my={5} textAlign="center">
+        <Image
+          style={{ textAlign: 'center' }}
+          src={EMPTY_RESULT}
+          width={270}
+          height={190}
+          alt="No se encontraron resultados"
+        />
+        <br />
+        <BpTypography sx={{ mt: 4 }} fontWeight={400} variant="body1" color="grey.700">
+          No se han encontrado resultados
+        </BpTypography>
+      </Box>
+    )
+  }
   return (
     <Box
       sx={{
@@ -29,7 +31,7 @@ const ProductsContainer = ({ products = undefined, children }) => {
         width: '100%',
         gridTemplateColumns: {
           xs: '1fr 1fr',
-          md: 'repeat(auto-fit, minmax(220px, 1fr))'
+          md: `repeat(auto-fit, minmax(220px, ${items.length > 2 ? '1fr' : '300px'}))`
         },
         gap: {
           xs: 2,

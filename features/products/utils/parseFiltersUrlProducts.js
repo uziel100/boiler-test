@@ -2,7 +2,7 @@ const parseFiltersUrlProducts = (query = {}, defaultFilters = {}, srr = true) =>
   let filters = { ...defaultFilters }
   const { slug, ...queryRest } = query
   if (!srr) {
-    return { ...queryRest, ...defaultFilters }
+    return { ...queryRest, ...filters }
   }
 
   if (query?.rating) filters.rating = parseInt(query.rating, 10)
@@ -12,6 +12,7 @@ const parseFiltersUrlProducts = (query = {}, defaultFilters = {}, srr = true) =>
   if (query?.priceMax) filters.priceMax = parseInt(query.priceMax, 10)
   if (query?.orderBy) filters.orderBy = query.orderBy
   if (query?.category) filters.ctg = query.category
+  if (query?.count) filters.count = parseInt(query.count, 10)
   if (query?.tags) filters.tags = typeof query.tags === 'string' ? [query.tags] : query.tags
 
   filters = { ...queryRest, ...filters }

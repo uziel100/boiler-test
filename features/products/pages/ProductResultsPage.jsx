@@ -6,6 +6,7 @@ import {
   ButtonFilterProduct,
   CardProductNomal,
   ContainerApp,
+  LoadingOverlay,
   SkeletonCategoryProductHistory
 } from 'components/common'
 import { BpButton, BpTypography } from 'components/shared'
@@ -25,78 +26,45 @@ import ProductsContainer from '../components/products/ProductsContainer'
 import FilterMobil from '../components/filters/FilterMobil'
 import FilterOrderBy from '../components/filters/FilterOrderBy'
 import { parseFiltersUrlProducts } from '../utils'
+import useProducts from '../hooks/useProducts'
+import { DEFAULT_OPTIONS_ORDER_BY } from '../consts'
 
-const OptionsOrderBy = [
-  {
-    id: 0,
-    value: 'none',
-    text: 'Ninguno'
-  },
-  {
-    id: 1,
-    value: 'popular',
-    text: 'Populares'
-  },
-  {
-    id: 2,
-    value: 'opinion',
-    text: 'Opinion media de los clientes'
-  },
-  {
-    id: 3,
-    value: 'new',
-    text: 'Nuevo'
-  },
-  {
-    id: 4,
-    value: 'mayor',
-    text: 'Mayor precio'
-  },
-  {
-    id: 5,
-    value: 'menor',
-    text: 'Menor precio'
-  }
-]
-
-const ProductFilterPage = () => {
-  const { findAllProducts, getProductsCategory, getCategoryHistory } = useProductService()
+const ProductResultsPage = () => {
+  const router = useRouter()
+  const { getProductsCategory, getCategoryHistory } = useProductService()
   const { handleStockProduct } = useShoppingCart()
   const { filters, resetFilters, changeFilters, countFilters, chipFilters, handleDeleteChipFilter } =
     useFilterProducts()
+  const { getProducts, fetchMoreProducts, products, hasNextPage, loadingFechingMore } = useProducts()
   const { showAlert, logError } = useError()
-  const router = useRouter()
+
   const [firstMount, setFirstMount] = useState(true)
-  const [secondMount, setSecondMount] = useState(true)
   const [thirthMount, setThirthMount] = useState(true)
-
-  const [products, setProducts] = useState(null)
   const [categoryProducts, setCategoryProducts] = useState(null)
-
   const [entry, setEntry] = useState(null)
-
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const isDeviceDesktop = useMediaQuery('(min-width:892px)')
 
   const handleClose = () => setOpen(false)
+  const handleDeleteChip = key => handleDeleteChipFilter(key)
 
   const handleAddToCart = (product, count) => {
     handleStockProduct(product, count)
     showAlert(`Producto añadido a tu cesta`, 'success')
   }
 
+  /**
+   * Efecto para actualizar la url con los filtros
+   * y hacer la solicitud http para obtener los
+   * productos
+   */
   useEffect(() => {
     if (firstMount) {
       setFirstMount(false)
       return
     }
 
-    if (secondMount) {
-      setSecondMount(false)
-      return
-    }
     const customFilters = parseFiltersUrlProducts(router.query, filters, false)
-
     router.push(
       {
         pathname: router.asPath.split('?')[0],
@@ -107,16 +75,15 @@ const ProductFilterPage = () => {
         shallow: true
       }
     )
-    setProducts(null)
-    findAllProducts({}, { fetchPolicy: 'no-cache' })
-      .then(data => {
-        setTimeout(() => {
-          setProducts(data.edges.map(({ node }) => ({ ...node })))
-        }, 1000)
-      })
-      .catch(logError)
+    getProducts()
   }, [filters])
 
+  /**
+   * Efecto para solicitar las categorias en formato:
+   * 1. Agrega todas las categorias sin importar el [slug]
+   * 2. Si la categorias padre hace match con el [slug] no devuelve las
+   * subcategorias de la categorias seleccionada
+   */
   useEffect(() => {
     if (thirthMount) {
       setThirthMount(false)
@@ -131,21 +98,21 @@ const ProductFilterPage = () => {
 
   useEffect(() => {
     setEntry(null)
-    setProducts(null)
     getCategoryHistory(router.query?.slug, !isDeviceDesktop, { where: { slug: [router.query?.ctg || filters?.ctg] } })
       .then(data => {
         setEntry(data)
       })
       .catch(logError)
-    findAllProducts({}, { fetchPolicy: 'no-cache' })
-      .then(data => {
-        setTimeout(() => {
-          setProducts(data.edges.map(({ node }) => ({ ...node })))
-        }, 1000)
-      })
-      .catch(logError)
+    // evitar cambiar la categoria cuando son los mismo y no haga
+    // doble peticon de los productos
+    if (router.query?.ctg === filters?.ctg) return
+    changeFilters({ ctg: router.query?.ctg })
   }, [router.query?.ctg])
 
+  /**
+   * Listar las subcategorias de la categoria base [slug]
+   * para la seccion de filtros en desktop
+   */
   useEffect(() => {
     setCategoryProducts(null)
     getProductsCategory({
@@ -159,18 +126,18 @@ const ProductFilterPage = () => {
       .catch(logError)
   }, [router.query?.slug])
 
-  const handleDeleteChip = key => handleDeleteChipFilter(key)
-
   return (
     <>
-      <FilterMobil
-        changeFilters={currentFilters => changeFilters({ ...currentFilters })}
-        resetFilters={resetFilters}
-        open={open}
-        handleClose={handleClose}
-        filters={filters}
-      />
-
+      <LoadingOverlay open={loadingFechingMore} />
+      {!isDeviceDesktop && (
+        <FilterMobil
+          changeFilters={currentFilters => changeFilters({ ...currentFilters })}
+          resetFilters={resetFilters}
+          open={open}
+          handleClose={handleClose}
+          filters={filters}
+        />
+      )}
       <ContainerApp sx={{ mt: 4, mb: 20 }}>
         <BpTypography color="grey.800" fontWeight={600} textAlign="center" variant="h3">
           {capitalize(router.query.slug || 'Productos')}
@@ -373,7 +340,7 @@ const ProductFilterPage = () => {
                         label={
                           item.key !== 'orderBy'
                             ? item.value
-                            : OptionsOrderBy.find(itemT => itemT.value === item.value).text
+                            : DEFAULT_OPTIONS_ORDER_BY.find(itemT => itemT.value === item.value).text
                         }
                         onDelete={() => handleDeleteChip(item.key)}
                         deleteIcon={<ClearIcon sx={{ path: { color: theme => theme.palette.grey[800] } }} />}
@@ -393,7 +360,7 @@ const ProductFilterPage = () => {
                     products.map(product => (
                       <CardProductNomal
                         key={product.id}
-                        img={product.images.length > 1 ? product.images[0].url : product.images[0].url}
+                        img={product.imgUrl}
                         price={product.price}
                         title={product.name}
                         rating={product.score}
@@ -405,13 +372,21 @@ const ProductFilterPage = () => {
                 </>
               )}
             </ProductsContainer>
-            <Box margin="2rem auto" width="100%" textAlign="center">
-              <BpButton sx={{ borderRadius: 3 }} fullWidth={false} variant="text" color="inherit">
-                <BpTypography variant="body1" color="grey.700" fontWeight={500} sx={{ textDecoration: 'underline' }}>
-                  Ver más
-                </BpTypography>
-              </BpButton>
-            </Box>
+            {hasNextPage && (
+              <Box margin="2rem auto" width="100%" textAlign="center">
+                <BpButton
+                  onClick={fetchMoreProducts}
+                  sx={{ borderRadius: 3 }}
+                  fullWidth={false}
+                  variant="text"
+                  color="inherit"
+                >
+                  <BpTypography variant="body1" color="grey.700" fontWeight={500} sx={{ textDecoration: 'underline' }}>
+                    Ver más
+                  </BpTypography>
+                </BpButton>
+              </Box>
+            )}
             <BannerQuoteWithoutPaying
               display={{
                 xs: 'block',
@@ -425,4 +400,4 @@ const ProductFilterPage = () => {
   )
 }
 
-export default ProductFilterPage
+export default ProductResultsPage

@@ -18,40 +18,13 @@ import {
 import TaskAltIcon from '@mui/icons-material/TaskAlt'
 import ArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import { BpButton, BpSliderRange, BpTypography } from 'components/shared'
+import { DEFAULT_OPTIONS_ORDER_BY } from 'features/products/consts'
 import FilterFreeShipping from './FilterFreeShipping'
 import FilterPriceRange from './price/FilterPriceRange'
 import FilterRating from './FilterRating'
 import FilterByTags from './FilterByTags'
 
 const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />)
-
-const OptionsOrderBy = [
-  {
-    id: 1,
-    value: 'popular',
-    text: 'Populares'
-  },
-  {
-    id: 2,
-    value: 'opinion',
-    text: 'Opinion media de los clientes'
-  },
-  {
-    id: 3,
-    value: 'new',
-    text: 'Nuevo'
-  },
-  {
-    id: 4,
-    value: 'mayor',
-    text: 'Mayor precio'
-  },
-  {
-    id: 5,
-    value: 'menor',
-    text: 'Menor precio'
-  }
-]
 
 const FilterMobil = ({ open, handleClose, changeFilters, filters: customFilter, resetFilters }) => {
   const [filters, setFilters] = useState(customFilter)
@@ -118,7 +91,7 @@ const FilterMobil = ({ open, handleClose, changeFilters, filters: customFilter, 
                 value={filters.orderBy}
                 onChange={e => handleChange('orderBy', e.target.value)}
               >
-                {OptionsOrderBy.map(item => (
+                {DEFAULT_OPTIONS_ORDER_BY.map(item => (
                   <FormControlLabel
                     sx={{
                       '& > span.MuiTypography-root': {

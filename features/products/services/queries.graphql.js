@@ -2,33 +2,51 @@
 import { gql } from '@apollo/client'
 
 export const PRODUCTS = gql`
-  query products($pag: Int, $num: Int, $ord: String, $asc: Boolean, $filter: ProductFilter) {
-    response: products(pag: $pag, num: $num, ord: $ord, asc: $asc, filter: $filter) {
-      totalCount
-      totalEdges
-      hasMore
-      pag
+  query products($first: Int, $after: String, $where: RootQueryToProductConnectionWhereArgs) {
+    response: products(first: $first, after: $after, where: $where) {
+      pageInfo {
+        startCursor
+        hasNextPage
+        hasPreviousPage
+        endCursor
+      }
       edges {
+        cursor
         node {
+          averageRating
+          featured
           id
-          slug
+          databaseId
           name
-          description
-          details
-          price
-          limit
-          score
-          freeShipping
-          images {
-            id
-            url
-            order
+          onSale
+          shortDescription
+          status
+          type
+          image {
+            sourceUrl
+            altText
           }
-          categoryBase {
-            id
-            slug
-            name
-            img
+          ... on SimpleProduct {
+            onSale
+            rawPrice: price(format: RAW)
+            price
+            rawRegularPrice: price(format: RAW)
+            regularPrice
+            rawSalePrice: price(format: RAW)
+            salePrice
+          }
+          ... on GroupProduct {
+            onSale
+            price
+          }
+          ... on VariableProduct {
+            onSale
+            rawPrice: price(format: RAW)
+            price
+            rawRegularPrice: price(format: RAW)
+            regularPrice
+            rawSalePrice: price(format: RAW)
+            salePrice
           }
         }
       }
@@ -37,7 +55,7 @@ export const PRODUCTS = gql`
 `
 
 export const PRODUCTS_CATEGORY = gql`
-  query ($where: RootQueryToProductCategoryConnectionWhereArgs) {
+  query productCategories($where: RootQueryToProductCategoryConnectionWhereArgs) {
     response: productCategories(where: $where) {
       nodes {
         count
@@ -79,7 +97,7 @@ export const PRODUCTS_CATEGORY = gql`
 `
 
 export const TAGS_PRODUCTS = gql`
-  query ($where: RootQueryToTagConnectionWhereArgs) {
+  query tags($where: RootQueryToTagConnectionWhereArgs) {
     response: tags(where: $where) {
       nodes {
         id

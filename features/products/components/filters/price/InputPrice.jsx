@@ -7,7 +7,7 @@ const stylesBase = {
   width: '90px'
 }
 
-const InputPrice = ({ value, onChange, sx = {}, min = 0, max = 300 }) => (
+const InputPrice = ({ value, onChange, sx = {}, min = 0, max = 80000 }) => (
   <InputBase
     type="number"
     sx={{ ...stylesBase, ...sx }}
