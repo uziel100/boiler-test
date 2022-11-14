@@ -1,10 +1,12 @@
 /* eslint-disable max-len */
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import { formatMoney } from 'utils'
 import { Box, CardActions, CardContent, Stack, useMediaQuery } from '@mui/material'
 import { BpButton, BpTextField, BpTypography } from 'components/shared'
 import StarRoundedIcon from '@mui/icons-material/StarRounded'
+import { DEFAULT_BLUR_IMG_XS } from 'const/products'
+import { useRouter } from 'next/router'
 import { StyledCard } from './StyledCommon'
 import { ChipFreeShipping } from '../chips'
 
@@ -17,8 +19,9 @@ const CardProductNormal = ({
   freeShipping = false,
   onAddToCart = () => {}
 }) => {
-  const isXs = useMediaQuery('(min-width:769px)')
+  const isXs = useMediaQuery('(min-width:821px)')
   const [count, setCount] = useState(1)
+  const router = useRouter()
 
   const onChangeCount = e => {
     setCount(e.target.value)
@@ -110,12 +113,12 @@ const CardProductNormal = ({
           {`${rating.toFixed(1)}`}
         </BpTypography>
       </Stack>
-      <Box width="100%" position="relative">
+      <Box onClick={() => router.push('/test-product')} width="100%" position="relative">
         <Image
           objectFit="cover"
           layout="responsive"
           placeholder="blur"
-          blurDataURL={img}
+          blurDataURL={DEFAULT_BLUR_IMG_XS}
           width={252}
           height={210}
           src={img}
@@ -128,8 +131,18 @@ const CardProductNormal = ({
         )}
       </Box>
       <Stack flexDirection="column" alignContent="space-between" gap={1} pt={1} pb={2} px={1}>
-        <CardContent sx={{ p: '0 0.5rem', maxHeight: '60px', minHeight: 'auto', overflow: 'hidden' }}>
-          <BpTypography variant="body2" fontWeight={400} color="grey.700">
+        <CardContent sx={{ p: '0 0.5rem', height: '40px', minHeight: 'auto', overflow: 'hidden' }}>
+          <BpTypography
+            sx={{
+              display: '-webkit-box',
+              WebkitLineClamp: '2',
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden'
+            }}
+            variant="body2"
+            fontWeight={400}
+            color="grey.700"
+          >
             {title}
           </BpTypography>
         </CardContent>
@@ -191,7 +204,7 @@ const CardProductNormal = ({
             inputProps={{ min: 1, max: 10, required: true }}
           />
           <BpButton color="primary" fullWidth type="submit">
-            <BpTypography color="inherit" variant="body2">
+            <BpTypography color="inherit" variant="body2" noWrap>
               {isXs ? 'Añadir al carrito' : 'Añadir'}
             </BpTypography>
           </BpButton>
@@ -200,4 +213,6 @@ const CardProductNormal = ({
     </StyledCard>
   )
 }
-export default CardProductNormal
+
+export default React.memo(CardProductNormal, (prev, next) => prev.img === next.img)
+// export default CardProductNormal
