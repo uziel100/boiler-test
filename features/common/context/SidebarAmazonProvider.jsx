@@ -13,17 +13,23 @@ export const SidebarAmazonProvider = ({ children }) => {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    let isMounted = true
     setLoading(true)
     getCategoriesDrawer()
       .then(data => {
-        setEntryStore(data)
+        if (isMounted) {
+          setEntryStore(data)
+        }
       })
       .catch(() => {
         showAlert('Ocurrio un error al recuperar las categorias', 'error')
       })
       .finally(() => {
-        setLoading(false)
+        if (isMounted) setLoading(false)
       })
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   const memorized = useMemo(
