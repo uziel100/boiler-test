@@ -1,8 +1,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/anchor-has-content */
-import { Avatar, Box, Button, ButtonGroup, CardContent, Divider, Stack } from '@mui/material'
-import { ChipFreeShipping, ContainerApp, ContainerCard, InputRating } from 'components/common'
+import { Avatar, Box, Button, ButtonGroup, CardContent, Divider, Stack, useMediaQuery, useTheme } from '@mui/material'
+import {
+  CardProductNomal,
+  CardProductSmall,
+  Carousel,
+  ChipFreeShipping,
+  ContainerApp,
+  ContainerCard,
+  InputRating
+} from 'components/common'
 import { LayoutMain } from 'components/layouts'
 import { BpButton, BpTextField, BpTypography } from 'components/shared'
 import React, { useEffect, useState } from 'react'
@@ -16,6 +24,13 @@ import { Pagination } from 'swiper'
 import IconAdd from '@mui/icons-material/Add'
 import IconRemove from '@mui/icons-material/Remove'
 import { useCounter } from 'features/common/hooks'
+import CardBasicInfoProvider from 'features/products/components/detail/CardBasicInfoProvider'
+import CardInfoProduct from 'features/products/components/detail/CardInfoProduct'
+import PreviewMobilProduct from 'features/products/components/preview/PreviewMobilProduct'
+import PreviewDesktopProduct from 'features/products/components/preview/PreviewDesktopProduct'
+import CardBasicInfoProduct from 'features/products/components/detail/CardBasicInfoProduct'
+import productsSeeds from 'seeds/products'
+import SectionQuestionAnswer from 'features/products/components/questions-answers/SectionQuestionAnswer'
 
 const IMAGES = [
   {
@@ -42,6 +57,17 @@ const IMAGES = [
     width: 1200,
     height: 1200
   }
+]
+
+const items = [
+  { id: 1, title: 'Coca cola light1', price: 20, rating: 3, img: '/images/testImages/image-01.jpg' },
+  { id: 2, title: 'Coca cola light2', price: 18, rating: 1, img: '/images/testImages/image-02.jpg' },
+  { id: 3, title: 'Coca cola light3', price: 26, rating: 2, img: '/images/testImages/image-03.jpg' },
+  { id: 4, title: 'Coca cola light4', price: 30, rating: 4, img: '/images/testImages/image-04.jpg' },
+  { id: 5, title: 'Coca cola light5', price: 30, rating: 5, img: '/images/testImages/image-02.jpg' },
+  { id: 6, title: 'Coca cola light6', price: 15, rating: 4, img: '/images/testImages/image-04.jpg' },
+  { id: 7, title: 'Coca cola light7', price: 70, rating: 5, img: '/images/testImages/image-01.jpg' },
+  { id: 8, title: 'Coca cola light8', price: 10, rating: 1, img: '/images/testImages/image-03.jpg' }
 ]
 export const photos = [
   {
@@ -91,27 +117,18 @@ export const photos = [
   }
 ]
 
-// eslint-disable-next-line arrow-body-style
+const CONTAINER_ID = 'gallery-preview'
+
 const ProductDetailPageRoot = () => {
-  // console.log({ products })
-
-  const [count, setCount] = useState(1)
-  const [currentImage, setCurrentImage] = useState(IMAGES[0].largeURL)
+  const theme = useTheme()
+  const isXs = useMediaQuery(theme.breakpoints.down('sm'))
+  const isSm = useMediaQuery(theme.breakpoints.between('xs', 'md'))
   const { count: countValue, decrementCount, incrementCount } = useCounter({ initialValue: 1, min: 1, max: 10 })
-
-  const onChangeCount = e => {
-    setCount(e.target.value)
-  }
-
-  const handleSubmit = event => {
-    event.preventDefault()
-  }
 
   useEffect(() => {
     let lightbox = new PhotoSwipeLightbox({
-      gallery: `#my-test-gallery`,
+      gallery: `#${CONTAINER_ID}`,
       children: 'a',
-      // preload: [1, 2],
       pswpModule: () => import('photoswipe')
     })
     lightbox.init()
@@ -120,404 +137,206 @@ const ProductDetailPageRoot = () => {
       lightbox.destroy()
       lightbox = null
     }
-  }, [])
-
-  console.log({ countValue })
+  }, [isSm])
 
   return (
-    <>
-      {/* <DialogFulLScreen open={viewerIsOpen} onClose={() => setViewerIsOpen(false)} /> */}
-      <ContainerApp sx={{ mt: 6, mb: 5 }}>
-        {/* <Button onClick={() => setViewerIsOpen(true)}>Opne</Button> */}
-        {/* <Box display="flex" gap={3}>
-          <Box display="flex" flexDirection="column" gap={3}>
-            <Box display="flex" flexDirection="row" gap={4}>
-              <SimpleGallery
-                currentImage={currentImage}
-                onCurrentImage={item => setCurrentImage(item.largeURL)}
-                // galleryID="my-test-gallery"
-                images={IMAGES}
-              />
-              <Box
+    <ContainerApp sx={{ mt: 6, mb: 5 }}>
+      {!isSm && (
+        <Box display="flex" gap={3}>
+          <Box width="60%" display="flex" flexDirection="column" gap={3}>
+            <PreviewDesktopProduct containerId={CONTAINER_ID} images={IMAGES} />
+            <CardInfoProduct />
+          </Box>
+          <Box width="40%" display="flex" flexDirection="column" gap={3}>
+            <CardBasicInfoProduct />
+            <CardBasicInfoProvider />
+          </Box>
+        </Box>
+      )}
+      {isSm && (
+        <Box display="block">
+          <Box mb={4}>
+            <Stack direction="row" justifyContent="space-between" alignItems="center">
+              <BpTypography color="grey.600" component="p" fontWeight={500} variant="body2">
+                29 disponibles
+              </BpTypography>
+              <InputRating size="medium" value={3} readOnly />
+            </Stack>
+            <Box mt={2} mb={1}>
+              <BpTypography color="grey.800" component="h1" fontWeight={600} variant="h5">
+                Refresco Coca-Cola Regular 2.5L Lorem ipsum dolor sit
+              </BpTypography>
+              <Box my={1} maxWidth="110px">
+                <ChipFreeShipping bgcolor="grey.200" />
+              </Box>
+            </Box>
+            <PreviewMobilProduct containerId={CONTAINER_ID} images={IMAGES} />
+            <Stack mt={2.25} flexDirection="row" justifyContent="space-between" alignItems="center">
+              <BpTypography color="grey.800" component="p" fontWeight={600} variant="h4">
+                $ 39,00
+              </BpTypography>
+              <ButtonGroup
                 sx={{
-                  minWidth: '0px',
-                  maxWidth: '680px',
-                  // width: '640px',
-                  // flexBasis: '40%',
-                  // height: 'auto',
-                  bgcolor: 'grey.200',
-                  borderRadius: '12px'
+                  alignItems: 'center',
+                  // gap: 1,
+                  height: '40px',
+                  '& > .button-contain': {
+                    bgcolor: 'grey.200',
+                    height: '100%',
+                    borderRight: 'none !important'
+                  }
                 }}
-                // id="my-test-gallery"
-                className="pswp-gallery"
+                disableElevation
+                variant="contained"
+                aria-label="Disabled elevation buttons"
               >
-                {IMAGES.map(image =>
-                  image.largeURL === currentImage ? (
-                    <a
-                      key={image.largeURL}
-                      href={currentImage}
-                      data-pswp-width={1200}
-                      data-pswp-height={1200}
-                      target="_blank"
-                      style={{ position: 'relative' }}
-                      rel="noreferrer"
-                    >
-                      <Image
-                        placeholder="blur"
-                        blurDataURL="/images/blur-sm.jpg"
-                        width={680}
-                        objectFit="cover"
-                        height={646}
-                        src={currentImage}
-                        style={{ borderRadius: '12px' }}
-                      />
-                    </a>
-                  ) : (
-                    <a
-                      key={image.largeURL}
-                      href={image.largeURL}
-                      data-pswp-width={1200}
-                      data-pswp-height={1200}
-                      target="_blank"
-                      style={{ position: 'relative' }}
-                      rel="noreferrer"
-                    />
-                  )
-                )}
-              </Box>
-            </Box>
-            <ContainerCard>
-              <CardContent>
-                <Stack flexDirection="column" gap={1}>
-                  <Box>
-                    <BpTypography color="grey.800" component="p" fontWeight={600} variant="h5" sx={{ mb: 1 }}>
-                      Descripción
-                    </BpTypography>
-                    <BpTypography
-                      color="grey.600"
-                      fontVariant="secondary"
-                      component="p"
-                      fontWeight={400}
-                      variant="body1"
-                    >
-                      Para consentirte y disfrutar, nada como el refrescante sabor de Coca-Cola Original. Disfruta de su
-                      delicioso sabor en todo momento y con tus platillos favoritos. Coca-Cola. Siente el sabor. Haz más
-                      ricas tus comidas con el delicioso y refrescante sabor de Coca-Cola. Coca-Cola. Siente el sabor.
-                    </BpTypography>
-                  </Box>
-                  <Box>
-                    <BpTypography
-                      fontVariant="secondary"
-                      color="grey.700"
-                      component="p"
-                      fontWeight={600}
-                      variant="body2"
-                      sx={{ mb: 1 }}
-                    >
-                      Incluye:
-                    </BpTypography>
-                    <Box display="flex" gap={1} flexDirection="column" component="div">
-                      <Box component="div" display="flex" alignItems="center" gap={2}>
-                        <CheckIcon color="primary" sx={{ display: 'inline' }} />
-                        <BpTypography
-                          fontVariant="secondary"
-                          color="grey.600"
-                          component="p"
-                          fontWeight={400}
-                          variant="body2"
-                          sx={{ display: 'inline' }}
-                        >
-                          Mesa alta rectangular (1.80 x 0.60 x 1.00 mts.)
-                        </BpTypography>
-                      </Box>
-                      <Box component="div" display="flex" alignItems="center" gap={2}>
-                        <CheckIcon color="primary" sx={{ display: 'inline' }} />
-                        <BpTypography
-                          fontVariant="secondary"
-                          color="grey.600"
-                          component="p"
-                          fontWeight={400}
-                          variant="body2"
-                          sx={{ display: 'inline' }}
-                        >
-                          Mesa alta rectangular (1.80 x 0.60 x 1.00 mts.)
-                        </BpTypography>
-                      </Box>
-                    </Box>
-                  </Box>
-                  <Box mt={1}>
-                    <BpTypography color="grey.800" component="p" fontWeight={600} variant="h5" sx={{ mb: 1 }}>
-                      Características
-                    </BpTypography>
-                    <Box mt={2} flexWrap="wrap" display="flex" gap={2} flexDirection="row" component="div">
-                      <Box component="div" display="flex" alignItems="flex-start" gap={2}>
-                        <CheckIcon color="primary" sx={{ display: 'inline' }} />
-                        <BpTypography
-                          fontVariant="secondary"
-                          color="grey.600"
-                          component="p"
-                          fontWeight={400}
-                          variant="body2"
-                          sx={{ display: 'inline' }}
-                        >
-                          Acerca de la característica
-                        </BpTypography>
-                      </Box>
-                      <Box component="div" display="flex" alignItems="flex-start" gap={2}>
-                        <CheckIcon color="primary" sx={{ display: 'inline' }} />
-                        <BpTypography
-                          fontVariant="secondary"
-                          color="grey.600"
-                          component="p"
-                          fontWeight={400}
-                          variant="body2"
-                          sx={{ display: 'inline' }}
-                        >
-                          Acerca de la característica
-                        </BpTypography>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Stack>
-              </CardContent>
-            </ContainerCard>
-          </Box>
-          <Box display="flex" flexDirection="column" gap={3}>
-            <ContainerCard>
-              <CardContent>
-                <Stack flexDirection="column" gap={1}>
-                  <Box alignSelf="flex-end" mb={2}>
-                    <ChipFreeShipping />
-                  </Box>
-                  <BpTypography color="grey.800" component="h1" fontWeight={600} variant="h5">
-                    Refresco Coca-Cola Regular 2.5L Lorem ipsum dolor sit
-                  </BpTypography>
-                  <Box ml={-0.4}>
-                    <InputRating size="medium" value={3} readOnly />
-                  </Box>
-                  <Box>
-                    <BpTypography color="grey.700" component="p" fontWeight={600} variant="body1">
-                      Descripción
-                    </BpTypography>
-                    <BpTypography
-                      color="grey.600"
-                      fontVariant="secondary"
-                      component="p"
-                      fontWeight={400}
-                      variant="body2"
-                    >
-                      Para consentirte y disfrutar, nada como el refrescante sabor de Coca-Cola Original. Disfruta de su
-                      delicioso sabor en todo momento y con tus platillos favoritos. Coca-Cola. Siente el sabor. Haz más
-                      ricas tus comidas con el delicioso y refrescante sabor de Coca-Cola. Coca-Cola. Siente el sabor.
-                    </BpTypography>
-                  </Box>
-                  <Stack mt={2} flexDirection="row" gap={1} alignItems="center">
-                    <BpTypography color="grey.800" component="p" fontWeight={600} variant="h4">
-                      $ 39,00
-                    </BpTypography>
-                    <Divider orientation="vertical" variant="middle" flexItem />
-                    <BpTypography color="grey.600" component="p" fontWeight={500} variant="body1">
-                      29 disponibles
-                    </BpTypography>
-                  </Stack>
-                  <Box mt={3}>
-                    <BpTypography textAlign="right" color="grey.600" component="p" fontWeight={500} variant="body2">
-                      Ver políticas de envío
-                    </BpTypography>
-                    <Stack
-                      // height="200px"
-                      mt={1}
-                      component="form"
-                      onSubmit={handleSubmit}
-                      direction="row"
-                      justifyContent="space-between"
-                      gap={2}
-                    >
-                      <BpTextField
-                        color="primary"
-                        size="small"
-                        sx={{ width: '100px', height: '100%' }}
-                        type="number"
-                        value={count}
-                        onChange={onChangeCount}
-                        inputProps={{ min: 1, max: 10, required: true }}
-                      />
-                      <BpButton color="primary" fullWidth type="submit">
-                        <BpTypography color="inherit" variant="body2">
-                          Añadir al carrito
-                        </BpTypography>
-                      </BpButton>
-                    </Stack>
-                  </Box>
-                </Stack>
-              </CardContent>
-            </ContainerCard>
-            <ContainerCard>
-              <CardContent>
-                <BpTypography color="grey.800" component="p" fontWeight={600} variant="h5">
-                  Información del proveedor
-                </BpTypography>
-                <Stack mt={2.5} gap={2} direction="row" justifyContent="flex-start" alignItems="center">
-                  <Avatar src={undefined} sx={{ width: '4.25rem', height: '4.25rem' }} />
-                  <BpTypography color="grey.700" component="p" fontWeight={600} variant="h5">
-                    Nombre del proveedor
-                  </BpTypography>
-                </Stack>
-                <Stack width="100%" mt={4} gap={1} direction="row" justifyContent="flex-start" alignItems="center">
-                  <Box width="100%" textAlign="center" padding="1.4rem 1rem" bgcolor="grey.200" borderRadius="0.75rem">
-                    <BpTypography color="primary.main" component="p" fontWeight={500} variant="h4">
-                      + 2 años
-                    </BpTypography>
-                    <BpTypography sx={{ mt: 1 }} color="grey.600" component="p" fontWeight={400} variant="body2">
-                      vendiendo con UEY
-                    </BpTypography>
-                  </Box>
-                  <Box width="100%" textAlign="center" padding="1.4rem 1rem" bgcolor="grey.200" borderRadius="0.75rem">
-                    <BpTypography color="primary.main" component="p" fontWeight={500} variant="h4">
-                      + 2 años
-                    </BpTypography>
-                    <BpTypography sx={{ mt: 1 }} color="grey.600" component="p" fontWeight={400} variant="body2">
-                      vendiendo con UEY
-                    </BpTypography>
-                  </Box>
-                  <Box width="100%" textAlign="center" padding="1.4rem 1rem" bgcolor="grey.200" borderRadius="0.75rem">
-                    <BpTypography color="primary.main" component="p" fontWeight={500} variant="h4">
-                      + 2 años
-                    </BpTypography>
-                    <BpTypography sx={{ mt: 1 }} color="grey.600" component="p" fontWeight={400} variant="body2">
-                      vendiendo con UEY
-                    </BpTypography>
-                  </Box>
-                </Stack>
-                <BpTypography
-                  sx={{ mt: 4 }}
-                  textAlign="right"
-                  color="grey.600"
-                  component="p"
-                  fontWeight={600}
-                  variant="body1"
+                <Button onClick={() => decrementCount()} color="grey" className="button-contain">
+                  <IconRemove sx={{ color: 'grey.500' }} />
+                </Button>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  width="100%"
+                  height="100%"
+                  className="button-contain"
                 >
-                  Ver más acerca del proveedor
-                </BpTypography>
-              </CardContent>
-            </ContainerCard>
-          </Box>
-        </Box> */}
-        <Box>
-          <Stack direction="row" justifyContent="space-between" alignItems="center">
-            <BpTypography color="grey.600" component="p" fontWeight={500} variant="body2">
-              29 disponibles
-            </BpTypography>
-            <InputRating size="medium" value={3} readOnly />
-          </Stack>
-          <Box mt={2}>
-            <BpTypography color="grey.800" component="h1" fontWeight={600} variant="h5">
-              Refresco Coca-Cola Regular 2.5L Lorem ipsum dolor sit
-            </BpTypography>
-            <Box my={1} maxWidth="110px">
-              <ChipFreeShipping bgcolor="grey.200" />
+                  <BpTypography color="grey.700" component="p" fontWeight={600} variant="body1">
+                    {countValue}
+                  </BpTypography>
+                </Box>
+                <Button onClick={() => incrementCount()} color="grey" className="button-contain">
+                  <IconAdd sx={{ color: 'grey.500' }} />
+                </Button>
+              </ButtonGroup>
+            </Stack>
+            <Box mt={1}>
+              <BpTypography color="grey.800" component="p" fontWeight={600} variant="h5" sx={{ mb: 1 }}>
+                Descripción
+              </BpTypography>
+              <BpTypography color="grey.600" fontVariant="secondary" component="p" fontWeight={400} variant="body1">
+                Para consentirte y disfrutar, nada como el refrescante sabor de Coca-Cola Original. Disfruta de su
+                delicioso sabor en todo momento y con tus platillos favoritos. Coca-Cola. Siente el sabor. Haz más ricas
+                tus comidas con el delicioso y refrescante sabor de Coca-Cola. Coca-Cola. Siente el sabor.
+              </BpTypography>
             </Box>
-          </Box>
-          <Swiper
-            pagination={{
-              dynamicBullets: true
-            }}
-            modules={[Pagination]}
-            // className="pswp-gallery"
-            className="mySwiper pswp-gallery"
-            id="my-test-gallery"
-          >
-            {IMAGES.map(image => (
-              <SwiperSlide key={image.largeURL} style={{ width: '300px' }}>
-                <a
-                  href={image.largeURL}
-                  data-pswp-width={1200}
-                  data-pswp-height={1200}
-                  target="_blank"
-                  style={{ position: 'relative', width: '300px' }}
-                  rel="noreferrer"
-                >
-                  <Image
-                    placeholder="blur"
-                    blurDataURL="/images/blur-sm.jpg"
-                    width={328}
-                    layout="responsive"
-                    objectFit="cover"
-                    height={328}
-                    src={image.largeURL}
-                    style={{ borderRadius: '12px' }}
-                  />
-                </a>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <Stack mt={2.25} flexDirection="row" justifyContent="space-between" alignItems="center">
-            <BpTypography color="grey.800" component="p" fontWeight={600} variant="h4">
-              $ 39,00
-            </BpTypography>
-            <ButtonGroup
+            <BpTypography
               sx={{
-                alignItems: 'center',
-                // gap: 1,
-                height: '40px',
-                '& > .button-contain': {
-                  bgcolor: 'grey.200',
-                  height: '100%',
-                  borderRight: 'none !important'
-                }
+                mt: 2
               }}
-              disableElevation
-              variant="contained"
-              aria-label="Disabled elevation buttons"
+              textAlign="right"
+              color="grey.600"
+              component="p"
+              fontWeight={500}
+              variant="body2"
             >
-              <Button onClick={() => decrementCount()} color="grey" className="button-contain">
-                <IconRemove sx={{ color: 'grey.500' }} />
-              </Button>
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                width="100%"
-                height="100%"
-                className="button-contain"
-              >
-                <BpTypography color="grey.700" component="p" fontWeight={600} variant="body1">
-                  {countValue}
-                </BpTypography>
-              </Box>
-              <Button onClick={() => incrementCount()} color="grey" className="button-contain">
-                <IconAdd sx={{ color: 'grey.500' }} />
-              </Button>
-            </ButtonGroup>
-          </Stack>
-          <Box>
-            <BpTypography color="grey.800" component="p" fontWeight={600} variant="h5" sx={{ mb: 1 }}>
-              Descripción
+              Ver políticas de envío
             </BpTypography>
-            <BpTypography color="grey.600" fontVariant="secondary" component="p" fontWeight={400} variant="body1">
-              Para consentirte y disfrutar, nada como el refrescante sabor de Coca-Cola Original. Disfruta de su
-              delicioso sabor en todo momento y con tus platillos favoritos. Coca-Cola. Siente el sabor. Haz más ricas
-              tus comidas con el delicioso y refrescante sabor de Coca-Cola. Coca-Cola. Siente el sabor.
-            </BpTypography>
+            <BpButton sx={{ mt: 2 }} color="primary" fullWidth type="submit">
+              <BpTypography color="inherit" variant="body2">
+                Añadir al carrito
+              </BpTypography>
+            </BpButton>
           </Box>
-          <BpTypography
-            sx={{ mt: 2 }}
-            textAlign="right"
-            color="grey.600"
-            component="p"
-            fontWeight={500}
-            variant="body2"
-          >
-            Ver políticas de envío
-          </BpTypography>
-          <BpButton color="primary" fullWidth type="submit">
-            <BpTypography color="inherit" variant="body2">
-              Añadir al carrito
+          <Box mb={2}>
+            <CardInfoProduct />
+          </Box>
+          <CardBasicInfoProvider />
+        </Box>
+      )}
+      {/* section publicaciones del provedor */}
+      <Box my={12}>
+        <BpTypography textAlign="center" color="grey.800" component="p" fontWeight={600} variant="h5">
+          Más publicaciones del proveedor
+        </BpTypography>
+        <BpTypography sx={{ mt: 1 }} textAlign="center" color="grey.700" component="p" fontWeight={400} variant="body1">
+          <strong>¡Ahorra</strong> el precio del envío pidiendo productos del mismo vendedor!
+        </BpTypography>
+        <Carousel type="settings2">
+          {items.map(item =>
+            isXs ? (
+              <CardProductSmall
+                key={item.id}
+                title={item.title}
+                img={item.img}
+                rating={item.rating}
+                price={item.price}
+              />
+            ) : (
+              <CardProductNomal
+                key={item.id}
+                title={item.title}
+                img={item.img}
+                rating={item.rating}
+                price={item.price}
+              />
+            )
+          )}
+        </Carousel>
+        <Box margin="0 auto" width="100%" textAlign="center">
+          <BpButton sx={{ borderRadius: 3 }} fullWidth={false} variant="text" color="inherit">
+            <BpTypography variant="body1" color="grey.700" fontWeight={500} sx={{ textDecoration: 'underline' }}>
+              Ver más
             </BpTypography>
           </BpButton>
         </Box>
-      </ContainerApp>
-    </>
+      </Box>
+      {/* section otras personas tambien llevaron esto */}
+      <Box my={12}>
+        <BpTypography textAlign="center" color="grey.800" component="p" fontWeight={600} variant="h5">
+          Otras personas también llevaron esto...
+        </BpTypography>
+        <Carousel type="settings2">
+          {items.map(item =>
+            isXs ? (
+              <CardProductSmall
+                key={item.id}
+                title={item.title}
+                img={item.img}
+                rating={item.rating}
+                price={item.price}
+              />
+            ) : (
+              <CardProductNomal
+                key={item.id}
+                title={item.title}
+                img={item.img}
+                rating={item.rating}
+                price={item.price}
+              />
+            )
+          )}
+        </Carousel>
+      </Box>
+      <SectionQuestionAnswer />
+      {/* section productos relacionados */}
+      <Box my={12}>
+        <BpTypography textAlign="center" color="grey.800" component="p" fontWeight={600} variant="h5">
+          Productos relacionados
+        </BpTypography>
+        <Carousel type="settings2">
+          {items.map(item =>
+            isXs ? (
+              <CardProductSmall
+                key={item.id}
+                title={item.title}
+                img={item.img}
+                rating={item.rating}
+                price={item.price}
+              />
+            ) : (
+              <CardProductNomal
+                key={item.id}
+                title={item.title}
+                img={item.img}
+                rating={item.rating}
+                price={item.price}
+              />
+            )
+          )}
+        </Carousel>
+      </Box>
+    </ContainerApp>
   )
 }
 

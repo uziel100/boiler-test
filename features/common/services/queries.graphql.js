@@ -1,71 +1,7 @@
 import { gql } from '@apollo/client'
 
-// eslint-disable-next-line import/prefer-default-export
-export const categoriesDrawer = gql`
-  # query viewer {
-  #   response: viewer {
-  #     avatar {
-  #       default
-  #       height
-  #     }
-  #     email
-  #   }
-  # }
-  query categories {
-    response: categories {
-      id
-      slug
-      name
-      img
-      order
-      categories {
-        id
-        slug
-        name
-        img
-        order
-        categories {
-          id
-          slug
-          name
-          img
-          order
-          categories {
-            id
-            slug
-            name
-            img
-            order
-            categories {
-              id
-              slug
-              name
-              img
-              order
-              categories {
-                id
-                slug
-                name
-                img
-                order
-                categories {
-                  id
-                  slug
-                  name
-                  img
-                  order
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`
-
 export const DRAWER_CATEGORIES = gql`
-  query ($where: RootQueryToProductCategoryConnectionWhereArgs) {
+  query drawerCategories($where: RootQueryToProductCategoryConnectionWhereArgs) {
     response: productCategories(where: $where) {
       nodes {
         id
@@ -113,7 +49,7 @@ export const DRAWER_CATEGORIES = gql`
 `
 
 export const CATEGORY_HISTORY = gql`
-  query ($where: RootQueryToProductCategoryConnectionWhereArgs) {
+  query categoryHistory($where: RootQueryToProductCategoryConnectionWhereArgs) {
     response: productCategories(where: $where) {
       nodes {
         id
