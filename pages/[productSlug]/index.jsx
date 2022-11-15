@@ -31,6 +31,7 @@ import PreviewDesktopProduct from 'features/products/components/preview/PreviewD
 import CardBasicInfoProduct from 'features/products/components/detail/CardBasicInfoProduct'
 import productsSeeds from 'seeds/products'
 import SectionQuestionAnswer from 'features/products/components/questions-answers/SectionQuestionAnswer'
+import RatingsSection from 'features/product/ratings/RatingsSection'
 
 const IMAGES = [
   {
@@ -336,6 +337,9 @@ const ProductDetailPageRoot = () => {
           )}
         </Carousel>
       </Box>
+
+      {/* RATINGS */}
+      <RatingsSection />
     </ContainerApp>
   )
 }
