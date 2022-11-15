@@ -1,14 +1,22 @@
 import { CardProductSmall, Carousel, SkeletonProductSmall } from 'components/common'
+import { SwiperSlide } from 'swiper/react'
 
-const SkeletonLoader = new Array(5).fill(0).map(item => <SkeletonProductSmall key={item} />)
+const SkeletonLoader = new Array(5).fill(0).map((item, idx) => (
+  // eslint-disable-next-line react/no-array-index-key
+  <SwiperSlide key={idx}>
+    <SkeletonProductSmall />
+  </SwiperSlide>
+))
 
 const ProductSlider = ({ items = null }) => {
   if (!items) return <Carousel>{SkeletonLoader}</Carousel>
 
   return (
-    <Carousel>
+    <Carousel typeColumn="column5">
       {items.map(item => (
-        <CardProductSmall key={item.id} title={item.title} price={item.price} rating={item.rating} img={item.img} />
+        <SwiperSlide key={item.id}>
+          <CardProductSmall title={item.title} price={item.price} rating={item.rating} img={item.img} />
+        </SwiperSlide>
       ))}
     </Carousel>
   )

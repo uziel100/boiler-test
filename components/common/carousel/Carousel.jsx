@@ -1,131 +1,109 @@
 import { Box } from '@mui/material'
-import React from 'react'
-import Slider from 'react-slick'
+import React, { useCallback, useState } from 'react'
+import { Swiper } from 'swiper/react'
+import { Pagination, Navigation } from 'swiper'
 import ArrowButtonNext from './ArrowButtonNext'
 import ArrowButtonPrevious from './ArrowButtonPrevious'
 
-const settings = {
-  dots: false,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 5,
-  slidesToScroll: 5,
-  initialSlide: 0,
-  lazyLoad: true,
-  prevArrow: <ArrowButtonPrevious />,
-  nextArrow: <ArrowButtonNext />,
-  responsive: [
-    {
-      breakpoint: 900,
-      settings: {
-        slidesToShow: 5,
-        slidesToScroll: 4,
-        infinite: false,
-        lazyLoad: true,
-        dots: false,
-        arrows: true
-      }
+const COLUMNS_RESPONSIVE = {
+  column4: {
+    0: {
+      slidesPerView: 2,
+      spaceBetween: 8,
+      slidesPerGroup: 2
     },
-    {
-      breakpoint: 768,
-      settings: {
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        initialSlide: 0,
-        lazyLoad: true,
-        dots: false,
-        arrows: true
-      }
+    600: {
+      slidesPerView: 3,
+      spaceBetween: 16,
+      slidesPerGroup: 3
     },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 2,
-        lazyLoad: true,
-        slidesToScroll: 2,
-        dots: false,
-        arrows: true
-      }
+    900: {
+      slidesPerView: 4,
+      spaceBetween: 16,
+      slidesPerGroup: 4
     }
-  ]
-}
-
-const settings2 = {
-  dots: false,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 4,
-  slidesToScroll: 4,
-  initialSlide: 0,
-  lazyLoad: true,
-  prevArrow: <ArrowButtonPrevious />,
-  nextArrow: <ArrowButtonNext />,
-  responsive: [
-    {
-      breakpoint: 900,
-      settings: {
-        slidesToShow: 4,
-        slidesToScroll: 3,
-        infinite: false,
-        lazyLoad: true,
-        dots: false,
-        arrows: true
-      }
+  },
+  column5: {
+    0: {
+      slidesPerView: 2,
+      spaceBetween: 8,
+      slidesPerGroup: 2
     },
-    {
-      breakpoint: 768,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        initialSlide: 0,
-        lazyLoad: true,
-        dots: false,
-        arrows: true
-      }
+    600: {
+      slidesPerView: 4,
+      spaceBetween: 16,
+      slidesPerGroup: 4
     },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 2,
-        lazyLoad: true,
-        slidesToScroll: 2,
-        dots: false,
-        arrows: true
-      }
+    900: {
+      slidesPerView: 5,
+      spaceBetween: 16,
+      slidesPerGroup: 5
     }
-  ]
+  }
 }
 
-const typeStetting = {
-  settings,
-  settings2
-}
+const Carousel = ({ children, typeColumn = 'column5' }) => {
+  const [swiperInstance, setSwiperInstance] = useState(null)
 
-const Carousel = ({ children, type = 'settings' }) => {
-  const countItems = React.Children.count(children)
+  const handleLeftClick = useCallback(() => {
+    if (!swiperInstance) return
+    swiperInstance.slidePrev()
+  }, [swiperInstance])
 
-  // console.log({ childrens })
-
-  const customSetting =
-    countItems < typeStetting[type].slidesToShow ? { ...typeStetting[type], infinite: false } : typeStetting[type]
+  const handleRightClick = useCallback(() => {
+    if (!swiperInstance) return
+    swiperInstance.slideNext()
+  }, [swiperInstance])
 
   return (
-    <Box
-      sx={{
-        position: 'relative',
-        '.slick-dots li.slick-active button:before': {
-          color: theme => theme.palette.primary.main
-        },
-        '& .slick-list > .slick-track': {
-          padding: '3rem 0 3rem 0',
-          marginLeft: 0
-        }
-        // '& .slick-slide.slick-cloned': {
-        //   display: 'none'
-        // }
-      }}
-    >
-      <Slider {...customSetting}>{children}</Slider>
+    <Box position="relative" display="flex" justifyContent="center" alignItems="center">
+      <ArrowButtonPrevious
+        sx={{
+          left: -40,
+          display: { xs: 'none', md: 'block' }
+        }}
+        onClick={handleLeftClick}
+      />
+      <Box
+        width="100%"
+        sx={{
+          '& .swiper-pagination': {
+            display: { xs: 'block', md: 'none' }
+          },
+          '& .swiper-pagination-bullet.swiper-pagination-bullet-active': {
+            bgcolor: 'primary.main'
+          },
+          '& .swiper-wrapper': {
+            mb: 4
+          }
+        }}
+      >
+        <Swiper
+          onSwiper={swiper => setSwiperInstance(swiper)}
+          loop
+          initialSlide={0}
+          pagination={{
+            clickable: true
+          }}
+          modules={[Pagination, Navigation]}
+          style={{
+            width: '100%',
+            height: '100%',
+            padding: '16px 8px'
+          }}
+          loopFillGroupWithBlank
+          breakpoints={COLUMNS_RESPONSIVE[typeColumn]}
+        >
+          {children}
+        </Swiper>
+      </Box>
+      <ArrowButtonNext
+        sx={{
+          right: -40,
+          display: { xs: 'none', md: 'block' }
+        }}
+        onClick={handleRightClick}
+      />
     </Box>
   )
 }

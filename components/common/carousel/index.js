@@ -1,2 +1,3 @@
-/* eslint-disable import/prefer-default-export */
+export { default as ArrowButtonNext } from './ArrowButtonNext'
+export { default as ArrowButtonPrevious } from './ArrowButtonPrevious'
 export { default as Carousel } from './Carousel'

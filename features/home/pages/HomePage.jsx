@@ -20,21 +20,21 @@ const items = [
 ]
 
 const itemsServices = [
-  { id: 1, title: 'Coca cola light', price: 20, rating: 3, img: '/images/testImages/image-06.jpg' },
-  { id: 2, title: 'Coca cola light', price: 18, rating: 1, img: '/images/testImages/image-07.jpg' },
-  { id: 3, title: 'Coca cola light', price: 26, rating: 2, img: '/images/testImages/image-08.jpg' },
-  { id: 4, title: 'Coca cola light', price: 30, rating: 4, img: '/images/testImages/image-09.jpg' },
-  { id: 5, title: 'Coca cola light', price: 30, rating: 5, img: '/images/testImages/image-06.jpg' },
-  { id: 6, title: 'Coca cola light', price: 15, rating: 4, img: '/images/testImages/image-08.jpg' }
+  { id: 11, title: 'Coca cola light', price: 20, rating: 3, img: '/images/testImages/image-06.jpg' },
+  { id: 22, title: 'Coca cola light', price: 18, rating: 1, img: '/images/testImages/image-07.jpg' },
+  { id: 33, title: 'Coca cola light', price: 26, rating: 2, img: '/images/testImages/image-08.jpg' },
+  { id: 44, title: 'Coca cola light', price: 30, rating: 4, img: '/images/testImages/image-09.jpg' },
+  { id: 55, title: 'Coca cola light', price: 30, rating: 5, img: '/images/testImages/image-06.jpg' },
+  { id: 66, title: 'Coca cola light', price: 15, rating: 4, img: '/images/testImages/image-08.jpg' }
 ]
 
 const itemsSpaces = [
-  { id: 1, title: 'Coca cola light', price: 20, rating: 3, img: '/images/testImages/image-10.jpg' },
-  { id: 2, title: 'Coca cola light', price: 18, rating: 1, img: '/images/testImages/image-11.jpg' },
-  { id: 3, title: 'Coca cola light', price: 26, rating: 2, img: '/images/testImages/image-12.jpg' },
-  { id: 4, title: 'Coca cola light', price: 30, rating: 4, img: '/images/testImages/image-13.jpg' },
-  { id: 5, title: 'Coca cola light', price: 30, rating: 5, img: '/images/testImages/image-14.jpg' },
-  { id: 6, title: 'Coca cola light', price: 15, rating: 4, img: '/images/testImages/image-12.jpg' }
+  { id: 111, title: 'Coca cola light', price: 20, rating: 3, img: '/images/testImages/image-10.jpg' },
+  { id: 222, title: 'Coca cola light', price: 18, rating: 1, img: '/images/testImages/image-11.jpg' },
+  { id: 322, title: 'Coca cola light', price: 26, rating: 2, img: '/images/testImages/image-12.jpg' },
+  { id: 411, title: 'Coca cola light', price: 30, rating: 4, img: '/images/testImages/image-13.jpg' },
+  { id: 511, title: 'Coca cola light', price: 30, rating: 5, img: '/images/testImages/image-14.jpg' },
+  { id: 611, title: 'Coca cola light', price: 15, rating: 4, img: '/images/testImages/image-12.jpg' }
 ]
 
 const HomePage = () => {

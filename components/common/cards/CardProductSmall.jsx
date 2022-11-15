@@ -6,10 +6,10 @@ import StarRoundedIcon from '@mui/icons-material/StarRounded'
 import { StyledCard } from './StyledCommon'
 
 const CardProductSmall = ({ img, title, price, rating = 0 }) => (
-  <StyledCard elevation={0} sx={{ maxHeight: '225px' }}>
+  <StyledCard elevation={0} sx={{ maxHeight: '250px' }} width="auto">
     <CardActionArea>
       <Box width="100%">
-        <Image objectFit="cover" width={200} height={140} src={img} alt={title} />
+        <Image objectFit="cover" width={210} height={150} layout="responsive" src={img} alt={title} />
       </Box>
       <CardContent sx={{ p: '0 0.5rem', pt: '0.5rem' }}>
         <BpTypography variant="body1" fontWeight={400} color="grey.700" noWrap>

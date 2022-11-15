@@ -3,10 +3,8 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 
 const ArrowButtonPrevious = ({ onClick, sx = {} }) => (
   <IconButton
-    disableRipple
     onClick={onClick}
     disabled={!onClick}
-    className="button-prev"
     sx={{
       zIndex: 9,
       position: 'absolute',
@@ -14,8 +12,9 @@ const ArrowButtonPrevious = ({ onClick, sx = {} }) => (
         xs: 0,
         md: '-4%'
       },
+      height: '40px',
       top: '40%',
-      background: '#0000000d',
+      // background: '#0000000d',
       ...sx
     }}
   >

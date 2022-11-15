@@ -3,7 +3,7 @@
 import { Card, styled } from '@mui/material'
 
 export const StyledCard = styled(Card)(() => ({
-  maxWidth: '200px',
+  // maxWidth: '200px',
   borderRadius: '12px',
   height: 'auto',
   transition: 'all 300ms ease',

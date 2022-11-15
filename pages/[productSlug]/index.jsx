@@ -1,26 +1,18 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable jsx-a11y/anchor-has-content */
-import { Avatar, Box, Button, ButtonGroup, CardContent, Divider, Stack, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Button, ButtonGroup, Stack, useMediaQuery, useTheme } from '@mui/material'
 import {
   CardProductNomal,
   CardProductSmall,
   Carousel,
   ChipFreeShipping,
   ContainerApp,
-  ContainerCard,
   InputRating
 } from 'components/common'
 import { LayoutMain } from 'components/layouts'
-import { BpButton, BpTextField, BpTypography } from 'components/shared'
-import React, { useEffect, useState } from 'react'
+import { BpButton, BpTypography } from 'components/shared'
+import React, { useEffect } from 'react'
 import { addApolloState, initializeApollo } from 'utils'
-import CheckIcon from '@mui/icons-material/Check'
 import PhotoSwipeLightbox from 'photoswipe/lightbox'
-import Image from 'next/image'
-import SimpleGallery from 'components/common/gallery/SimpleGallery'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination } from 'swiper'
+import { SwiperSlide } from 'swiper/react'
 import IconAdd from '@mui/icons-material/Add'
 import IconRemove from '@mui/icons-material/Remove'
 import { useCounter } from 'features/common/hooks'
@@ -29,7 +21,6 @@ import CardInfoProduct from 'features/products/components/detail/CardInfoProduct
 import PreviewMobilProduct from 'features/products/components/preview/PreviewMobilProduct'
 import PreviewDesktopProduct from 'features/products/components/preview/PreviewDesktopProduct'
 import CardBasicInfoProduct from 'features/products/components/detail/CardBasicInfoProduct'
-import productsSeeds from 'seeds/products'
 import SectionQuestionAnswer from 'features/products/components/questions-answers/SectionQuestionAnswer'
 import RatingsSection from 'features/product/ratings/RatingsSection'
 
@@ -253,26 +244,16 @@ const ProductDetailPageRoot = () => {
         <BpTypography sx={{ mt: 1 }} textAlign="center" color="grey.700" component="p" fontWeight={400} variant="body1">
           <strong>¡Ahorra</strong> el precio del envío pidiendo productos del mismo vendedor!
         </BpTypography>
-        <Carousel type="settings2">
-          {items.map(item =>
-            isXs ? (
-              <CardProductSmall
-                key={item.id}
-                title={item.title}
-                img={item.img}
-                rating={item.rating}
-                price={item.price}
-              />
-            ) : (
-              <CardProductNomal
-                key={item.id}
-                title={item.title}
-                img={item.img}
-                rating={item.rating}
-                price={item.price}
-              />
-            )
-          )}
+        <Carousel typeColumn="column4">
+          {items.map(item => (
+            <SwiperSlide key={item.id}>
+              {isXs ? (
+                <CardProductSmall title={item.title} img={item.img} rating={item.rating} price={item.price} />
+              ) : (
+                <CardProductNomal title={item.title} img={item.img} rating={item.rating} price={item.price} />
+              )}
+            </SwiperSlide>
+          ))}
         </Carousel>
         <Box margin="0 auto" width="100%" textAlign="center">
           <BpButton sx={{ borderRadius: 3 }} fullWidth={false} variant="text" color="inherit">
@@ -287,26 +268,16 @@ const ProductDetailPageRoot = () => {
         <BpTypography textAlign="center" color="grey.800" component="p" fontWeight={600} variant="h5">
           Otras personas también llevaron esto...
         </BpTypography>
-        <Carousel type="settings2">
-          {items.map(item =>
-            isXs ? (
-              <CardProductSmall
-                key={item.id}
-                title={item.title}
-                img={item.img}
-                rating={item.rating}
-                price={item.price}
-              />
-            ) : (
-              <CardProductNomal
-                key={item.id}
-                title={item.title}
-                img={item.img}
-                rating={item.rating}
-                price={item.price}
-              />
-            )
-          )}
+        <Carousel typeColumn="column4">
+          {items.map(item => (
+            <SwiperSlide key={item.id}>
+              {isXs ? (
+                <CardProductSmall title={item.title} img={item.img} rating={item.rating} price={item.price} />
+              ) : (
+                <CardProductNomal title={item.title} img={item.img} rating={item.rating} price={item.price} />
+              )}
+            </SwiperSlide>
+          ))}
         </Carousel>
       </Box>
       <SectionQuestionAnswer />
@@ -315,26 +286,16 @@ const ProductDetailPageRoot = () => {
         <BpTypography textAlign="center" color="grey.800" component="p" fontWeight={600} variant="h5">
           Productos relacionados
         </BpTypography>
-        <Carousel type="settings2">
-          {items.map(item =>
-            isXs ? (
-              <CardProductSmall
-                key={item.id}
-                title={item.title}
-                img={item.img}
-                rating={item.rating}
-                price={item.price}
-              />
-            ) : (
-              <CardProductNomal
-                key={item.id}
-                title={item.title}
-                img={item.img}
-                rating={item.rating}
-                price={item.price}
-              />
-            )
-          )}
+        <Carousel typeColumn="column4">
+          {items.map(item => (
+            <SwiperSlide key={item.id}>
+              {isXs ? (
+                <CardProductSmall title={item.title} img={item.img} rating={item.rating} price={item.price} />
+              ) : (
+                <CardProductNomal title={item.title} img={item.img} rating={item.rating} price={item.price} />
+              )}
+            </SwiperSlide>
+          ))}
         </Carousel>
       </Box>
 
@@ -348,10 +309,9 @@ ProductDetailPageRoot.getLayout = function getLayout(page) {
   return <LayoutMain>{page}</LayoutMain>
 }
 
-export async function getServerSideProps({ query = {} }) {
+export async function getServerSideProps() {
   const apolloClient = initializeApollo()
 
-  console.log({ query })
   return addApolloState(apolloClient, {
     props: {}
   })
