@@ -118,7 +118,7 @@ const NavbarMain = () => {
       </NavbarApp>
       <NavbarApp.MenuAccount anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
       {!isDeviceSm && <MenuShoppingCart anchorEl={anchorCartShoppingEl} setAnchorEl={setAnchorCartShoppingEl} />}
-      {openSidebarCart && isDeviceSm && (
+      {isDeviceSm && (
         <NavbarApp.Drawer type="shoppingCart" anchor="right" open={openSidebarCart} onClose={onCloseDrawerShoppingCart}>
           <SidebarShoppingCart />
         </NavbarApp.Drawer>

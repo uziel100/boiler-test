@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 import CloseIcon from '@mui/icons-material/Close'
@@ -106,8 +107,9 @@ const ModalImagesRating = ({ gallery = [], openModal, initialSlide, onClose }) =
               }}
               initialSlide={initialSlide}
             >
-              {gallery.map(img => (
+              {gallery.map((img, idx) => (
                 <SwiperSlide
+                  key={`${img}-${idx}`}
                   style={{
                     width: '100%',
                     height: '100%'

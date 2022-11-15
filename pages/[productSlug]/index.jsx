@@ -298,7 +298,6 @@ const ProductDetailPageRoot = () => {
           ))}
         </Carousel>
       </Box>
-
       {/* RATINGS */}
       <RatingsSection />
     </ContainerApp>

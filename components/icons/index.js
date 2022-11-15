@@ -1,6 +1,7 @@
 export { default as IconAccountUser } from './IconAccountUser'
 export { default as IconCartDelivery } from './IconCartDelivery'
 export { default as IconDate } from './IconDate'
+export { default as IconDocument } from './IconDocument'
 export { default as IconDoneGradient } from './IconDoneGradient'
 export { default as IconDontLike } from './IconDontLike'
 export { default as IconEmail } from './IconEmail'

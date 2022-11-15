@@ -1,4 +1,5 @@
 export * from './Button'
 export * from './Input'
 export * from './modal'
+export * from './transitions'
 export * from './typography'
