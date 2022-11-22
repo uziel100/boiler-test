@@ -11,6 +11,7 @@ const InputDatePickerDesktop = ({
   views = ['year', 'day', 'month'],
   placeholder,
   error,
+  onFocus = () => {},
   onChange,
   ...props
 }) => (
@@ -19,6 +20,7 @@ const InputDatePickerDesktop = ({
     onChange={onChange}
     views={views}
     toolbarTitle={toolbarTitle}
+    onOpen={() => onFocus()}
     components={{
       OpenPickerIcon: IconDate
     }}
@@ -27,6 +29,7 @@ const InputDatePickerDesktop = ({
       <BpTextField
         {...params}
         id={id}
+        onFocus={onFocus}
         name={name}
         helperText={helperText}
         placeholder={placeholder}

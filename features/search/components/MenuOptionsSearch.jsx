@@ -2,6 +2,7 @@ import { useState } from 'react'
 import {
   Box,
   CardContent,
+  Collapse,
   Dialog,
   Divider,
   Grid,
@@ -12,16 +13,19 @@ import {
   MenuItem,
   Stack,
   Tab,
-  Tabs,
-  useMediaQuery,
-  useTheme
+  Tabs
 } from '@mui/material'
 import { InputDatePickerDesktop } from 'components/common'
 import { IconHome, IconPlaceLocation, IconSearch } from 'components/icons'
 import { BpTextField, BpTransitionSlideDown, BpTypography } from 'components/shared'
+import { useRouter } from 'next/router'
+import { parseFiltersUrlProducts } from 'features/products/utils'
+import { useBreakpoint } from 'hooks'
 import DialogHaveAPlace from './DialogHaveAPlace'
 import DialogPlaceInUEY from './DialogPlaceInUEY'
 import DialogContainerLocation from './DialogContainerLocation'
+import FormHaveAPlace from './FormHaveAPlace'
+import FormPlaceInUEY from './FormPlaceInUEY'
 
 const TABS = [
   {
@@ -79,27 +83,47 @@ function ColorTabs() {
 
 const MenuOptionsSearch = ({ anchorEl, setAnchorEl, onClose }) => {
   const open = Boolean(anchorEl)
-  const themeMui = useTheme()
-  const isDeviceXs = useMediaQuery(themeMui.breakpoints.down('sm'))
+  const router = useRouter()
+  const { isDeviceXs } = useBreakpoint()
   const [anchorMenu, setAnchorMenu] = useState(null)
   const openMenu = Boolean(anchorMenu)
   const [openDialogHaveAplace, setOpenDialogHaveAplace] = useState(false)
   const [openDialogPlaceInUey, setOpenDialogPlaceInUey] = useState(false)
-  const [openDialogMobilContainer, setOpenDialogMobilContainer] = useState(false)
+  const [currentLocationSection, setCurrentLocationSection] = useState('')
 
   const handleOpenModalMobilContainer = () => {
     setAnchorMenu(false)
-    setOpenDialogMobilContainer(true)
+    const customFilters = parseFiltersUrlProducts(router.query, { modal: 'CONTAINER-ROOT' }, false)
+    router.push(
+      {
+        pathname: router.asPath.split('?').length > 0 ? router.asPath.split('?')[0] : router.pathname,
+        query: customFilters
+      },
+      undefined,
+      {
+        shallow: true
+      }
+    )
   }
+
+  // const handleOpenModalHaveAplace = () => {
+  //   setAnchorMenu(false)
+  //   setOpenDialogHaveAplace(true)
+  // }
+
+  // const handleOpenModalPlaceInUey = () => {
+  //   setAnchorMenu(false)
+  //   setOpenDialogPlaceInUey(true)
+  // }
 
   const handleOpenModalHaveAplace = () => {
     setAnchorMenu(false)
-    setOpenDialogHaveAplace(true)
+    setCurrentLocationSection('sec2')
   }
 
   const handleOpenModalPlaceInUey = () => {
     setAnchorMenu(false)
-    setOpenDialogPlaceInUey(true)
+    setCurrentLocationSection('sec1')
   }
 
   const clickToOpenMenu = event => {
@@ -117,6 +141,23 @@ const MenuOptionsSearch = ({ anchorEl, setAnchorEl, onClose }) => {
 
   const [value, setValue] = useState(null)
 
+  // todo: before
+  // const LOCATION_OPTIONS = [
+  //   {
+  //     id: 1,
+  //     icon: <IconHome color="primary" variant="main" />,
+  //     text: 'Buscar un lugar en UEY',
+  //     divider: true,
+  //     click: !isDeviceXs ? handleOpenModalPlaceInUey : handleOpenModalMobilContainer
+  //   },
+  //   {
+  //     id: 2,
+  //     icon: <IconPlaceLocation color="primary" variant="main" />,
+  //     text: 'Ya tengo un lugar',
+  //     divider: false,
+  //     click: !isDeviceXs ? handleOpenModalHaveAplace : handleOpenModalMobilContainer
+  //   }
+  // ]
   const LOCATION_OPTIONS = [
     {
       id: 1,
@@ -142,7 +183,8 @@ const MenuOptionsSearch = ({ anchorEl, setAnchorEl, onClose }) => {
             position: 'fixed',
             top: { xs: '14%', sm: '12%', md: '4.5%' },
             maxWidth: '860px',
-            border: '1px solid #ccc'
+            boxShadow: '0px 1px 20px rgba(0, 0, 0, 0.07)'
+            // border: '1px solid #ccc'
           },
           elevation: 0
         }}
@@ -166,6 +208,7 @@ const MenuOptionsSearch = ({ anchorEl, setAnchorEl, onClose }) => {
                 placeholder="Fecha"
                 color="primary"
                 views={['month', 'day']}
+                onFocus={() => setCurrentLocationSection('')}
                 minDate={new Date()}
               />
             </Grid>
@@ -188,7 +231,7 @@ const MenuOptionsSearch = ({ anchorEl, setAnchorEl, onClose }) => {
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <Stack direction="row" alignItems="center" gap={2}>
-                <BpTextField placeholder="Buscar aqui..." />
+                <BpTextField onFocus={() => setCurrentLocationSection('')} placeholder="Buscar aqui..." />
                 <IconButton
                   sx={{
                     bgcolor: 'grey.200',
@@ -204,6 +247,22 @@ const MenuOptionsSearch = ({ anchorEl, setAnchorEl, onClose }) => {
               </Stack>
             </Grid>
           </Grid>
+          <br />
+          {!isDeviceXs && (
+            <Collapse exit unmountOnExit in={currentLocationSection !== ''}>
+              <Divider />
+              <Collapse sx={{ mt: 2 }} in={currentLocationSection === 'sec1'}>
+                <Box mt={2} margin="0 auto" maxWidth={405}>
+                  <FormHaveAPlace hiddenTitle={false} />
+                </Box>
+              </Collapse>
+              <Collapse in={currentLocationSection === 'sec2'}>
+                <Box mt={2} margin="0 auto" maxWidth={405}>
+                  <FormPlaceInUEY hiddenTitle={false} />
+                </Box>
+              </Collapse>
+            </Collapse>
+          )}
         </CardContent>
       </Dialog>
       <Menu
@@ -227,7 +286,7 @@ const MenuOptionsSearch = ({ anchorEl, setAnchorEl, onClose }) => {
       </Menu>
       <DialogHaveAPlace open={openDialogHaveAplace} onClose={() => setOpenDialogHaveAplace(false)} />
       <DialogPlaceInUEY open={openDialogPlaceInUey} onClose={() => setOpenDialogPlaceInUey(false)} />
-      <DialogContainerLocation open={openDialogMobilContainer} onClose={() => setOpenDialogMobilContainer(false)} />
+      <DialogContainerLocation open={router.query?.modal === 'CONTAINER-ROOT'} onClose={() => router.back()} />
     </>
   )
 }
