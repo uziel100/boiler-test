@@ -9,7 +9,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import esLocale from 'date-fns/locale/es'
 
-import { ThemeContextProvider } from 'context/Theme/ThemeContextProvider'
+import { ThemeContextProvider } from 'context/theme/ThemeContextProvider'
 import { useApollo } from 'utils'
 import { Toaster } from 'react-hot-toast'
 import { Provider } from 'react-redux'

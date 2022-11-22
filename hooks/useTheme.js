@@ -1,4 +1,4 @@
-import { useThemeContextProvider } from 'context/Theme/ThemeContextProvider'
+import { useThemeContextProvider } from 'context/theme/ThemeContextProvider'
 
 const useTheme = () => {
   const { theme, toggleTheme, changeTheme } = useThemeContextProvider()
