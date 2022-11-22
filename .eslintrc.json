@@ -25,6 +25,18 @@
     "no-plusplus": "off",
     "consistent-return": "off",
     "no-console": "off",
-    "max-len": ["error", { "code": 120 }]
+    "max-len": ["error", { "code": 120 }],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never",
+        "mjs": "never",
+        "": "never"
+      }
+    ]
   }
 }
