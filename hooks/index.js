@@ -1,3 +1,4 @@
+export { default as useBreakpoint } from './useBreakpoint'
 export { default as useDebounce } from './useDebounce'
 export { default as useError } from './useError'
 export { default as useLocalStorage } from './useLocalStorage'
