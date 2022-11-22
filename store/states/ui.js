@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   openDrawer: false,
-  openMenuShoppingCart: false
+  openMenuShoppingCart: false,
+  openSearch: false
 }
 
 export const uiSlice = createSlice({
@@ -21,11 +22,24 @@ export const uiSlice = createSlice({
     },
     closeDrawerShoppingCart: state => {
       state.openMenuShoppingCart = false
+    },
+    openOptionSearch: state => {
+      state.openSearch = true
+    },
+    closeOptionSearch: state => {
+      state.openSearch = false
     }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { openDrawer, closeDrawer, openDrawerShoppingCart, closeDrawerShoppingCart } = uiSlice.actions
+export const {
+  openDrawer,
+  closeDrawer,
+  openDrawerShoppingCart,
+  closeDrawerShoppingCart,
+  openOptionSearch,
+  closeOptionSearch
+} = uiSlice.actions
 
 export default uiSlice.reducer

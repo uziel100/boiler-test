@@ -5,10 +5,18 @@ import { BpTypography } from 'components/shared'
 import { MenuShoppingCart } from 'features/cart/components'
 import { useShoppingCart } from 'features/cart/hooks'
 import { SidebarAmazonProvider } from 'features/common/context'
+import { MenuOptionsSearch } from 'features/search/components'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { closeDrawer, closeDrawerShoppingCart, openDrawer, openDrawerShoppingCart } from 'store/states/ui'
+import {
+  closeDrawer,
+  closeDrawerShoppingCart,
+  closeOptionSearch,
+  openDrawer,
+  openDrawerShoppingCart,
+  openOptionSearch
+} from 'store/states/ui'
 import { SidebarNav } from '../sidebar'
 import SidebarShoppingCart from '../sidebarShoppingCart/SidebarShoppingCart'
 
@@ -21,11 +29,19 @@ const NavbarMain = () => {
   const theme = useTheme()
   const isDeviceSm = useMediaQuery(theme.breakpoints.down('md'))
   const [anchorEl, setAnchorEl] = useState(null)
+  const [anchorElSearch, setAnchorElSearch] = useState(null)
   const [anchorCartShoppingEl, setAnchorCartShoppingEl] = useState(null)
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
   }
+
+  const clickToOpenSearchMenu = event => {
+    dispatcher(openOptionSearch())
+    setAnchorElSearch(event.currentTarget)
+  }
+
+  const handleCloseSearch = () => dispatcher(closeOptionSearch())
 
   const onOpenDrawer = () => {
     dispatcher(openDrawer())
@@ -49,7 +65,7 @@ const NavbarMain = () => {
   return (
     <>
       <NavbarApp>
-        <ContainerApp sx={{ px: 0 }}>
+        <ContainerApp sx={{ px: 0, pt: { xs: 1, md: 0 } }}>
           <Stack direction="row" gap={2} alignItems="center" justifyContent="space-between">
             <Stack direction="row" gap={4}>
               <NavbarApp.Logo openDrawer={onOpenDrawer} />
@@ -85,7 +101,9 @@ const NavbarMain = () => {
                     }}
                   />
                 </Stack> */}
-              <NavbarApp.Search />
+              <Box onClick={clickToOpenSearchMenu} sx={{ display: { xs: 'none', md: 'block' } }}>
+                <NavbarApp.Search type="desktop" />
+              </Box>
             </Stack>
             <Stack direction="row" gap={1}>
               {session.status === 'loading' ? (
@@ -114,6 +132,9 @@ const NavbarMain = () => {
               </IconButton>
             </Stack>
           </Stack>
+          <Box onClick={clickToOpenSearchMenu} mt={2} mb={1} sx={{ display: { xs: 'block', md: 'none' } }}>
+            <NavbarApp.Search type="mobil" />
+          </Box>
         </ContainerApp>
       </NavbarApp>
       <NavbarApp.MenuAccount anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
@@ -123,15 +144,15 @@ const NavbarMain = () => {
           <SidebarShoppingCart />
         </NavbarApp.Drawer>
       )}
-      {openSidebar && (
-        <NavbarApp.Drawer open={openSidebar} onClose={onCloseDrawer}>
-          <SidebarAmazonProvider>
-            <Box component="nav" position="relative" padding="1rem 0 1rem 0">
-              <SidebarNav />
-            </Box>
-          </SidebarAmazonProvider>
-        </NavbarApp.Drawer>
-      )}
+
+      <NavbarApp.Drawer open={openSidebar} onClose={onCloseDrawer}>
+        <SidebarAmazonProvider>
+          <Box component="nav" position="relative" padding="1rem 0 1rem 0">
+            <SidebarNav />
+          </Box>
+        </SidebarAmazonProvider>
+      </NavbarApp.Drawer>
+      <MenuOptionsSearch anchorEl={anchorElSearch} setAnchorEl={setAnchorElSearch} onClose={handleCloseSearch} />
     </>
   )
 }
