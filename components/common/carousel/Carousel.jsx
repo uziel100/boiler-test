@@ -30,9 +30,9 @@ const COLUMNS_RESPONSIVE = {
       slidesPerGroup: 2
     },
     600: {
-      slidesPerView: 4,
+      slidesPerView: 3,
       spaceBetween: 16,
-      slidesPerGroup: 4
+      slidesPerGroup: 3
     },
     900: {
       slidesPerView: 5,
