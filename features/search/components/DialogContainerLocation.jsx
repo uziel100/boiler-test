@@ -3,7 +3,7 @@ import ArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import { BpTransitionSlideLeft } from 'components/shared'
 import { InputRadio } from 'components/common'
 import { useState } from 'react'
-import { FormHaveAPlace } from '.'
+import FormHaveAPlace from './FormHaveAPlace'
 import FormPlaceInUEY from './FormPlaceInUEY'
 
 // eslint-disable-next-line arrow-body-style

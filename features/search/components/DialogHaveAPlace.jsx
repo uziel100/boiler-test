@@ -2,7 +2,7 @@ import { Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme
 import { BpTransitionSlideLeft, BpTransitionSlideUp } from 'components/shared'
 import CloseIcon from '@mui/icons-material/Close'
 import ArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
-import { FormHaveAPlace } from '.'
+import FormHaveAPlace from './FormHaveAPlace'
 
 const DialogHaveAPlace = ({ open, onClose }) => {
   const themeMui = useTheme()

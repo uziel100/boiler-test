@@ -1,7 +1,6 @@
 import { DesktopDatePicker } from '@mui/x-date-pickers'
 import IconDate from 'components/icons/IconDate'
 import { BpTextField } from 'components/shared'
-import { useState } from 'react'
 
 const InputDatePickerDesktop = ({
   value,
