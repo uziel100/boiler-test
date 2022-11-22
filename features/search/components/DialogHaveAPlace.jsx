@@ -1,12 +1,12 @@
-import { Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme } from '@mui/material'
+import { useBreakpoint } from 'hooks'
+import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material'
 import { BpTransitionSlideLeft, BpTransitionSlideUp } from 'components/shared'
 import CloseIcon from '@mui/icons-material/Close'
 import ArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import FormHaveAPlace from './FormHaveAPlace'
 
 const DialogHaveAPlace = ({ open, onClose }) => {
-  const themeMui = useTheme()
-  const isDeviceXs = useMediaQuery(themeMui.breakpoints.down('sm'))
+  const { isDeviceXs } = useBreakpoint()
 
   return (
     <Dialog

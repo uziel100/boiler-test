@@ -2,7 +2,6 @@ import { Box, FormControl, MenuItem, Select } from '@mui/material'
 import { BpTextField, BpTypography } from 'components/shared'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { DEFAULT_OPTIONS_ORDER_BY } from 'features/products/consts'
-// import { InputRadio } from 'components/common'
 
 const FormHaveAPlace = ({ hiddenTitle = false }) => (
   <>
